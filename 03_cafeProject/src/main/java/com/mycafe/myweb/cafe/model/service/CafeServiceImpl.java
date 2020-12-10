@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycafe.myweb.cafe.model.dao.CafeDao;
 import com.mycafe.myweb.cafe.model.vo.Cafe;
+import com.mycafe.myweb.cafe.model.vo.CafeAndFile;
 
 @Service
 public class CafeServiceImpl implements CafeService {
@@ -21,5 +22,11 @@ public class CafeServiceImpl implements CafeService {
 	public List searchColor() {
 		// TODO Auto-generated method stub
 		return dao.searchColor(session);
+	}
+
+	@Override
+	public List<CafeAndFile> selectCafeAll() {
+		// TODO Auto-generated method stub
+		return dao.selectCafeAll(session);
 	}
 }

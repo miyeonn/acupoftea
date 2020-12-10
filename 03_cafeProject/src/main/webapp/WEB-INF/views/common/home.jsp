@@ -5,7 +5,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 	.hometext-title{
-	 color:#f4d35d;
+	 
 	
 	}
     .card-img-top:hover{
@@ -18,7 +18,7 @@
 	 	box-shadow: 3px 3px 3px 3px gray;
 	 
 	 }
-/* 	.btns {
+ 	.btns {
 	  height: 380px;
 	  width: 80px;
 	  background: none;
@@ -29,6 +29,11 @@
 	  z-index: 9999;
 	  cursor:pointer;
 	}
+	button:focus{ 	
+    border: none;
+    outline:none;
+    }
+	/*
 	.left {position: absolute; top:0;left:0;}
 .right{position: absolute; top:0; right:0;}
 	.slide{

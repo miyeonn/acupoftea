@@ -44,7 +44,17 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- max upload size in bytes -->
+        <beans:property name="maxUploadSize" value="5242880" /> <!-- 5MB -->
+        <!-- max size of file in memory (in bytes) -->
+        <beans:property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+    </beans:bean>
+
+	 <resources mapping="/img/*" location="file:///C:/Users/aldus/spring_workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/03_cafeProject/resources/img" />
+
 	<context:component-scan base-package="com.mycafe.myweb" /> 
+	
 	
 	
 	

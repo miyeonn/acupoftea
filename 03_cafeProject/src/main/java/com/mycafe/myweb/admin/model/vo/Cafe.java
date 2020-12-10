@@ -1,12 +1,12 @@
-package com.mycafe.myweb.cafe.model.vo;
+package com.mycafe.myweb.admin.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Cafe {
 
 	private int cafe_No;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+	<insert id="enrollCafe" parameterType="map" useGeneratedKeys="true" keyColumn="cafe_no" keyProperty="cafeNo">
+		INSERT INTO CAFE VALUES(CAFE_NO_SEQ.NEXTVAL,#{cafeTitle},#{cafeAddr},#{businessHour},#{cafePage},#{cafeColor},#{cafeTel})
+		
+	</insert>
+	<insert id="enrollCafeFiles" parameterType="com.mycafe.myweb.admin.model.vo.CafeFile">
+		INSERT INTO CAFE_FILE VALUES(CF_NO_SEQ.NEXTVAL,#{cafe_no},#{file_Path},#{file_Name})
+	
+	</insert>
+
+</mapper>

@@ -15,7 +15,7 @@
 	#mainPhotoDiv{
 		 width:750px ;
 		height:400px; 
-		background-color : #ddd;
+		background-color : white;
 		background-position : center;
 		background-repeat : no-repeat;
 		background-size : cover;
@@ -41,85 +41,81 @@
 		align-items:center;
 	
 	}
+	.smallImage-container{
+		width:100px;
+		height:300px;
 	
+	}
 
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <section>
-	<div class="container-fluid">
-		<div class="row">
-			<!-- 사이드바로 분리 -->
-				<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
+	<div class="container-fluid ">
+		<div class="row ">
+			<div class="col-sm-2 content"></div>
+				
 			
 			<!-- 컨텐츠섹션으로 분리 -->
-			<div class="col-sm-9 content ">
+			<div class="col-sm-8 content">
 				<!-- 메인사진 &&설명 -->
-				<div class="row mt-3">
-					<div class="col-sm-1"></div>
-					<div class="border col-sm-7">
-						<div id="mainPhotoDiv" class=" mx-auto img-fluid bg-dark" style="background-image:url('../resources/img/cafe1.jpg')" >				    	
+				<div class="row">
+					<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
+							
+						<div class="border col-sm-7 mt-3 ">
+							<div class="d-flex">
+								<div class="smallImage-container d-flex flex-column border mt-5" >
+									<div class="smallImage" >
+										<img class="small" src="${path }/resources/img/cafe1.jpg">
+									</div>
+									<div class="smallImage" >
+										<img class="small" src="${path }/resources/img/cafe1_1.jpg">
+									</div>
+									<div class="smallImage">
+										<img class="small"  src="${path }/resources/img/cafe1_2.jpg">
+									</div>
+							  	</div>
+								<div id="mainPhotoDiv" class=" mx-auto img-fluid border " style="background-image:url('../resources/img/cafe1.jpg')" ></div>
+						  	</div>
+						  	<div class="border col-sm-10">
+								<div id="map" style="width:600px;height:400px;"></div>
+							</div> 	
 						</div>
-						<div class="container border " >
-							<div class="smallImage" >
-								<img class="small" src="${path }/resources/img/cafe1.jpg">
-							</div>
-							<div class="smallImage" >
-								<img class="small" src="${path }/resources/img/cafe1_1.jpg">
-							</div>
-							<div class="smallImage">
-								<img class="small"  src="${path }/resources/img/cafe1_2.jpg">
-							</div>
-					  	</div>
-					  	
-					</div>
-					<div class="col-sm-3 pt-3" style="width:300px;background-color:grey">
-						<table class="ml-2">
-							<tr>
-								<td colspan="2"><h2>대충유원지</h2></td>
-							</tr>
-							<tr>
-								<td>주소:</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>전화번호</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>영업시간</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>홈페이지</td>
-								<td></td>
-							</tr>					
-						</table>
-						
-					</div>
-					<div class="col-sm-1"></div>
-				</div>
-				<!-- 주소에 따른 지도 위치 marker표시 하기 카카오맵-->
-				<div class="row mt-3">
-					<div class="col-sm-1"></div>
-					<div class="border col-sm-10">
-						<div id="map" style="width:600px;height:400px;"></div>
-					</div>
-					<div class="col-sm-1"></div>
+						<div class="col-sm-3 mt-3 pt-3" style="width:300px;background-color:grey">
+							<table class="ml-2">
+								<tr>
+									<td colspan="2"><h2>대충유원지</h2></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="float:right;">
+										<h5><i class="far fa-bookmark"></i>
+									  	<i class="fas fa-share-alt"></i></h5>
+									</td>
+									
+								</tr>
+								<tr>
+									<td>주소:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>전화번호</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>영업시간</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>홈페이지</td>
+									<td></td>
+								</tr>					
+							</table>	
+						</div>	
 				</div>	
-				<!-- 후기출력 -->
-			
-				
-				
-			</div><!-- 컨텐츠 끝 -->
-			
-			<!-- 샘플 출력용 -->
-					<c:forEach items="${list}" var="l">
-						<a>${l.cafeTitle }</a>
-					</c:forEach>
+			</div>
 			<!-- 오른쪽여백으로 분리 -->
-			<jsp:include page="/WEB-INF/views/common/sidebar-right.jsp" />
+			<jsp:include page="/WEB-INF/views/common/rightSide.jsp" />
 		</div>
 	</div>
 </section>
@@ -161,11 +157,12 @@ for(var i=0; i<smallPics.length;i++){
 function changePic(){
 	var smallPicAttribute=this.getAttribute("src");
 	console.log(smallPicAttribute);
-	var mainPicAttribute="background-image:url('.."+smallPicAttribute+"')";
+	var mainPicAttribute="background-image:url('"+smallPicAttribute+"')";
 	console.log( mainPicAttribute);
 	mainPic.setAttribute("style",mainPicAttribute);
 }
 
+//지도 api
 var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 var options = { //지도를 생성할 때 필요한 기본 옵션
 	center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.

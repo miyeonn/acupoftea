@@ -1,5 +1,6 @@
 package com.mycafe.myweb.cafe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mycafe.myweb.cafe.model.service.CafeService;
+import com.mycafe.myweb.cafe.model.vo.CafeAndFile;
 
 @Controller
 public class CafeController {
@@ -16,10 +18,16 @@ public class CafeController {
 	private CafeService service;
 	
 	@RequestMapping("/cafe/searchCafe")
-	public String searchCafe() {
+	public ModelAndView searchCafe(ModelAndView mv) {
 		
+		List<CafeAndFile> cafeList=new ArrayList<CafeAndFile>();
+		cafeList=service.selectCafeAll();
 		
-		return "cafe/searchCafe";
+		System.out.println(cafeList.get(0));
+		mv.addObject("cafeList", cafeList);
+		mv.setViewName("cafe/searchCafe");
+		
+		return mv;
 	}
 	
 
@@ -40,6 +48,7 @@ public class CafeController {
 		return "cafe/cafeDetail";
 	}
 	
+
 
 	
 }

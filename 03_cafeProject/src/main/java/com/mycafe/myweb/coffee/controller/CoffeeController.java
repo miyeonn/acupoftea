@@ -17,7 +17,7 @@ public class CoffeeController {
 		return "coffee/coffeeDetail";
 	}
 	
-	@RequestMapping("/allCoffee")
+	@RequestMapping("/coffee/allCoffee")
 	public String searchAllCoffee(){
 		
 		return "coffee/allCoffee";

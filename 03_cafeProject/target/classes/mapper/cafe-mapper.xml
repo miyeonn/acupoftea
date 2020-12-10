@@ -4,6 +4,8 @@
 	<select resultType="String" id="selectColor">
 			SELECT *FROM CAFE
 	</select>
-
+	<select id="selectCafeAll" resultType="com.mycafe.myweb.cafe.model.vo.CafeAndFile">
+		SELECT *FROM CAFE JOIN CAFE_FILE USING(CAFE_NO)
+	</select>
 
 </mapper>

@@ -23,7 +23,7 @@
 <title>메인 홈</title>
 <style>
 header{
-height:210px;
+height:220px;
 
 }
 	@font-face
@@ -69,7 +69,7 @@ height:210px;
 	width:150px;
 	color:white;
 	text-decoration:none;
-	line-height:43px;
+	line-height:30px;
 	
 	}
 	.dropmenu ul li a:hover{
@@ -85,6 +85,7 @@ height:210px;
  	<div class="header-wrap" style="height:100%">
 		<div class="head dropmenu">
 			 <ul class="nav justify-content-end mr-5 " id="myPage_ul">
+			 	<c:if test="${loginUser!=null && loginUser.member_id ne 'admin' }">
 				    <li class="nav-item"><a class="nav-link">마이페이지</a>
 				    	<ul>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo">내정보관리</a></li>
@@ -93,18 +94,24 @@ height:210px;
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder">결제내역</a></li>
 				    	</ul>
 				    </li>
+				</c:if>
+				  <c:if test="${loginUser.member_id eq'admin' }">
+					    <li class="nav-item">
+					      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
+					    </li>
+				    </c:if>   
 				    <li class="nav-item">|</li>
 				    <c:if test="${loginUser!=null }">
-				    <li class="nav-item">
-				      <a class="nav-link" href="${path }/user/logOut">로그아웃</a>
-				    </li>
+					    <li class="nav-item">
+					      <a class="nav-link" href="${path }/user/logOut">로그아웃</a>
+					    </li>
 				    </c:if>
 				    <c:if test="${loginUser==null }">
-				    <li class="nav-item">
-				      <a class="nav-link" href="${path }/user/login">로그인</a>
-				    </li>
+					    <li class="nav-item">
+					      <a class="nav-link" href="${path }/user/login">로그인/회원가입</a>
+					    </li>
 				    </c:if>
-			</ul>
+			 </ul>
 		</div>
 		<div class="text-center " >
 		  <h1 id="title"><a id="title" href="${path}/common/home">A CUP OF TEA</a></h1>

@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Cafe {
+@NoArgsConstructor
+public class CafeAndFile {
 
 	private int cafe_No;
 	private String cafe_title;
@@ -15,4 +15,9 @@ public class Cafe {
 	private String cafe_hours;
 	private String cafe_page;
 	private String cafe_tel;
+	private int cf_no;
+	private String file_Path;
+	private String file_Name;
+	
+	
 }

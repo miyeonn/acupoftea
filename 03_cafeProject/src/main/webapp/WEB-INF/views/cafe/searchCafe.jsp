@@ -7,7 +7,7 @@
 	#palette
 	{
 	 /* display: inline-block; */
-	 margin-left:20%;
+	 margin-left:150px;
 	
 	}
 	
@@ -47,8 +47,14 @@
 	 	box-shadow: 3px 3px 3px 3px gray;
 	 
 	 }
-
-
+	.card-container{
+		margin-left:40px;
+	
+	}
+	.cards{
+	
+	margin-left:90px;
+	}
 
 </style>
 
@@ -64,45 +70,26 @@
 			 		<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			<!-- 컨텐츠섹션으로 분리 -->
 					<div class="col-sm-10  row-vh d-flex flex-column " style="width:100%">
-						<div id="palette" class="border row-vh d-flex flex-column" style="width:100%">
-							<div class="paletteBox  mt-3 border ">
-								<% String[]colors=
-									{
-									  "#E91E63",
-									  "#FF9800",
-									  "#FFEB3B",
-									  "#4CAF50",
-									  "#2196F3",
-									  "#3F51B5",
-									  "#9C27B0",
-									  "#9E9E9E",
-									  "#795548",
-									  "black"
-									  
-									};%>
-						
-						<%for(int i=0;i<10;i++) {%>
-						<div class='btn ' onclick='handlePickColor(<%=i%>)' style='background-color:<%=colors[i]%>'></div>
-						<%} %>
-							</div>
-						</div>
-				
 						<div class="row mt-3">
-						<!-- 반복문 출력  한줄에 세개씩!!-->		
-							<div class="">
-							  	<div class="card-container mt-3">
-								  	<div class="card" style="width:15rem;">
-								    	<div class="embed-responsive embed-responsive-1by1 ">
-								    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-								    	</div>
-								    	<div class="card-body">
-								      		<h4 class="card-title">대충유원지</h4>
-								      		<p class="card-text">서울시 연남동</p>
-								      		
-								    	</div>
-								  	</div>
+						<!-- 반복문 출력  한줄에 세개씩!!-->
+									
+								<div class="cards d-flex flex-wrap" style="width:840px;">
+									<c:forEach items="${cafeList }" var="c" >
+								  	<div class="card-container mt-3">
+									  	<div class="card" style="width:15rem;">
+									    	<div class="embed-responsive embed-responsive-1by1 ">
+									    		<img class="card-img-top embed-responsive-item" src="/img/cafe/${c.file_Name}" alt="Card image" style="">
+									    		${c.file_Path}${c.file_Name}
+									    	</div>
+									    	<div class="card-body">
+									      		<h4 class="card-title">${c.cafe_title }</h4>
+									      		<p class="card-text">서울시 연남동</p>  		
+									    	</div>
+									  	</div>
+									</div>
+									</c:forEach>	
 								</div>
-							</div>
+							
 						<!-- 반복문 끝 -->	
 						</div>
 				
@@ -112,11 +99,6 @@
 					</div><!-- 컨텐츠 끝 -->
 				</div>
 			</div>
-			<!-- 샘플 출력용 -->
-					<c:forEach items="${list}" var="l">
-						<a>${l.cafeTitle }</a>
-					</c:forEach>
-			<!-- 오른쪽여백으로 분리 -->
 			<jsp:include page="/WEB-INF/views/common/rightSide.jsp" />
 		</div>
 	</div>
