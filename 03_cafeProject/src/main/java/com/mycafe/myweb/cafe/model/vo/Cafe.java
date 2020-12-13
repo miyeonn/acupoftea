@@ -15,4 +15,5 @@ public class Cafe {
 	private String cafe_hours;
 	private String cafe_page;
 	private String cafe_tel;
+	private String main_image;
 }

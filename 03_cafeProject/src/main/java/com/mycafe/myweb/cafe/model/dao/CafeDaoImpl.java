@@ -18,9 +18,27 @@ public class CafeDaoImpl implements CafeDao{
 	}
 
 	@Override
-	public List<CafeAndFile> selectCafeAll(SqlSessionTemplate session) {
+	public List<Cafe> selectCafeAll(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectList("cafe.selectCafeAll");
+	}
+
+	@Override
+	public CafeAndFile cafeDetail(SqlSessionTemplate session, int cafeNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cafe.selectCafeDetail", cafeNo);
+	}
+
+	@Override
+	public List<String> cafeFiles(SqlSessionTemplate session, int cafeNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("cafe.selectCafeFiles",cafeNo);
+	}
+
+	@Override
+	public List<Cafe> resentCafe(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("cafe.selectResentCafe");
 	}
 
 }

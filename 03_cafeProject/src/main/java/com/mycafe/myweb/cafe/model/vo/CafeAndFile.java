@@ -1,5 +1,7 @@
 package com.mycafe.myweb.cafe.model.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +17,8 @@ public class CafeAndFile {
 	private String cafe_hours;
 	private String cafe_page;
 	private String cafe_tel;
-	private int cf_no;
-	private String file_Path;
-	private String file_Name;
+	private String main_image;
+	private List<String> file_Names;
 	
 	
 }

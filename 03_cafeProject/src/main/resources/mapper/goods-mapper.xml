@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods">
+	<insert id="enrollGoods" parameterType="map" useGeneratedKeys="true" keyColumn="goods_no" keyProperty="goodsNo">
+		INSERT INTO GOODS VALUES(GOODS_NO_SEQ.NEXTVAL,#{category},#{goodsStock})
+		
+	</insert>
+	<insert id="enrollGoodsFiles" parameterType="com.mycafe.myweb.goods.model.vo.GoodsFile">
+		INSERT INTO GOODS_FILE VALUES(GF_NO_SEQ.NEXTVAL,#{goods_no},#{file_path},#{file_name})
+	
+	</insert>
+
+</mapper>

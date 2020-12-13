@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mycafe.myweb.cafe.model.service.CafeService;
+import com.mycafe.myweb.cafe.model.vo.Cafe;
 import com.mycafe.myweb.cafe.model.vo.CafeAndFile;
 
 @Controller
@@ -20,7 +22,7 @@ public class CafeController {
 	@RequestMapping("/cafe/searchCafe")
 	public ModelAndView searchCafe(ModelAndView mv) {
 		
-		List<CafeAndFile> cafeList=new ArrayList<CafeAndFile>();
+		List<Cafe> cafeList=new ArrayList<Cafe>();
 		cafeList=service.selectCafeAll();
 		
 		System.out.println(cafeList.get(0));
@@ -43,10 +45,18 @@ public class CafeController {
 	
 	
 	@RequestMapping("/cafe/cafeDetail")
-	public String cafeDetail() {
+	public ModelAndView cafeDetail(int cafeNo,ModelAndView mv) {
 		
-		return "cafe/cafeDetail";
+		CafeAndFile cf=service.cafeDetail(cafeNo);
+		
+		System.out.println(cf);
+		mv.addObject("cafe",cf);
+		mv.setViewName("cafe/cafeDetail");
+		
+		
+		return mv;
 	}
+	
 	
 
 

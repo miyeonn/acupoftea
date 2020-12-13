@@ -99,74 +99,19 @@ transition:left 0.5s ease-out;
 				 					<button class="left btns">&lt;</button>
 				 					<div class="slide-wrapper">
 					 					<div class=" d-flex slides">
-										  	<div class="card-container mt-3  ">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지1</h4>
-											      		<p class="card-text">서울시 연남동</p>
-											      		
-											    	</div>
-											  	</div>
-											</div>							
-										  	<div class="card-container mt-3 ">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지2</h4>
-											      		<p class="card-text">서울시 연남동</p>
-											      		
-											    	</div>
-											  	</div>
-											</div>					
-										  	<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지3</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
-											<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지4</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
-											<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지5</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
-											<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지6</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
+					 						<c:forEach items="${cafeList }" var="c" varStatus="status">
+											  	<div class="card-container mt-3  ">
+												  	<div class="card" style="width:240px;">
+												    	<div class="embed-responsive embed-responsive-1by1 ">
+												    		<img class="card-img-top embed-responsive-item" src="/img/cafe/${c.main_image}" alt="Card image" style="">
+												    	</div>
+												    	<div class="card-body">
+												      		<h4 class="card-title">${c.cafe_title}</h4>
+												      		<p class="card-text">서울시 연남동</p>	
+												    	</div>
+												  	</div>
+												</div>
+											</c:forEach>							
 										</div>
 									</div>
 									<button  class="right btns" >&gt;</button>

@@ -25,8 +25,25 @@ public class CafeServiceImpl implements CafeService {
 	}
 
 	@Override
-	public List<CafeAndFile> selectCafeAll() {
+	public List<Cafe> selectCafeAll() {
 		// TODO Auto-generated method stub
 		return dao.selectCafeAll(session);
+	}
+
+	@Override
+	public CafeAndFile cafeDetail(int cafeNo) {
+		// TODO Auto-generated method stub
+		CafeAndFile cf=dao.cafeDetail(session,cafeNo);
+		List<String> files=dao.cafeFiles(session,cafeNo);
+		cf.setFile_Names(files);
+		System.out.println("파일명:"+files);
+		
+		return cf;
+	}
+
+	@Override
+	public List<Cafe> resentCafe() {
+		// TODO Auto-generated method stub
+		return dao.resentCafe(session);
 	}
 }

@@ -28,7 +28,7 @@
 				<div class="row">
 					<div class="admin-header d-flex flex-column justify-content-center align-items-center">
 					     <div class="d-flex pr-2">
-							<form action="<%=request.getContextPath()%>/admin/tripInfoEnd.do" method="post" enctype="multipart/form-data" >
+							<form action="${path }/admin/enrollGoodsEnd" method="post" enctype="multipart/form-data" >
 								<table class="table table-bordered" style="width:1000px">
 									<tr>
 										<td colspan="2">
@@ -40,7 +40,7 @@
 										 	카테고리 선택
 										</td>
 										<td>
-											<select class="form-control" name="trip-selector" id="trip-selector">
+											<select class="form-control" name="category" id="category">
 								        		<option value="all" selected>유형선택</option>
 								        		<option value="coffee">coffee</option>
 								        		<option value="tea">tea</option>
@@ -55,31 +55,29 @@
 											<input type="text" class="form-control"  name="goodsTitle" id="goodsTitle">
 										</td>
 									</tr>
-										<tr>
+									<tr>
 										<td>
 											상품가격
 										</td>
 										<td>
-											<input type="text"  class="form-control" placeholder="예시)11:00 - 21:30" id="businessHour" name="businessHour">
+											<input type="text"  class="form-control"  id="goodsPrice" name="goodsPrice">
 										</td>
 									</tr>
 									<tr>
-										<td rowspan="3">
+										<td>
+											재고갯수
+										</td>
+										<td>
+											<input type="text"  class="form-control"  id="goodsStock" name="goodsStock">
+										</td>
+									</tr>
+									<tr>
+										<td >
 											사진 첨부
 										</td>
 										<td>
-											<input type="file" name="upFile" id="upFile">
+											<input type="file" multiple="multiple" name="upFile" id="upFile">
 											
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="file" name="upFile2" id="upFile2">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type="file" name="upFile3" id="upFile3">
 										</td>
 									</tr>
 									<tr>
@@ -87,13 +85,13 @@
 											브랜드명
 										</td>
 										<td>
-											<input type="text" class="form-control"  name="brandTitle" id="brandTitle">
+											<input type="text" class="form-control"  name="goodsBrand" id="goodsBrand">
 										</td>
 										
 									</tr>
 									<tr>
 										<td>
-											제조사
+											제조사명
 										</td>
 										<td>
 											<input type="text"  class="form-control"  id="goodsCom" name="goodsCom">
@@ -104,7 +102,7 @@
 											기계종류
 										</td>
 										<td>
-											<input type="text" class="form-control" id="tripTel" name="tripTel" placeholder="(-포함)010-1234-5678">
+											<input type="text" class="form-control" id="goodsMachine" name="goodsMachine">
 										</td>
 									</tr>
 									<tr>
@@ -112,7 +110,23 @@
 											원산지
 										</td>
 										<td>
-											<input type="text"  class="form-control" id="homePage" name="homePage">
+											<input type="text"  class="form-control" id="goodsOrigin" name="goodsOrigin">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											맛
+										</td>
+										<td>
+											<input type="text"  class="form-control" id="goodsTaste" name="goodsTaste">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											향
+										</td>
+										<td>
+											<input type="text"  class="form-control" id="goodsFlavor" name="goodsFlavor">
 										</td>
 									</tr>
 									<tr>

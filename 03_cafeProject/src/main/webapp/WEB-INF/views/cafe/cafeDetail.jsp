@@ -13,7 +13,7 @@
 	
 	} */
 	#mainPhotoDiv{
-		 width:750px ;
+		 width:500px ;
 		height:400px; 
 		background-color : white;
 		background-position : center;
@@ -23,17 +23,19 @@
 
 	}
 	.smallImage{
-	  border-style:solid;
+	 /*  border-style:solid; */
 	  width:100px;
 	  height:100px;
 	  overflow:hidden;
+	  margin-bottom:5px;
+	
 	
 	}
 	.smallImage img{
 	 width:inherit;
 	 max-width:100%;
 	 height:auto;
-	 
+	 transition:0.2s ease-in-out;
 	
 	}
 	.container{
@@ -43,10 +45,22 @@
 	}
 	.smallImage-container{
 		width:100px;
-		height:300px;
-	
+		
+		margin-left:70px;
+		
 	}
 
+	.btns {
+	  height: 30px;
+	  width: 40px;
+	  background: none;
+	  border: none;
+	  font-size: 28px;
+	  font-weight: 800;
+	  color :#f4d35d;
+	  z-index: 9999;
+	  cursor:pointer;
+	}
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -54,7 +68,7 @@
 <section>
 	<div class="container-fluid ">
 		<div class="row ">
-			<div class="col-sm-2 content"></div>
+			<jsp:include page="/WEB-INF/views/common/leftSide.jsp" />		
 				
 			
 			<!-- 컨텐츠섹션으로 분리 -->
@@ -65,32 +79,29 @@
 							
 						<div class="border col-sm-7 mt-3 ">
 							<div class="d-flex">
-								<div class="smallImage-container d-flex flex-column border mt-5" >
-									<div class="smallImage" >
-										<img class="small" src="${path }/resources/img/cafe1.jpg">
-									</div>
-									<div class="smallImage" >
-										<img class="small" src="${path }/resources/img/cafe1_1.jpg">
-									</div>
-									<div class="smallImage">
-										<img class="small"  src="${path }/resources/img/cafe1_2.jpg">
-									</div>
+								
+								<div class="smallImage-container d-flex flex-column border rounded" >
+									<c:forEach items="${cafe.file_Names }" var="c" varStatus="status">
+										<div class="smallImage rounded" >
+											<img class="small" src="/img/cafe/${c}">
+										</div>
+									</c:forEach> 
 							  	</div>
-								<div id="mainPhotoDiv" class=" mx-auto img-fluid border " style="background-image:url('../resources/img/cafe1.jpg')" ></div>
+								<div id="mainPhotoDiv" class=" mx-auto img-fluid border rounded" style="background-image:url('/img/cafe/${cafe.main_image}')" ></div>
 						  	</div>
-						  	<div class="border col-sm-10">
-								<div id="map" style="width:600px;height:400px;"></div>
+						  	<div class="border">
+								<div id="map" style="width:650px;height:400px;"></div>
 							</div> 	
 						</div>
 						<div class="col-sm-3 mt-3 pt-3" style="width:300px;background-color:grey">
 							<table class="ml-2">
 								<tr>
-									<td colspan="2"><h2>대충유원지</h2></td>
+									<td colspan="2"><h2 id="cafeTitle">${cafe.cafe_title }</h2></td>
 								</tr>
 								<tr>
 									<td colspan="2" style="float:right;">
-										<h5><i class="far fa-bookmark"></i>
-									  	<i class="fas fa-share-alt"></i></h5>
+										<a href="javascript:clickBookMark('${cafe.cafe_No }')"><i id="bookmark" class="far fa-bookmark"></i></a>
+									  	<a><i class="fas fa-share-alt"></i></a>
 									</td>
 									
 								</tr>
@@ -150,7 +161,7 @@ if (imgAspect <= divAspect) {
 var mainPic=document.querySelector("#mainPhotoDiv");
 var smallPics=document.querySelectorAll(".small");
 for(var i=0; i<smallPics.length;i++){
-	smallPics[i].addEventListener("click",changePic);
+	smallPics[i].addEventListener("mouseover",changePic);
 	
 }
 
@@ -162,6 +173,8 @@ function changePic(){
 	mainPic.setAttribute("style",mainPicAttribute);
 }
 
+
+
 //지도 api
 var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -170,9 +183,91 @@ var options = { //지도를 생성할 때 필요한 기본 옵션
 };
 
 var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+//주소가
+geocoder.addressSearch('${cafe.cafe_address}', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">${cafe.cafe_title}</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+}); 
+
+//북마크 등록하기
+var cafeNo='${cafe.cafe_No}';
+var userNo='${loginUser.member_no}';
+var insertList={
+		cafeNo:cafeNo,
+		userNo:userNo
+};
+console.log(insertList);
+function clickBookMark(cafeNo){
+	
+	if(userNo==null||userNo==""){
+		alert("로그인후 이용해주세요");
+		location.href="${path}/user/login";
+	}else{
+	$.ajax({
+		url:'${path}/user/insertBookMark',
+		data:insertList,
+		success:function(data){
+			alert("북마크 등록 성공");
+			}	
+		})
+	}
+}
+
+
+
+var bookmark=document.getElementById("bookmark");
+console.log(bookmark);
+
+//북마크에 저장되어있는 카페인지 확인
+$(function(){
+			$.ajax({
+				url:'${path}/user/selectBookMark',
+				data:insertList,
+				success:function(data){
+						console.log(data.flag);
+					if(data.flag==false){
+						//이미 저장되어있음(색깔)
+					
+					 bookmark.className="fas fa-bookmark";
+						
+					}else{
+						//
+					bookmark.className="far fa-bookmark";
+					}
+					
+					
+					
+				}
+				
+				
+				
+			})
+		
+		})  
  
-
-
 </script>
 
 

@@ -16,7 +16,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services"></script>
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
@@ -28,7 +28,7 @@ height:220px;
 }
 	@font-face
 	{
-	src:url("../resources/fonts/Pacifico-Regular.ttf");
+	src:url("${path}/resources/fonts/Pacifico-Regular.ttf");
 	font-family:"pcrr";
 	}
 	 #title
@@ -38,7 +38,7 @@ height:220px;
 	 	text-decoration:none;
 	 }
 	 .header-wrap{
-	 background-image:linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ),url("../resources/img/main/coffeemain.jpg");
+	 background-image:linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ),url("${path}/resources/img/main/coffeemain.jpg");
 	 }
 
 	#myPage_ul{
@@ -80,12 +80,12 @@ height:220px;
 	
 </style>
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
 <header >
  	<div class="header-wrap" style="height:100%">
 		<div class="head dropmenu">
 			 <ul class="nav justify-content-end mr-5 " id="myPage_ul">
-			 	<c:if test="${loginUser!=null && loginUser.member_id ne 'admin' }">
+			 		<c:if test="${loginUser!=null && loginUser.member_id ne 'admin' }">
 				    <li class="nav-item"><a class="nav-link">마이페이지</a>
 				    	<ul>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo">내정보관리</a></li>
@@ -94,8 +94,8 @@ height:220px;
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder">결제내역</a></li>
 				    	</ul>
 				    </li>
-				</c:if>
-				  <c:if test="${loginUser.member_id eq'admin' }">
+					</c:if>
+				  	<c:if test="${loginUser.member_id eq'admin' }">
 					    <li class="nav-item">
 					      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
 					    </li>
@@ -103,7 +103,7 @@ height:220px;
 				    <li class="nav-item">|</li>
 				    <c:if test="${loginUser!=null }">
 					    <li class="nav-item">
-					      <a class="nav-link" href="${path }/user/logOut">로그아웃</a>
+					      <a class="nav-link" href="${path }/user/logout">로그아웃</a>
 					    </li>
 				    </c:if>
 				    <c:if test="${loginUser==null }">
@@ -114,7 +114,7 @@ height:220px;
 			 </ul>
 		</div>
 		<div class="text-center " >
-		  <h1 id="title"><a id="title" href="${path}/common/home">A CUP OF TEA</a></h1>
+		  <h1 id="title"><a id="title" href="${path}/home">A CUP OF TEA</a></h1>
 		  <br>
 		  <p class="">내 스타일의 카페와 커피를 만나보세요.</p> 
 		</div>

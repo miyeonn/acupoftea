@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.mycafe.myweb.user.model.service.BookMarkService;
 import com.mycafe.myweb.user.model.service.UserService;
+import com.mycafe.myweb.user.model.vo.BookMarkCafe;
 import com.mycafe.myweb.user.model.vo.JoinUser;
 
 @Controller
@@ -28,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private BookMarkService bkService;
 	
 	@RequestMapping("/user/login")
 	private String loginPage() {
@@ -109,13 +115,15 @@ public class UserController {
 			/* 세션 생성 */
 			session = req.getSession();
 			session.setAttribute("loginUser", login);
-			page="common/home";
+			page="common/msg";
 			m.addAttribute("loginUser",login);
+			m.addAttribute("msg", "환영합니다!");
+			m.addAttribute("loc", "/");
 			
 		}else {
 			page = "common/msg";
-			m.addAttribute("msg", "로그인실패! 관리자에게 문의하세요.");
-			m.addAttribute("loc", "/");
+			m.addAttribute("msg", "아이디나 비밀번호가 다릅니다.");
+			m.addAttribute("loc", "/user/login");
 		}
 		return page;
 	}
@@ -129,7 +137,8 @@ public class UserController {
 			status.setComplete();
 		}
 		
-		return "redirect:/home";
+		
+		return "redirect:/";
 	} 
 	
 	
@@ -155,6 +164,54 @@ public class UserController {
 		
 		  return "user/myInfoModify";
 	}
+	//북마크에 넣기
+	
+	  @RequestMapping("/user/insertBookMark") 
+	  public @ResponseBody int insertBookMark(HttpServletRequest request){
+	  
+	  System.out.println("카페번호:"+request.getParameter("cafeNo"));
+	  
+	  BookMarkCafe bk=new BookMarkCafe();
+	  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
+	  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+	  
+	  
+	  int result=bkService.insertBookMark(bk);
+	  
+	  	ModelAndView mv=new ModelAndView();
+		
+		mv.setViewName("jsonView"); 
+	  	return result;
+	  }
+	 
+	
+	
+	
+	
+	
+	//북마크에 있는지 찾기
+	
+	 @RequestMapping("/user/selectBookMark") 
+	 public @ResponseBody ModelAndView selectBookMark(HttpServletRequest request){
+	  
+	  BookMarkCafe bk=new BookMarkCafe();
+	  ModelAndView mv=new ModelAndView();
+	  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
+	  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+	  
+	  bk=bkService.selectBookMark(bk);
+	  
+	  
+	  boolean flag=bk!=null?false:true; System.out.println("flag:"+flag);
+	  
+	  
+	  mv.addObject("flag", flag); 
+	  mv.setViewName("jsonView"); 
+	  return mv; 
+	  }
+	 
+	
+	
 	
 
 }

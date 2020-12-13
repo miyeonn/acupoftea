@@ -75,11 +75,11 @@
 									
 								<div class="cards d-flex flex-wrap" style="width:840px;">
 									<c:forEach items="${cafeList }" var="c" >
-								  	<div class="card-container mt-3">
+								  	<div class="card-container mt-3"  onclick="clickCard('${c.cafe_No }')">
 									  	<div class="card" style="width:15rem;">
 									    	<div class="embed-responsive embed-responsive-1by1 ">
-									    		<img class="card-img-top embed-responsive-item" src="/img/cafe/${c.file_Name}" alt="Card image" style="">
-									    		${c.file_Path}${c.file_Name}
+									    		<img class="card-img-top embed-responsive-item" src="/img/cafe/${c.main_image}" alt="Card image" style="">
+									    		
 									    	</div>
 									    	<div class="card-body">
 									      		<h4 class="card-title">${c.cafe_title }</h4>
@@ -110,18 +110,14 @@
 <script>
 
 //컬러 클릭했을때
-function handlePickColor(k){
-	
-	location.href='/cafe/searchCafeByColor?color='+k;
-	
-}
+
 
 //for문 돌아간 이후에는 각 coffeeno를 매개변수로 해서 넘겨지는 페이지를 다르게 해줌
-var enterImg=document.getElementsByClassName("card-container")[0];
-console.log(enterImg);
-enterImg.onclick=function(){
-	location.href="${path}/cafe/cafeDetail"};
-
+function clickCard(cafeNo){
+	
+	location.href="${path}/cafe/cafeDetail?cafeNo="+cafeNo;
+	
+	}
 
 
 

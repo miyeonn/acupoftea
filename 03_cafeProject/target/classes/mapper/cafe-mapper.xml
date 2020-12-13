@@ -4,8 +4,17 @@
 	<select resultType="String" id="selectColor">
 			SELECT *FROM CAFE
 	</select>
-	<select id="selectCafeAll" resultType="com.mycafe.myweb.cafe.model.vo.CafeAndFile">
-		SELECT *FROM CAFE JOIN CAFE_FILE USING(CAFE_NO)
+	<select id="selectCafeAll" resultType="com.mycafe.myweb.cafe.model.vo.Cafe">
+		SELECT *FROM CAFE 
 	</select>
-
+	<select id="selectCafeDetail" resultType="com.mycafe.myweb.cafe.model.vo.CafeAndFile">
+		SELECT DISTINCT CAFE_NO,CAFE_TITLE,CAFE_ADDRESS,CAFE_HOURS,CAFE_PAGE,CAFE_TEL,MAIN_IMAGE
+		FROM CAFE JOIN CAFE_FILE USING(CAFE_NO) WHERE CAFE_NO=#{cafeNo}
+	</select>
+	<select id="selectCafeFiles" resultType="String">
+		SELECT FILE_NAME FROM CAFE_FILE JOIN CAFE USING(CAFE_NO) WHERE CAFE_NO=#{cafeNo}
+	</select>
+	<select id="selectResentCafe" resultType="com.mycafe.myweb.cafe.model.vo.Cafe">
+		SELECT * FROM CAFE WHERE <![CDATA[ ROWNUM < 6 ]]> ORDER BY CAFE_NO DESC
+	</select>
 </mapper>
