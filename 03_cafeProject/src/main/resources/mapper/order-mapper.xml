@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cart">
+	<insert id="addCart" parameterType="com.mycafe.myweb.order.model.vo.Cart">
+		INSERT INTO CART VALUES(CART_NO_SEQ.NEXTVAL,#{member_no},#{goods_no},'Y',#{goods_qty})
+	
+	</insert>
+	<select id="selectCart" resultType="com.mycafe.myweb.order.model.vo.CartList">
+		SELECT GOODS_NO,CART_NO,GOODS_QTY,COFFEE_NO,COFFEE_TITLE,COFFEE_PRICE,MAIN_IMAGE,CATEGORY,GOODS_STOCK 
+		FROM CART JOIN COFFEE USING(GOODS_NO) JOIN GOODS USING(GOODS_NO) WHERE CART_STATE='Y' AND MEMBER_NO=#{memberNo}
+	</select>
+</mapper>

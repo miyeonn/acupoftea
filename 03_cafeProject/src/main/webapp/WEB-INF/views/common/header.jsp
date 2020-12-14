@@ -17,6 +17,8 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services"></script>
+<!-- 결제api -->
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
@@ -90,7 +92,7 @@ height:220px;
 				    	<ul>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo">내정보관리</a></li>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myBookmark">북마크</a></li>
-				    		<li class="nav-item"><a class="nav-link" href="${path }/order/cart">장바구니</a></li>
+				    		<li class="nav-item"><a class="nav-link" href="${path }/order/cart?memberNo=${loginUser.member_no }">장바구니</a></li>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder">결제내역</a></li>
 				    	</ul>
 				    </li>
