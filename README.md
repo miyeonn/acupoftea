@@ -1,2 +1,2 @@
 # acupoftea
- a cup of tea. coffee&amp;cafe webpage
+ a cup of tea. a website for cafe&coffee
