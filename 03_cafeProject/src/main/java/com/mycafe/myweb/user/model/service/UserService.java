@@ -12,4 +12,8 @@ public interface UserService {
 
 	JoinUser selectUser(String id);
 
+	String selectAdmin();
+
+	JoinUser getUserByNo(int memberNo);
+
 }

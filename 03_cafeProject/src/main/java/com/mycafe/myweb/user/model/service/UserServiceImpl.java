@@ -39,4 +39,18 @@ public class UserServiceImpl implements UserService {
 		return dao.selectUser(id,session);
 	}
 
+
+	@Override
+	public String selectAdmin() {
+		// TODO Auto-generated method stub
+		return dao.selectAdmin(session);
+	}
+
+
+	@Override
+	public JoinUser getUserByNo(int memberNo) {
+		// TODO Auto-generated method stub
+		return dao.getUserByNo(session,memberNo);
+	}
+
 }

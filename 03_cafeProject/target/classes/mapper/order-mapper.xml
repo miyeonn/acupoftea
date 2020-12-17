@@ -9,4 +9,11 @@
 		SELECT GOODS_NO,CART_NO,GOODS_QTY,COFFEE_NO,COFFEE_TITLE,COFFEE_PRICE,MAIN_IMAGE,CATEGORY,GOODS_STOCK 
 		FROM CART JOIN COFFEE USING(GOODS_NO) JOIN GOODS USING(GOODS_NO) WHERE CART_STATE='Y' AND MEMBER_NO=#{memberNo}
 	</select>
+	<select id="selectCartNo" parameterType="com.mycafe.myweb.order.model.vo.Cart" resultType="com.mycafe.myweb.order.model.vo.CartList">
+		SELECT *FROM CART WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}
+	</select>
+	<update id="addCountcart" parameterType="com.mycafe.myweb.order.model.vo.Cart">
+		<![CDATA[UPDATE CART SET GOODS_QTY=GOODS_QTY+#{goods_qty} WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}]]>
+	
+	</update>
 </mapper>

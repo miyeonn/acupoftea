@@ -13,4 +13,8 @@ public interface OrderDao {
 
 	List<CartList> selectCart(int memberNo, SqlSessionTemplate session);
 
+	CartList selectCart(Cart cart, SqlSessionTemplate session);
+
+	int addCountcart(Cart cart, SqlSessionTemplate session);
+
 }

@@ -1,3 +1,4 @@
+
 package com.mycafe.myweb.user.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

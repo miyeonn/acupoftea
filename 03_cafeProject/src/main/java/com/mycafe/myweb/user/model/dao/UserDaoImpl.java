@@ -28,6 +28,18 @@ public class UserDaoImpl implements UserDao {
 		return session.selectOne("user.selectUser",id);
 	}
 
+	@Override
+	public String selectAdmin(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("user.selectAdmin");
+	}
+
+	@Override
+	public JoinUser getUserByNo(SqlSessionTemplate session, int memberNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("user.selectByNo", memberNo);
+	}
+
 	
 
 }

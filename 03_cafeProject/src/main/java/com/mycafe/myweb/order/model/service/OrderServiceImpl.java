@@ -20,11 +20,7 @@ public class OrderServiceImpl implements OrderService {
 	private SqlSessionTemplate session;
 	
 	
-	@Override
-	public int addCart(Cart cart) {
-		// TODO Auto-generated method stub
-		return dao.addCart(cart,session);
-	}
+
 
 
 	@Override
@@ -32,5 +28,21 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return dao.selectCart(memberNo,session);
 	}
+	
+	@Override
+	public int addCart(Cart cart) {
+		//이미 같은 상품이 존재할경우 goods_qty만 올려줌
+		//없을경우 업데이트
+		int result=0;
+		CartList list=dao.selectCart(cart,session);
+		System.out.println("존재하는값:"+list);
+		if(list!=null) {
+			result=dao.addCountcart(cart,session);
+		}else {
+			result=dao.addCart(cart,session);
+		}
+		return result;
+	}
+
 
 }

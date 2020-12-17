@@ -23,4 +23,16 @@ public class OrderDaoImpl implements OrderDao {
 		return session.selectList("cart.selectCart",memberNo);
 	}
 
+	@Override
+	public CartList selectCart(Cart cart, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cart.selectCartNo",cart);
+	}
+
+	@Override
+	public int addCountcart(Cart cart, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.update("cart.addCountcart",cart);
+	}
+
 }

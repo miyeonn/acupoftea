@@ -6,10 +6,12 @@
 <meta name="google-signin-client_id" content="651161446279-3rjhjblbrb141lep5kevk9d1mvrtbp74.apps.googleusercontent.com">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
-#loginBox{
-	width:500px;
-
-}
+ .login-container{
+ 	margin-top:100px;
+ }
+ .loginContent{
+ 	margin-bottom:10px;
+ }
 
 </style>
 <section>
@@ -21,40 +23,37 @@
 			<!-- 컨텐츠섹션으로 분리 -->
 			<div class="col-sm-8 content">
 			 	<div class="row align-items-center">		 	
-			 		<div class="container content ">
+			 		
+			 		<div class="col-sm-4"></div>
+			 		<div class="col-sm-4 container login-container">
 						<form action="${path }/user/loginEnd" id="loginform" method="post" >
-							 <div id="loginBox" class="border center-block text-center">
-							 <h1 id="title" class="text-center">LOGIN</h1>
-							 	<table class="text-center">
-							 		<tr>
-							 			<td colspan="2">
-							 			<input type="text" name="id" placeholder="아이디"/>
-							 			</td>
-							 		</tr>
-							 		<tr>
-							 			<td colspan="2">
-							 			<input type="password" name="password" placeholder="비밀번호"/>
-							 			</td>
-							 		</tr>
-	 								<tr>
-	 									<td colspan="2">
-	 									<button class="btn btn-primary btn-block" onclick='btn_click("login");'>로그인</button>
-	 									</td>
-	 								</tr>
-	 								<tr>
-	 									<td colspan="2">
-	 									<div class="g-signin2 align-center" data-onsuccess="onSignIn"></div>
-	 									<!-- <a href="#" onclick="signOut();">Sign out</a>로그인 상태일때 -->
-	 									</td>
-	 								</tr>
-							 	</table>	 
+							 <div id="loginBox" class="d-flex flex-column  justify-content-center">
+							 	<h1 id="title" class="text-center mb-3">LOGIN</h1>
+					 			<div class="loginContent">
+					 				<input type="text" class="form-control" name="id" placeholder="아이디"/>
+					 			</div>
+					 			<div class="loginContent">
+					 				<input type="password" class="form-control" name="password" placeholder="비밀번호"/>
+					 			</div>
+					 			<div class="loginContent">
+									<button class="btn btn-primary btn-block" onclick='btn_click("login");'>로그인</button>
+								</div>
+								<div class="loginContent">
+									<div class="g-signin2 align-center" data-onsuccess="onSignIn"></div>
+									<a id="kakao-login-btn"></a>
+									<!-- <a href="#" onclick="signOut();">Sign out</a>로그인 상태일때 -->
+								</div>
+								<hr style="background-color:grey"/>
+								<button class="btn btn-primary btn-block" onclick='btn_click("join");'>회원가입</button>	 
 							 </div>
 						</form>
-							<button class="btn btn-primary btn-block" onclick='btn_click("join");'>회원가입</button>
-					</div>			
+					</div>	
+					<div class="col-sm-4"></div>
+							
 			 	</div>
 			</div>
 			<!-- 오른쪽여백으로 분리 -->
+			<div class="col-sm-2 content"></div>
 		</div>
 	</div>
 			
@@ -89,6 +88,27 @@ function onSignIn(googleUser) {
 	 
 	 
  }
+ //카카로 로그인
+ 
+ 
+   // 사용할 앱의 JavaScript 키를 설정해 주세요.
+   Kakao.init('dd85c7c19c3d45f5bedf296de1914e7f');
+   
+   // 카카오 로그인 버튼을 생성합니다.
+   Kakao.Auth.createLoginButton({
+     container: '#kakao-login-btn',
+     success: function(authObj) {
+    alert(JSON.stringify(authObj));
+     },
+     fail: function(err) {
+     alert(JSON.stringify(err));
+     }
+   });
+    //
+
+  
+  
+  
 </script>
 </body>
 </html>

@@ -4,16 +4,18 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-
+	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
@@ -27,7 +29,7 @@
 
 
 	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="viewResolver">
-	<beans:property value="1" name="order"/>
+		<beans:property value="1" name="order"/>
 	</beans:bean>
 
 
@@ -44,14 +46,36 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
+	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- max upload size in bytes -->
         <beans:property name="maxUploadSize" value="5242880" /> <!-- 5MB -->
         <!-- max size of file in memory (in bytes) -->
         <beans:property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
     </beans:bean>
-
-	 <resources mapping="/img/*" location="file:///C:/Users/aldus/spring_workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/03_cafeProject/resources/img" />
+    <!-- Gmail -->
+	 
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <beans:property name="host" value="smtp.gmail.com" />
+	    <beans:property name="port" value="587" />
+	    <beans:property name="username" value="aldus9302@gmail.com" />
+	    <beans:property name="password" value="kmy200603!" />
+	    <beans:property name="javaMailProperties">
+		    <beans:props>
+		      <beans:prop key="mail.smtp.auth">true</beans:prop>
+		      <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+		    </beans:props>
+	    </beans:property>
+	</beans:bean>
+	
+	<!-- cors해결 -->
+	<beans:import resource="classpath:config/cors-config.xml"/>
+	<!-- 스케줄러 -->
+    <context:component-scan base-package="com.mycafe.myweb.common.CronTask" />
+    <task:scheduler id="cronScheduler" pool-size="10" />
+    <task:annotation-driven scheduler="cronScheduler"/>
+	<!-- 이미지 경로 지정 -->
+	<resources mapping="/img/*" location="file:///C:/Users/aldus/spring_workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/03_cafeProject/resources/img" />
 
 	<context:component-scan base-package="com.mycafe.myweb" /> 
 	

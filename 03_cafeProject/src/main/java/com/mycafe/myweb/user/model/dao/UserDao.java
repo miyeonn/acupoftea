@@ -14,4 +14,8 @@ public interface UserDao {
 
 	JoinUser selectUser(String id, SqlSessionTemplate session);
 
+	String selectAdmin(SqlSessionTemplate session);
+
+	JoinUser getUserByNo(SqlSessionTemplate session, int memberNo);
+
 }

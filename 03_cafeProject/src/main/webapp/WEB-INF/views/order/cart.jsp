@@ -21,7 +21,7 @@
 				<div class="d-flex form-check justify-content-between">
 					<div>
 						<div>
-							<input type="checkbox" class="form-check-input">모두선택
+							<input type="checkbox" class="form-check-input" name="checkAll"  >모두선택
 						</div>
 					</div>
 					<div>
@@ -32,12 +32,13 @@
 				<c:forEach items="${list }" var="c">
 					<div class="border d-flex form-check bg-white rounded-lg mb-2" >
 						
-						<input type="checkbox" class="form-check-input"/>
-						<img class="orderImg"src="${path }/resources/img/capsule.jpg" width="150px;" height="150px;"/>
+						<input type="checkbox" name="cartCheck" class="form-check-input" value="${c.goods_no }" />
+						<img class="orderImg"src="/img/cafe/${c.main_image}" width="150px;" height="150px;"/>
 						<div>
 							<h6>${c.coffee_title }</h6>
+							<div>금액:<span class="goodsPrice">${c.coffee_price }</span></div>
 							<div id="">
-							<select class="form-control qtySelector" onchange="fnQtyChange(${c.goods_no },this)">
+							<select class="form-control qtySelector" name="qtySelector" onchange="CountAmount();">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -60,24 +61,24 @@
 		 	<div class="cart-total-container border rounded-lg bg-white mt-4 pl-2">
 		 		<div class="d-flex mt-3">
 		 			<h6 class="label">총 상품금액</h6>
-		 			<h6>10000원</h6>
+		 			<span id="cartTotalPrice">0</span><span>원</span>
 		 		</div>
 		 		<div class="d-flex">
 		 			<h6 class="label">총 배송비</h6>
-		 			<h6>10000원</h6>
+		 			<span id="deliveryFee">0</span><span>원</span>
 		 		</div>
-		 		<div class="d-flex">
+		 		<!-- <div class="d-flex">
 		 			<h6 class="label">총 할인금액</h6>
 		 			<h6>10000원</h6>
-		 		</div>
+		 		</div> -->
 		 		<br/>
 		 		<div class="d-flex">
 		 			<h6 class="label"><b>결제금액</b></h6>
-		 			<h4><b>10000원</b></h4>
+		 			<span name="OrderTotalPrice">0</span><span>원</span>
 		 		</div>
 		 	</div>
 		 	<div class="mt-3">
-		 		<button id="CartAddOrder"class="btn btn-primary btn-block">n개 상품 결제하기</button>
+		 		<button id="CartAddOrder" class="btn btn-primary btn-block" onclick="fnAddOrder()";>n개 상품 결제하기</button>
 		 	</div>
 		</div>
 	
@@ -85,82 +86,146 @@
 	</div>
 </section>
 <script>
-function fnQtyChange(goodsNo,ths){
+//select에 기본 값 db에서 가져온 값으로 설정하기
+$(function(){
+	var selector=document.getElementsByName("qtySelector");//배열값
+	var options;
+	var cartList=new Array();
+	<c:forEach items="${list}" var="c">
+		cartList.push(${c.goods_qty});
+	</c:forEach>
+	console.log(selector.length);//select박스 갯수
+	console.log(selector[0].length);//option 갯수
+	
+	for(i=0;i<selector.length;i++){
+		
+		for(j=0;j<selector[i].length;j++){
+		if(Number(selector[i].options[j].value) == cartList[i] ){
+			console.log("실행됨");
+			selector[i].options[j].selected = true;
+			break;
+			}
+		}
+	}
+
+});
+/* function fnQtyChange(goodsNo,ths){
 	console.log(goodsNo+":"+ths.innerText);
 	
 }
-var addOrder=document.querySelector("#CartAddOrder");
-addOrder.addEventListener("click",function(){
-	var IMP = window.IMP; // 생략가능
-	IMP.init('imp19318003');
-	// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
-	IMP.request_pay({ //param   -> request_pay(param,callback);
-	pg: 'inicis', // version 1.1.0부터 지원.
-	/*
-	'kakao':카카오페이,
-	html5_inicis':이니시스(웹표준결제)
-	'nice':나이스페이
-	'jtnet':제이티넷
-	'uplus':LG유플러스
-	'danal':다날
-	'payco':페이코
-	'syrup':시럽페이
-	'paypal':페이팔
-	*/
-	pay_method: 'card',
-	/*
-	'samsung':삼성페이,
-	'card':신용카드,
-	'trans':실시간계좌이체,
-	'vbank':가상계좌,
-	'phone':휴대폰소액결제
-	*/
-	merchant_uid: 'merchant_' + new Date().getTime(),
-	/*
-	merchant_uid에 경우
-	https://docs.iamport.kr/implementation/payment
-	위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
-	참고하세요.
-	나중에 포스팅 해볼게요.
-	*/
-	name: '주문명:결제테스트',
-	//결제창에서 보여질 이름
-	amount: 1000,
-	//가격
-	buyer_email: 'iamport@siot.do',
-	buyer_name: '구매자이름',
-	buyer_tel: '010-1234-5678',
-	buyer_addr: '서울특별시 강남구 삼성동',
-	buyer_postcode: '123-456',
-	m_redirect_url: 'https://www.yourdomain.com/payments/complete'
-	/*
-	모바일 결제시,
-	결제가 끝나고 랜딩되는 URL을 지정
-	(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
-	*/
-	}, function (rsp) {//callback
-	console.log(rsp);
-	if (rsp.success) {
-	var msg = '결제가 완료되었습니다.';
-	msg += '고유ID : ' + rsp.imp_uid;
-	msg += '상점 거래ID : ' + rsp.merchant_uid;
-	msg += '결제 금액 : ' + rsp.paid_amount;
-	msg += '카드 승인번호 : ' + rsp.apply_num;
-	} else {
-	var msg = '결제에 실패하였습니다.';
-	msg += '에러내용 : ' + rsp.error_msg;
+ */
+
+
+var checkbox=document.getElementsByName('cartCheck');//체크박스 전부 가져오기
+console.log(checkbox.value);
+var selectbox=document.getElementsByName('qtySelector');//셀렉트박스 전부 가져오기
+var priceArr=document.getElementsByClassName('goodsPrice');//상품가격 전부 가져오기
+console.log("가격배열:"+priceArr);
+var checkArr=new Array();//체크된 체크박스 담을 변수
+var selectArr=new Array();//select박스 변수
+
+
+//order로 가져갈 변수, member_no goods_no;private int order_qty;payment_price;
+function fnAddOrder(){
+	//체크된 항목의 goods_no로 상품을 가져옴. 
+	console.log(checkbox.length);
+	for(i=0;i<checkbox.length;i++){
+			if(checkbox[i].checked){
+				console.log()
+				console.log("goodsNo:"+checkbox[i].value);
+				checkArr.push(checkbox[i].value);	
+				selectArr.push(selectbox[i].value);
+				}
+			}
+	if(checkArr==0){
+		
+		alert('선택된 상품이 없습니다');
+		return false;
 	}
-	alert(msg);
-	});
+	console.log(checkArr+":"+selectArr);
+	//goodsNo랑 주문 갯수 넘겨줌 
+	location.href="${path}/order/addOrder?checkArr="+checkArr+"&selectArr="+selectArr+"&member_no=${loginUser.member_no}";
 	
+	
+	}	
 
-	
-	
-	
-	
-})
 
+
+
+//체크박스 선택 |해제
+
+var checkAll=document.querySelector("input[name='checkAll']");
+var chk=document.querySelectorAll("input[name='cartCheck']");
+
+//전체선택 클릭시 체크//해제
+checkAll.onclick=function(){
+	if(checkAll.checked==false){
+		for(var i=0;i<chk.length;i++){
+			chk[i].checked=false;
+		}
+		CountAmount();
+	}else{
+		for(var i=0;i<chk.length;i++){
+			chk[i].checked=true;
+		}
+		CountAmount();
+	}
+}
+//하위 개별항목 해제시 선택해제
+for(var i=0;i<chk.length;i++){
+	chk[i].onclick=function(){
+		if(this.checked==false){
+			checkAll.checked=false;
+		}
+		CountAmount();
+		
+	}
+}	
+		
+
+ 
+
+
+
+
+
+function CountAmount(){
+	var checkbox=document.getElementsByName('cartCheck');
+	var selectbox=document.getElementsByName('qtySelector');
+	var priceArr=document.getElementsByClassName('goodsPrice');//상품가격 전부 가져오기
+	
+	//각각의 (금액 *수량)한것을 모두 합산
+	var selectArr=new Array();
+	var price=new Array();
+	var totalPrice=0;
+	for(i=0;i<checkbox.length;i++){ 
+		if(checkbox[i].checked){
+			console.log("체크된 배열:"+i);
+			price.push(parseInt(priceArr[i].innerHTML));
+			selectArr.push(parseInt(selectbox[i].value));
+			console.log(i+"번째"+selectbox[i].value)
+	 	}
+	}
+	for(j=0;j<price.length;j++){
+		console.log('계산할 배열:'+price.length);
+		console.log(selectArr);
+		console.log("갯수:"+selectArr[j]);
+		totalPrice+=price[j]*selectArr[j];
+		}
+	
+	console.log('토탈금액:'+totalPrice);
+	
+	
+	var totalInput=document.querySelector('span[id="cartTotalPrice"]');
+	
+	totalInput.innerHTML=addComma(totalPrice);
+}
+
+function addComma(num) {
+	//3자리 마다 콤마 추가
+	  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	  return num.toString().replace(regexp, ',');
+	}
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

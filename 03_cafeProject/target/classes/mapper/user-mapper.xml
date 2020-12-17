@@ -11,5 +11,10 @@
 	<select id="selectUser" parameterType="String" resultType="com.mycafe.myweb.user.model.vo.JoinUser">
 		SELECT * FROM MEMBER_TB WHERE MEMBER_ID=#{id}
 	</select>
-
+	<select id="selectAdmin" resultType="String">
+		SELECT MEMBER_ID FROM MEMBER_TB WHERE MEMBER_NO=82
+	</select>
+	<select id="selectByNo" parameterType="_int" resultType="com.mycafe.myweb.user.model.vo.JoinUser">
+		SELECT * FROM MEMBER_TB WHERE MEMBER_NO=#{memberNo}
+	</select>
 </mapper>
