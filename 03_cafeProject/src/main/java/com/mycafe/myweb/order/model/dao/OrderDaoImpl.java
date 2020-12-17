@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
+import com.mycafe.myweb.order.model.vo.OrderList;
+import com.mycafe.myweb.order.model.vo.Payment;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -33,6 +35,25 @@ public class OrderDaoImpl implements OrderDao {
 	public int addCountcart(Cart cart, SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.update("cart.addCountcart",cart);
+	}
+
+	@Override
+	public CartList selectCartBygoodsNo(int goodsNo, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cart.selectByGoodsNo",goodsNo);
+	}
+
+
+	@Override
+	public int insertPayment(Payment pay, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.insert("order.insertPayment", pay);
+	}
+
+	@Override
+	public int insertOrder(OrderList orderList, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.insert("order.insertOrder", orderList);
 	}
 
 }

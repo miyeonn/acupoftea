@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 public class Payment {
 
 	private int payment_no;
-	private int order_no;
+	private String order_no;
 	private int payment_price;
 	private String payment_state;
 	private String payment_method;
 	private String imp_id;//아임포트 접근정보
 	private String merchant_id;
+	private String apply_num;
 	
 	
 }

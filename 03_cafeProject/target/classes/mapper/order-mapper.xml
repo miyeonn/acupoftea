@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cart">
-	<insert id="addCart" parameterType="com.mycafe.myweb.order.model.vo.Cart">
-		INSERT INTO CART VALUES(CART_NO_SEQ.NEXTVAL,#{member_no},#{goods_no},'Y',#{goods_qty})
+<mapper namespace="order">
+	<insert id="insertPayment" parameterType="com.mycafe.myweb.order.model.vo.Payment">
+		INSERT INTO PAYMENT VALUES(PAYMENT_NO_SEQ.NEXTVAL,#{payment_price},'결제완료','n',#{imp_id},#{merchant_id},#{apply_num},#{order_no})
+	</insert>
+	<insert id="insertOrder" parameterType="com.mycafe.myweb.order.model.vo.OrderList">
+		INSERT INTO ORDER_TB VALUES(#{member_no},#{goods_no},SYSDATE,'출고대기',#{order_qty},#{order_receiver},#{order_tel},#{order_address},
+		'N','N','N',#{order_sender},#{sender_tel},#{sender_memo},#{order_no})
 	
 	</insert>
-	<select id="selectCart" resultType="com.mycafe.myweb.order.model.vo.CartList">
-		SELECT GOODS_NO,CART_NO,GOODS_QTY,COFFEE_NO,COFFEE_TITLE,COFFEE_PRICE,MAIN_IMAGE,CATEGORY,GOODS_STOCK 
-		FROM CART JOIN COFFEE USING(GOODS_NO) JOIN GOODS USING(GOODS_NO) WHERE CART_STATE='Y' AND MEMBER_NO=#{memberNo}
-	</select>
-	<select id="selectCartNo" parameterType="com.mycafe.myweb.order.model.vo.Cart" resultType="com.mycafe.myweb.order.model.vo.CartList">
-		SELECT *FROM CART WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}
-	</select>
-	<update id="addCountcart" parameterType="com.mycafe.myweb.order.model.vo.Cart">
-		<![CDATA[UPDATE CART SET GOODS_QTY=GOODS_QTY+#{goods_qty} WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}]]>
-	
-	</update>
+
 </mapper>

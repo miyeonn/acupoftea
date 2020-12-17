@@ -96,4 +96,7 @@
 		<jsp:include page="/WEB-INF/views/common/rightSide.jsp" />
 	</div>
 </section>
+<script>
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

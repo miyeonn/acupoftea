@@ -9,17 +9,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderList {
 
-	private int order_no;
+	private String order_no;
 	private int member_no;
 	private int goods_no;
-	private String order_date;
-	private String order_state;
+	private String order_date;//db
+	private String order_state;//db
 	private int order_qty;
 	private String order_receiver;
 	private String order_tel;
 	private String order_address;
-	private String order_canceled;
-	private String order_ship;
-	private String order_cfm;
+	private String order_sender;
+	private String sender_tel;
+	private String order_canceled;//db
+	private String order_ship;//db
+	private String order_cfm;//db
+	private String sender_memo;
 	
 }

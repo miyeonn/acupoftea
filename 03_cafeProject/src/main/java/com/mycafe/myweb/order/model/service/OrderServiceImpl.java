@@ -1,5 +1,6 @@
 package com.mycafe.myweb.order.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.mycafe.myweb.order.model.dao.OrderDao;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
+import com.mycafe.myweb.order.model.vo.OrderList;
+import com.mycafe.myweb.order.model.vo.Payment;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -41,6 +44,39 @@ public class OrderServiceImpl implements OrderService {
 		}else {
 			result=dao.addCart(cart,session);
 		}
+		return result;
+	}
+
+	@Override
+	public List<CartList> selectCartBygoodsNo(int[] goodsNo) {
+		// TODO Auto-generated method stub
+		List<CartList> lists=new ArrayList<CartList>();	
+	
+		for(int i=0;i<goodsNo.length;i++) {
+			lists.add(dao.selectCartBygoodsNo(goodsNo[i],session));
+			
+		}
+		
+		
+		return lists;
+	}
+
+	@Override
+	public int insertPayment(Payment pay) {
+		// TODO Auto-generated method stub
+		return dao.insertPayment(pay,session);
+	}
+
+	@Override
+	public int insertOrder(List<OrderList> list) {
+		// TODO Auto-generated method stub
+		int result=0;
+		for(int i=0;i<list.size();i++) {
+			result=dao.insertOrder(list.get(i), session);
+		
+		}
+	
+		
 		return result;
 	}
 
