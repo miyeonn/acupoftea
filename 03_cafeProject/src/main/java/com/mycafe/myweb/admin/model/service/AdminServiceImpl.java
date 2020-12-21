@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycafe.myweb.admin.model.dao.AdminDao;
 import com.mycafe.myweb.admin.model.vo.CafeFile;
+import com.mycafe.myweb.order.model.vo.OrderList;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -40,6 +41,13 @@ public class AdminServiceImpl implements AdminService {
 			}
 		}
 		return result;
+	}
+
+
+	@Override
+	public List<OrderList> checkStock() {
+		// TODO Auto-generated method stub
+		return dao.checkStock(session);
 	}
 
 }

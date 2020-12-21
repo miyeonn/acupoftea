@@ -1,5 +1,6 @@
 package com.mycafe.myweb.coffee.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,6 +33,21 @@ public class CoffeeServiceImpl implements CoffeeService {
 			cf.setFile_Names(dao.coffeeFiles(session,coffeeNo));
 			
 		return cf;
+	}
+
+	@Override
+	public List<Coffee> selectHot() {
+		// TODO Auto-generated method stub
+		List<Coffee> list=new ArrayList<Coffee>();
+		List<Integer> goodsNos=dao.selectHot(session);
+		for(int i=0;i<goodsNos.size();i++) {
+			
+			Coffee c=dao.selectHots(session,goodsNos.get(i));
+			list.add(c);
+		}
+		
+		
+		return list;
 	}
 
 

@@ -1,10 +1,5 @@
 package com.mycafe.myweb.admin.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +16,7 @@ import com.mycafe.myweb.admin.model.service.AdminService;
 import com.mycafe.myweb.coffee.model.service.CoffeeService;
 import com.mycafe.myweb.common.FileUpload;
 import com.mycafe.myweb.goods.model.service.GoodsService;
+import com.mycafe.myweb.order.model.vo.OrderList;
 
 @Controller
 public class AdminController {
@@ -103,6 +99,20 @@ public class AdminController {
 		}
 		return page;
 	}
+	
+	@RequestMapping("/admin/orderList")
+	public ModelAndView checkStock() {
+		
+		ModelAndView mv=new ModelAndView();
+		List<OrderList> list=service.checkStock();
+		
+		
+		mv.addObject("list", list);
+		mv.setViewName("admin/orderList");
+		
+		return mv;
+	}
+	
 
 }
 

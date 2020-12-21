@@ -36,4 +36,18 @@ public class CoffeeDaoImpl implements CoffeeDao {
 		return session.selectList("coffee.selectFiles",coffeeNo);
 	}
 
+	@Override
+	public List<Integer> selectHot(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		
+			
+		return session.selectList("coffee.selectHot");
+	}
+
+	@Override
+	public Coffee selectHots(SqlSessionTemplate session,int goodsNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("coffee.selectHots",goodsNo);
+	}
+
 }

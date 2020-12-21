@@ -1,7 +1,5 @@
 package com.mycafe.myweb;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mycafe.myweb.cafe.model.service.CafeService;
 import com.mycafe.myweb.cafe.model.vo.Cafe;
+import com.mycafe.myweb.coffee.model.service.CoffeeService;
+import com.mycafe.myweb.coffee.model.vo.Coffee;
 
 /**
  * Handles requests for the application home page.
@@ -25,18 +25,22 @@ public class HomeController {
 
 	@Autowired
 	private CafeService cfService;
-	
+	@Autowired
+	private CoffeeService cService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 	
+		//최근 추가된 카페
 		List<Cafe> cafeList=cfService.resentCafe();
 		System.out.println("리스트 가져옴:"+cafeList);
 		model.addAttribute("cafeList",cafeList);
-		
-		
+		//인기 아이템
+		List<Coffee> coffeelist=cService.selectHot();
+		System.out.println(coffeelist);
+		model.addAttribute("coffeeList", coffeelist);
 		return "home";
 	}
 	@RequestMapping("/home")
@@ -45,6 +49,9 @@ public class HomeController {
 		
 
 		List<Cafe> cafeList=cfService.resentCafe();
+		List<Coffee> coffeelist=cService.selectHot();
+		
+		mv.addObject("coffeeList", coffeelist);
 		mv.addObject("cafeList",cafeList);
 		mv.setViewName("home");
 		

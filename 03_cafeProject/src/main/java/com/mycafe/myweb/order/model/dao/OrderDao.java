@@ -1,12 +1,14 @@
 package com.mycafe.myweb.order.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
+import com.mycafe.myweb.order.model.vo.OrderState;
 import com.mycafe.myweb.order.model.vo.Payment;
 
 public interface OrderDao {
@@ -24,6 +26,14 @@ public interface OrderDao {
 	int insertPayment(Payment pay, SqlSessionTemplate session);
 	
 	int insertOrder(OrderList orderList, SqlSessionTemplate session);
+
+	int deleteCart(int i, SqlSessionTemplate session);
+
+	List<OrderList> selectMyOrder(Map<String, Object> map,int cPage, int numPerpage, SqlSessionTemplate session);
+
+	int selectMyOrderCount(Map<String, Object> map, SqlSessionTemplate session);
+
+	OrderState countOrderState(int memberNo, SqlSessionTemplate session);
 
 
 }

@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookMarkCafe {
-
-	private int bc_no;
+public class Bookmark {
+	
+	
 	private int member_no;
 	private int cafe_no;
-	
+	private int goods_no;
+
 }

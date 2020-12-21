@@ -55,6 +55,11 @@
 	height:100px;
 	
 	}
+	i{
+	font-size:30px;
+	}
+	.text-title{
+	font-size:20px}
 </style>
 <section>
 	<div class="container-fluid">
@@ -67,8 +72,8 @@
 					<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 			
 				<!-- 커피사진,커피 관련내용 -->					
-					<div class="border col-sm-7 mt-3">
-						<div class="d-flex">	
+					<div class=" col-sm-7 mt-3">
+						<div class="d-flex mb-3">	
 							<div class="smallImage-container d-flex flex-column rounded" >
 									<c:forEach items="${coffee.file_Names }" var="c" varStatus="status">
 										<div class="smallImage rounded" >
@@ -76,10 +81,10 @@
 										</div>
 									</c:forEach> 
 							</div>
-							<div id="mainPhotoDiv" class=" mx-auto img-fluid border rounded" style="background-image:url('/img/cafe/${coffee.main_image}')" ></div>
+							<div id="mainPhotoDiv" class=" mx-auto img-fluid  rounded" style="background-image:url('/img/cafe/${coffee.main_image}')" ></div>
 						</div>
 						<div class="nav-container">
-							<nav class="navbar navbar-expand-sm bg-light  itemnav bg-dark navbar-dark  ">
+							<nav class="navbar navbar-expand-sm bg-light  itemnav bg-dark navbar-light ">
 								<ul class="navbar-nav">
 									<li class="nav-item">
 									 	<a class="nav-link" href="#goodsDetail" >상품정보</a>
@@ -100,7 +105,7 @@
 							</div>
 							<div id="goodsReview" style="height:600px;">
 								<h1>상품후기</h1>
-								<div class="d-flex border justify-content-around">
+								<div class="d-flex  justify-content-around">
 									<div class="d-flex flex-column">
 										<span><h3>총 평점</h3></span>
 										<div>
@@ -114,7 +119,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row d-flex border">
+								<div class="row d-flex ">
 									<div class="ml-3 col-sm-6">
 										<div><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
 									 	<div><span>아이디</span><span>/리뷰날짜</span></div>
@@ -129,26 +134,24 @@
 							</div>								
 						</div>	
 					</div>	
-					<div class="col-sm-3 mt-3 pt-3 coffeeDetail" style="width:300px;background-color:grey"v>
+					<div class="col-sm-3 mt-3 pt-3 coffeeDetail" style="width:300px;">
 						  	<div><h3>${coffee.coffee_title }</h3></div>
-						  	<div>
-							  	<h5><i class="far fa-bookmark"></i>
+						  	<div class="d-flex justify-content-end ">
+							  	<a class="mr-2"href="javascript:clickBookMark('${coffee.goods_no }')"><i id="bookmark"  class="far fa-bookmark"></i></a>
 							  	<!-- <i class="fas fa-bookmark"></i> -->
-							  	<i class="fas fa-share-alt"></i></h5>
+							  	<a><i class="fas fa-share-alt"></i></a>
 						  	</div>
-						  	<div>가격:<span name="goodsPrice">${coffee.coffee_price }</span></div>
+						  	<div class="text-title">가격:<span name="goodsPrice">${coffee.coffee_price }</span></div>
 						  	<hr/>
-						  	<div><h5>배송방법</h5></div>
-						  	<hr/>
-						  	<div>재고 10개이하일경우 품절임박표시</div>
+						  	<div class="text-title">재고 10개이하일경우 품절임박표시</div>
 						  	<div class="d-none" id="stockCount">10</div>
-						  	<div>갯수선택</div>
+						  	<div class="text-title">갯수선택</div>
 						  	<div class="d-flex">
 						  		<button type ="button" onclick="fnCalCount('m');">-</button>
 						  		<input type="text" name="pop_out" value="1" readonly="readonly" style="text-align:center;"/>
 						  		<button type ="button" onclick="fnCalCount('p');">+</button>
 						  	</div>
-						  	<div>주문금액 :<span name="totalPrice"></span>   원</div>
+						  	<div class="text-title">주문금액 :<span name="totalPrice"></span>   원</div>
 						  	<div>
 						  		<button class="btn btn-outline-primary" onclick="addCart('${coffee.goods_no}');">장바구니</button>
 						  		<button class="btn btn-primary" onclick="location.href='${path}/order/enterOrder'">바로구매</button>
@@ -253,6 +256,62 @@ function addCart(goodsNo){
 		})
 	}	
 }
+//북마크 등록하기
+var goodsNo='${coffee.goods_no}';
+var userNo='${loginUser.member_no}';
+var insertList={
+		goodsNo:goodsNo,
+		userNo:userNo
+};
+console.log(insertList);
+function clickBookMark(goodsNo){
+	
+	if(userNo==null||userNo==""){
+		alert("로그인후 이용해주세요");
+		location.href="${path}/user/login";
+	}else{
+	$.ajax({
+		url:'${path}/user/insertBookMark',
+		data:insertList,
+		success:function(data){
+			if(data.result>0){
+			alert("북마크 등록 성공");
+			bookmark.className="fas fa-bookmark";
+			}else{
+				alert("북마크 등록 실패");
+			}
+			}	
+		})
+	}
+}
+
+
+
+var bookmark=document.getElementById("bookmark");
+console.log(bookmark);
+
+//북마크에 저장되어있는 카페인지 확인
+$(function(){
+			$.ajax({
+				url:'${path}/user/selectBookMark',
+				data:insertList,
+				success:function(data){
+						console.log(data.flag);
+					if(data.flag==true){
+						//이미 저장되어있음(색깔)
+					
+					 bookmark.className="fas fa-bookmark";
+						
+					}else{
+						//
+					bookmark.className="far fa-bookmark";
+					}					
+					
+				}			
+				
+			})
+		
+		})  
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

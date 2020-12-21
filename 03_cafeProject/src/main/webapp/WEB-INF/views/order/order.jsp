@@ -232,16 +232,9 @@ function payOrder(){
 			memo:document.getElementById("memo").value
 		} ,
 		success:function(data){
-			if(data.flag){
+			if(data.result>0){
+				console.log(data.result)
 			alert("결제,오더 완료");
-		/* 	$.ajax({
-				url:"${path}/order/orderEnd",
-				type:"post",
-				dataType:"json",
-				success:function(data){
-					//주문번호를 넘겨받아서 payment에 저장 			
-				}
-			})*/
 			}else{
 				alert("결제,오더 실패");
 			}

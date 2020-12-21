@@ -88,17 +88,17 @@ height:220px;
  	<div class="header-wrap" style="height:100%">
 		<div class="head dropmenu">
 			 <ul class="nav justify-content-end mr-5 " id="myPage_ul">
-			 		<c:if test="${loginUser!=null && loginUser.member_id ne 'admin' }">
+			 		<c:if test="${loginUser!=null && loginUser.member_id ne 'aldus9302@gmail.com' }">
 				    <li class="nav-item"><a class="nav-link">마이페이지</a>
 				    	<ul>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo">내정보관리</a></li>
-				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myBookmark">북마크</a></li>
+				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myBookmark?memberNo=${loginUser.member_no }"">북마크</a></li>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/cart?memberNo=${loginUser.member_no }">장바구니</a></li>
-				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder">결제내역</a></li>
+				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder?memberNo=${loginUser.member_no }">결제내역</a></li>
 				    	</ul>
 				    </li>
 					</c:if>
-				  	<c:if test="${loginUser.member_id eq'admin' }">
+				  	<c:if test="${loginUser.member_id eq'aldus9302@gmail.com' }">
 					    <li class="nav-item">
 					      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
 					    </li>

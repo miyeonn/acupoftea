@@ -61,6 +61,10 @@
 	  z-index: 9999;
 	  cursor:pointer;
 	}
+	
+	i{
+	font-size:30px;
+	}
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -77,51 +81,44 @@
 				<div class="row">
 					<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 							
-						<div class="border col-sm-7 mt-3 ">
-							<div class="d-flex">
+						<div class=" col-sm-7 mt-3 mb-3">
+							<div class="d-flex mb-3">
 								
-								<div class="smallImage-container d-flex flex-column border rounded" >
+								<div class="smallImage-container d-flex flex-column  rounded" >
 									<c:forEach items="${cafe.file_Names }" var="c" varStatus="status">
 										<div class="smallImage rounded" >
 											<img class="small" src="/img/cafe/${c}">
 										</div>
 									</c:forEach> 
 							  	</div>
-								<div id="mainPhotoDiv" class=" mx-auto img-fluid border rounded" style="background-image:url('/img/cafe/${cafe.main_image}')" ></div>
+								<div id="mainPhotoDiv" class="mx-auto img-fluid rounded" style="background-image:url('/img/cafe/${cafe.main_image}')" ></div>
 						  	</div>
-						  	<div class="border">
+						  	<hr/>
+						  	<div class="">
+						  		<div class="mb-2"style="font-size:25px;">위치정보</div>
 								<div id="map" style="width:650px;height:400px;"></div>
 							</div> 	
 						</div>
-						<div class="col-sm-3 mt-3 pt-3" style="width:300px;background-color:grey">
-							<table class="ml-2">
-								<tr>
-									<td colspan="2"><h2 id="cafeTitle">${cafe.cafe_title }</h2></td>
-								</tr>
-								<tr>
-									<td colspan="2" style="float:right;">
-										<a href="javascript:clickBookMark('${cafe.cafe_No }')"><i id="bookmark" class="far fa-bookmark"></i></a>
-									  	<a><i class="fas fa-share-alt"></i></a>
-									</td>
-									
-								</tr>
-								<tr>
-									<td>주소:</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>전화번호</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>영업시간</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>홈페이지</td>
-									<td></td>
-								</tr>					
-							</table>	
+						<div class="col-sm-3 mt-3 " style="width:300px">
+							<div>
+								<h2 id="cafeTitle">${cafe.cafe_title }</h2>
+							</div>
+							<div class="d-flex justify-content-end">
+								<a  class="mr-2" href="javascript:clickBookMark('${cafe.cafe_No }')"><i id="bookmark" class="far fa-bookmark"></i></a>
+								<a><i class="fas fa-share-alt"></i></a>
+							</div>
+							<div class="mb-1 mt-3">
+							주소
+							</div>
+							<div class="mb-1">
+							전화번호
+							</div>
+							<div class="mb-1">
+							영업시간
+							</div>
+							<div class="mb-1">
+							홈페이지
+							</div>	
 						</div>	
 				</div>	
 			</div>
@@ -231,6 +228,7 @@ function clickBookMark(cafeNo){
 		data:insertList,
 		success:function(data){
 			alert("북마크 등록 성공");
+			bookmark.className="fas fa-bookmark";
 			}	
 		})
 	}
@@ -248,7 +246,7 @@ $(function(){
 				data:insertList,
 				success:function(data){
 						console.log(data.flag);
-					if(data.flag==false){
+					if(data.flag==true){
 						//이미 저장되어있음(색깔)
 					
 					 bookmark.className="fas fa-bookmark";
@@ -256,13 +254,9 @@ $(function(){
 					}else{
 						//
 					bookmark.className="far fa-bookmark";
-					}
+					}					
 					
-					
-					
-				}
-				
-				
+				}			
 				
 			})
 		

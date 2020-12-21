@@ -93,8 +93,9 @@ transition:left 0.5s ease-out;
 			 	
 			 		<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 			 		<div class="col-sm-10 mt-3">
+
 				 		<div>
-				 			<h4 class="hometext-title"><b>최근 추가된 카페</b></h4>
+				 			<h4 class="hometext-title ml-3"><b>최근 추가된 카페</b></h4>
 				 			<div class="d-flex justify-content-around pl-4 pr-4">
 				 					<button class="left btns">&lt;</button>
 				 					<div class="slide-wrapper">
@@ -119,79 +120,25 @@ transition:left 0.5s ease-out;
 				 		</div>
 				 		<hr/>
 		 		 		<div>
-				 			<h4 class="hometext-title"><b>인기 아이템</b></h4>
+				 			<h4 class="hometext-title ml-3"><b>인기 아이템</b></h4>
 								<div class="d-flex justify-content-around pl-4 pr-4">
 				 					<button class="item-left btns">&lt;</button>
 				 					<div class="slide-wrapper">
 					 					<div class=" d-flex item_slides">
+					 						<c:forEach items="${coffeeList }" var="cf">
 										  	<div class="card-container mt-3  ">
 											  	<div class="card" style="width:240px;">
 											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
+											    		<img class="card-img-top embed-responsive-item" src="/img/cafe/${cf.main_image }" alt="Card image" style="">
 											    	</div>
 											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지a</h4>
-											      		<p class="card-text">서울시 연남동</p>
+											      		<h4 class="card-title">${cf.coffee_title }</h4>
+											      		<p class="card-text">${cf.coffee_price }</p>
 											      		
 											    	</div>
 											  	</div>
-											</div>							
-										  	<div class="card-container mt-3 ">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지b</h4>
-											      		<p class="card-text">서울시 연남동</p>
-											      		
-											    	</div>
-											  	</div>
-											</div>					
-										  	<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지c</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
-											<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지d</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
-											<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지e</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
-											<div class="card-container mt-3">
-											  	<div class="card" style="width:240px;">
-											    	<div class="embed-responsive embed-responsive-1by1 ">
-											    		<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
-											    	</div>
-											    	<div class="card-body">
-											      		<h4 class="card-title">대충유원지f</h4>
-											      		<p class="card-text">서울시 연남동</p>	
-											    	</div>
-											  	</div>
-											</div>
+											</div>	
+											</c:forEach>						
 										</div>
 									</div>
 									<button  class="item-right btns" >&gt;</button>

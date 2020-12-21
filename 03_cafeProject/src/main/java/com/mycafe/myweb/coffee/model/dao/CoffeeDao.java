@@ -18,4 +18,8 @@ public interface CoffeeDao {
 
 	List<String> coffeeFiles(SqlSessionTemplate session, int coffeeNo);
 
+	List<Integer> selectHot(SqlSessionTemplate session);
+
+	Coffee selectHots(SqlSessionTemplate session,int i);
+
 }

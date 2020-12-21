@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,14 +16,17 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mycafe.myweb.common.PagingFactory;
 import com.mycafe.myweb.common.PaymentCheck;
 import com.mycafe.myweb.order.model.service.OrderService;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
+import com.mycafe.myweb.order.model.vo.OrderState;
 import com.mycafe.myweb.order.model.vo.Payment;
 import com.mycafe.myweb.user.model.service.UserService;
 import com.mycafe.myweb.user.model.vo.JoinUser;
@@ -76,15 +81,30 @@ public class OrderController {
 		mv.setViewName("jsonView"); 
 	  	return mv;
 	  }
- 
-		
-	@RequestMapping("/order/myOrder")
-	public String enterMyOrder() {
-		
-		
-		return "order/myOrder";
-	}
+	@RequestMapping("/order/deleteCart")
+	public @ResponseBody ModelAndView deleteCart(HttpServletRequest request) {
+		//선택삭제로 카트 지우기
 	
+
+	
+		  int[] cartNo=Arrays.stream(request.getParameterValues("cartNos[]")).mapToInt(Integer::parseInt).toArray();
+			 
+		  System.out.println("카트번호:"+cartNo[0]);
+		  int result=0;
+		  //지울 갯수가 여러개이면 반복문(어쨌든 한개이상)
+		  for(int i=0;i<cartNo.length;i++) {
+			result=service.deleteCart(cartNo[i]);
+			System.out.println("실행완료"+result);
+			}
+
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("result", result);	
+		mv.setViewName("jsonView");   
+	
+		return mv;
+
+	}
+
 	@RequestMapping("/order/getToken")
 	public @ResponseBody String getToken(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
@@ -135,7 +155,7 @@ public class OrderController {
 		  
 	  }
 	  @RequestMapping("/order/paymentEnd")
-	  public @ResponseBody boolean paymentEnd(HttpServletRequest request) {
+	  public @ResponseBody int paymentEnd(HttpServletRequest request) {
 		  
 		  // 주문번호 생성하기
 		  Date now = new Date();
@@ -178,16 +198,53 @@ public class OrderController {
 		  System.out.println(pay);
 		  result=service.insertPayment(pay);
 		  
+		  //주문완료된 것은 장바구니 테이블에서 지우기
 		  
-		  boolean flag=true;
-		  if(result>0) {
-			  flag=true;
+		  
+		  
+		  
+		
+		  return result;
+		  
+		  
+	  }
+	  
+	  //마이페이지 결제내역
+	  @RequestMapping("/order/myOrder")
+	  public ModelAndView selectMyOrder(HttpServletRequest request, @RequestParam(required = false, defaultValue="1") int cPage,
+			  							@RequestParam(required = false, defaultValue="4") int numPerpage) {
+		  ModelAndView mv=new ModelAndView();
+		  
+		  String orderState=request.getParameter("orderState");
+		  Map<String,Object> map=new HashMap<String,Object>();
+		  List<OrderList> list=new ArrayList<OrderList>();
+		  int totalData=0;
+		  
+		  map.put("memberNo",Integer.parseInt(request.getParameter("memberNo")));
+		  if(orderState!=null) {
+			  map.put("orderState",orderState);
+			  System.out.println("여기로 실행"+map);
+			  list=service.selectMyOrder(map,cPage, numPerpage);
+			  totalData=service.selectMyOrderCount(map);
+			  
 		  }else {
-			  flag=false;
+			 
+			  list=service.selectMyOrder(map,cPage, numPerpage);
+			  totalData=service.selectMyOrderCount(map);
 		  }
+		  //카운트 가져오기
 		  
-		  return flag;
+		  OrderState countList=service.countOrderState(Integer.parseInt(request.getParameter("memberNo")));
 		  
+		  
+		  System.out.println("결제내역리스트"+countList);
+		  mv.addObject("countList", countList);
+		  mv.addObject("list",list);
+		  mv.addObject("pageBar", PagingFactory.getPage(totalData, cPage, numPerpage, "/order/myOrder"));
+		  mv.setViewName("order/myOrder");
+		  
+		  
+		  return mv;
 		  
 	  }
 	 

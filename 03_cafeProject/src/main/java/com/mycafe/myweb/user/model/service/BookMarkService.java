@@ -1,13 +1,21 @@
 package com.mycafe.myweb.user.model.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
-import com.mycafe.myweb.user.model.vo.BookMarkCafe;
+
+import com.mycafe.myweb.user.model.vo.BookMarkList;
+import com.mycafe.myweb.user.model.vo.Bookmark;
 
 public interface BookMarkService {
 
-	int insertBookMark(BookMarkCafe bk);
+	int insertBookMark(Bookmark bk);
 
-	BookMarkCafe selectBookMark(BookMarkCafe bk);
+	Bookmark selectBookMark(Bookmark bk);
+
+	List<BookMarkList> selectMyBookmark(int memberNo);
+
+
 
 }

@@ -9,5 +9,8 @@
 		INSERT INTO CAFE_FILE VALUES(CF_NO_SEQ.NEXTVAL,#{cafe_no},#{file_Path},#{file_Name})
 	
 	</insert>
-
+	<select id="checkStock" resultType="com.mycafe.myweb.order.model.vo.OrderList">
+		SELECT *FROM ORDER_TB
+	
+	</select>
 </mapper>

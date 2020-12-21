@@ -1,6 +1,7 @@
 package com.mycafe.myweb.user.model.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mycafe.myweb.user.model.service.BookMarkService;
 import com.mycafe.myweb.user.model.service.UserService;
-import com.mycafe.myweb.user.model.vo.BookMarkCafe;
+
+
+import com.mycafe.myweb.user.model.vo.BookMarkList;
+import com.mycafe.myweb.user.model.vo.Bookmark;
 import com.mycafe.myweb.user.model.vo.JoinUser;
 
 @Controller
@@ -108,7 +112,7 @@ public class UserController {
 		System.out.println("들어옴"+id);
 		JoinUser login = service.selectUser(id);
 		
-		System.out.println("pw:"+password+"dbPw:"+login.getPassword());
+		//System.out.println("pw:"+password+"dbPw:"+login.getPassword());
 		
 		String page = "";
 		if(login!=null&&encoder.matches(password, login.getPassword())) {	
@@ -151,10 +155,13 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/myBookmark")
-	public String enterMyBookmark(String pw) {
+	public ModelAndView selectMyBookmark(int memberNo) {
+		ModelAndView mv=new ModelAndView();
+		List<BookMarkList> list=bkService.selectMyBookmark(memberNo);
 		
-		
-		  return "user/myBookmark";
+		mv.addObject("list", list);
+		mv.setViewName("user/myBookmark");
+		  return mv;
 	}
 
 	
@@ -169,14 +176,24 @@ public class UserController {
 	  @RequestMapping("/user/insertBookMark") 
 	  public @ResponseBody int insertBookMark(HttpServletRequest request){
 	  
+	
+	  Bookmark bk=new Bookmark();
+	 
 	  System.out.println("카페번호:"+request.getParameter("cafeNo"));
-	  
-	  BookMarkCafe bk=new BookMarkCafe();
-	  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
-	  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
-	  
-	  
-	  int result=bkService.insertBookMark(bk);
+	  String cafeNo=request.getParameter("cafeNo");
+	  int result=0;
+	  if(cafeNo!=null) {
+
+		  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
+		  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+		  result=bkService.insertBookMark(bk);
+	  }else {
+		  bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
+		  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+	
+		  result=bkService.insertBookMark(bk);
+		  
+	  }
 	  
 	  	ModelAndView mv=new ModelAndView();
 		
@@ -194,15 +211,30 @@ public class UserController {
 	 @RequestMapping("/user/selectBookMark") 
 	 public @ResponseBody ModelAndView selectBookMark(HttpServletRequest request){
 	  
-	  BookMarkCafe bk=new BookMarkCafe();
+	  Bookmark bk=new Bookmark();
+	  Bookmark bks=new Bookmark();
 	  ModelAndView mv=new ModelAndView();
-	  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
+	  String cafeNo=request.getParameter("cafeNo");
+	  System.out.println("카페번호"+cafeNo);
+	  if(cafeNo!=null) {
+		  System.out.println("카페실행");
+	  bk.setCafe_no(Integer.parseInt(cafeNo));
 	  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
 	  
-	  bk=bkService.selectBookMark(bk);
+	  bks=bkService.selectBookMark(bk);
+	  }else {
+		  //bookmark goods등록
+		  System.out.println("굿즈실행");
+		  bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
+		  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+		  
+		  bks=bkService.selectBookMark(bk);
+	  }
+	    
+	  System.out.println(bks);
 	  
 	  
-	  boolean flag=bk!=null?false:true; System.out.println("flag:"+flag);
+	  boolean flag=bks!=null?true:false; System.out.println("flag:"+flag);
 	  
 	  
 	  mv.addObject("flag", flag); 

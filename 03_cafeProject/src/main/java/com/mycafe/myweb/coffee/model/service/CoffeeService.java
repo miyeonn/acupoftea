@@ -12,6 +12,8 @@ public interface CoffeeService {
 
 	CoffeeAndFile selectCoffee(int coffeeNo);
 
+	List<Coffee> selectHot();
+
 	
 
 }

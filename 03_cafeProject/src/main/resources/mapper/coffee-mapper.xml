@@ -14,4 +14,10 @@
 	<select id="selectFiles" parameterType="_int" resultType="String">
 		SELECT FILE_NAME FROM GOODS_FILE JOIN COFFEE USING(GOODS_NO) WHERE COFFEE_NO=#{coffeeNo}
 	</select>
+	<select id="selectHot" resultType="_int">
+		SELECT GOODS_NO FROM ORDER_TB GROUP BY GOODS_NO ORDER BY SUM(ORDER_QTY) DESC
+	</select>
+	<select id="selectHots" resultType="com.mycafe.myweb.coffee.model.vo.Coffee">
+		SELECT GOODS_NO,COFFEE_TITLE,COFFEE_PRICE,MAIN_IMAGE FROM COFFEE WHERE GOODS_NO=#{goodsNo}
+	</select>
 </mapper>

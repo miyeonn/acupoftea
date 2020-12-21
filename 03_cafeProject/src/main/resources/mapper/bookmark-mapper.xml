@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bookMark">
-	<insert id="insertBookMark" parameterType="com.mycafe.myweb.user.model.vo.BookMarkCafe">
-		INSERT INTO BOOKMARK_CAFE VALUES(BC_NO_SEQ.NEXTVAL,#{member_no},#{cafe_no})
+	<insert id="insertBookMark" parameterType="com.mycafe.myweb.user.model.vo.Bookmark">
+		INSERT INTO BOOKMARK VALUES
+		<choose>
+			<when test="cafe_no !=null">
+				(b_NO_SEQ.NEXTVAL,#{member_no},#{cafe_no},null)
+			</when>
+			<otherwise>
+				(b_NO_SEQ.NEXTVAL,#{member_no},null,#{goods_no})
+			</otherwise>		
 		
+		</choose>
 	</insert>
-	<select id="selectBookMark" resultType="com.mycafe.myweb.user.model.vo.BookMarkCafe">
-		SELECT *FROM BOOKMARK_CAFE WHERE MEMBER_NO=#{member_no} AND CAFE_NO=#{cafe_no}
+	<select id="selectBookMark"  parameterType="com.mycafe.myweb.user.model.vo.Bookmark" resultType="com.mycafe.myweb.user.model.vo.Bookmark">	
+		SELECT *
+		<choose>
+			<when test="cafe_no !=null">
+			FROM BOOKMARK WHERE MEMBER_NO=#{member_no} AND CAFE_NO=#{cafe_no}
+			</when>
+			<otherwise>
+			FROM BOOKMARK WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}
+			</otherwise>
+		</choose>
+	</select>
+	<select id="selectMyBookmark" resultType="com.mycafe.myweb.user.model.vo.BookMarkList">
+		SELECT *FROM BOOKMARK_CAFE JOIN BOOKMARK
+	
 	</select>
 
 </mapper>

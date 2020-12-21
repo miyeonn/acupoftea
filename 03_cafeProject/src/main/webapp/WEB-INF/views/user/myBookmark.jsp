@@ -54,14 +54,23 @@
 						<div>
 							<div class="card-container mt-3">
 							  	<div class="card" style="width:15rem;">
+							  	<c:forEach items="${list }" var="l">
 							    	<div class="embed-responsive embed-responsive-1by1 ">
 							    	<img class="card-img-top embed-responsive-item" src="${path }/resources/img/cafe1.jpg" alt="Card image" style="">
 							    	</div>
 							    	<div class="card-body">
-							      		<h4 class="card-title">네스프레소</h4>
-							      		<p class="card-text">15,000₩</p>
-							      		<p>일시품절</p>
+							    		<c:if test="${l.cafe_no ne null }">
+								      		<h4 class="card-title">${l.goods_title }</h4>
+								      		<p class="card-text">${l.goods_price }/p>
+								      		<p>일시품절</p>
+							      		</c:if>
+							      		<c:if test="${l.cafe_no eq null }">
+								      		<h4 class="card-title">${l.cafe_title }</h4>
+								      		<p class="card-text">${l.cafe_addr }</p>
+								      		<p>일시품절</p>
+							      		</c:if>
 							    	</div>
+							    </c:forEach>
 							  	</div>
 						  	</div>
 						</div>

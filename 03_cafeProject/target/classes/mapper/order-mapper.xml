@@ -9,5 +9,28 @@
 		'N','N','N',#{order_sender},#{sender_tel},#{sender_memo},#{order_no})
 	
 	</insert>
-
+	<select id="selectMyOrder" parameterType="hashMap" resultType="com.mycafe.myweb.order.model.vo.OrderList">
+		SELECT * FROM ORDER_TB WHERE MEMBER_NO=#{memberNo} 
+			<if test="orderState!=null">
+				AND ORDER_STATE=#{orderState}
+			</if>
+		ORDER BY ORDER_DATE DESC
+	
+	</select>
+	<select id="selectMyOrderCount" parameterType="hashMap" resultType="_int">
+		SELECT COUNT(*) FROM ORDER_TB 
+		WHERE MEMBER_NO=#{memberNo}
+			<if test="orderState!=null">
+				AND ORDER_STATE=#{orderState}
+			</if>
+	</select>
+	<select id="countOrderState" parameterType="_int" resultType="com.mycafe.myweb.order.model.vo.OrderState">
+		SELECT COUNT(CASE WHEN order_state='결제완료' THEN 1 END ) CNT,
+		COUNT(CASE WHEN order_state='배송준비' THEN 1 END) CNT2,
+		COUNT(CASE WHEN order_state='배송완료' THEN 1 END) CNT3,
+		COUNT(CASE WHEN order_state='구매확정' THEN 1 END) CNT4
+		FROM ORDER_TB
+		WHERE MEMBER_NO=#{memberNo}
+		
+	</select>
 </mapper>

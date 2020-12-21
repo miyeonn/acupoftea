@@ -25,7 +25,7 @@
 						</div>
 					</div>
 					<div>
-					 	<h6>선택삭제</h6>
+					 	<h6><a href="javascript:deleteCart();" >선택삭제</a></h6>
 					</div>
 				</div>
 				<!-- 내 장바구니 반복구문 -->
@@ -33,6 +33,7 @@
 					<div class="border d-flex form-check bg-white rounded-lg mb-2" >
 						
 						<input type="checkbox" name="cartCheck" class="form-check-input" value="${c.goods_no }" />
+						<input type="hidden" name="cartNo" class="form-check-input" value="${c.cart_no }" />
 						<img class="orderImg"src="/img/cafe/${c.main_image}" width="150px;" height="150px;"/>
 						<div>
 							<h6>${c.coffee_title }</h6>
@@ -182,7 +183,56 @@ for(var i=0;i<chk.length;i++){
 	}
 }	
 		
+//선택삭제 클릭시 체크박스 선택된 값 카트에서 삭제
 
+function deleteCart(){
+	//필요한것 checkbox:chk, 
+	var cartNo=document.querySelectorAll("input[name='cartNo']");
+	var cartNos=new Array();
+	var checkedList=new Array();
+	for(var i=0;i<chk.length;i++){
+		if(chk[i].checked==true){
+			//지울것
+			cartNos.push(cartNo[i].value);
+			//체크된것
+			checkedList.push(chk[i]);
+			
+		}
+		
+	}
+	console.log(cartNos);
+	console.log(checkedList);
+	if(checkedList.length>0){
+		if(confirm('선택한 상품을 삭제하시겠습니까?')==true){
+			$.ajax({
+				url:"${path}/order/deleteCart",
+				type:"post",
+				data:{cartNos:cartNos},
+				success:function(data){
+					console.log("결과값:"+data.result)
+					if(data.result>0){
+						alert("상품이 삭제되었습니다");
+						location.reload();
+					}else{
+						alert("상품이 정상적으로 삭제되지 않았습니다");
+						location.reload();
+					}
+					
+				}
+				
+			})
+		  
+		}else{
+			return false;		
+			}
+	}else{
+		alert("선택된 상품이 없습니다.");
+	}
+	
+	
+	
+	
+}
  
 
 
