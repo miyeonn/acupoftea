@@ -17,16 +17,16 @@ color:black;
 	<nav class="navbar navbar-expand-sm justify-content-center">
 		<ul class="navbar-nav">
 		    <li class="nav-item">
-		      <a class="nav-link " href="${path }/user/myInfo">내정보관리</a>
+		      <a class="nav-link " href="${path }/user/myInfo?memberNo=${loginUser.member_no }">내정보관리</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link " href="${path }/user/myBookmark">북마크</a>
+		      <a class="nav-link " href="${path }/user/myBookmark?memberNo=${loginUser.member_no }">북마크</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link "  href="${path }/order/cart">장바구니</a>
+		      <a class="nav-link "  href="${path }/order/cart?memberNo=${loginUser.member_no }">장바구니</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link "  href="${path }/order/myOrder">결제내역</a>
+		      <a class="nav-link "  href="${path }/order/myOrder?memberNo=${loginUser.member_no }">결제내역</a>
 		    </li>
 	  	</ul>
 	</nav>

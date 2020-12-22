@@ -35,5 +35,7 @@ public interface OrderDao {
 
 	OrderState countOrderState(int memberNo, SqlSessionTemplate session);
 
+	int cancelOrder(Map<String, Object> map, SqlSessionTemplate session);
+
 
 }

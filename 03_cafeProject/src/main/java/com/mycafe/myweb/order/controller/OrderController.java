@@ -247,8 +247,31 @@ public class OrderController {
 		  return mv;
 		  
 	  }
-	 
-	
+	  //결제내역에서 결제취소 요청하기
+	  @RequestMapping("/order/cancelOrder")
+	  public @ResponseBody int cancelOrder(String orderNo,int goodsNo) {
+		  
+		  Map<String,Object> map=new HashMap();
+		  map.put("orderNo", orderNo);
+		  map.put("goodsNo", goodsNo);
+		  
+		  int result=service.cancelOrder(map);
+		  
+		  return result;
+	  }
+	  
+	  //아임포트에 취소요청
+	  @RequestMapping("/order/cancelPort")
+	  public ModelAndView cancelPort(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		  ModelAndView mv=new ModelAndView();
+		  
+		  String token=getToken(request, response);
+		  
+		  
+		  return mv;
+		  
+	  }
+	  
 	
 
 }

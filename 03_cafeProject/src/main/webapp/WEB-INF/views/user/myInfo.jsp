@@ -9,35 +9,40 @@
 		<div class="row">
 			<!-- 사이드바로 분리 -->
 			<div class="col-sm-2 content"></div>
-				<div class="col-sm-8 content">
-			 	<div class=" row-vh d-flex flex-column justify-content-center border mt-3">
-			 		<div >
-			 			<h3><b>회원정보확인</b></h3>
-			 		</div>
-			 		<h6>이름님의 정보를 안전하게 보호하기위해 비밀번호를 다시 한번 확인합니다.</h6>
-			 		<form action="${path }/user/myInfoModify" id="loginform" method="post" >
-						 <div id="loginBox" >
-						 	<table >
-						 		<tr>
-						 			<td td colspan="2">
-						 			<label>아이디:</label>					 			
-						 			</td>
-						 		</tr>
-						 		<tr>
-						 			<td colspan="2">
-						 			<label for="password">비밀번호:</label>
-						 			<input type="password" name="password" placeholder="비밀번호"/>
-						 			</td>
-						 		</tr>
-						 	</table>	 
-						 </div>
-						 <div>
-						  	<button type="submit" class="btn btn-primary" onclick="location.href='${path}/user/myInfoModify'">확인</button>
-			 			 	<button type="button" class="btn btn-warning">취소</button>
-						 </div>
-					</form>
+			<div class="col-sm-8 content d-flex flex-column justify-content-center ">			
+			 	<div class="row align-items-center   mt-5 mb-5"  >
+			 		<div class="col-sm-4"></div>
+			 		<div class="col-sm-4">
+				 		<div class="d-flex justify-content-center">
+				 			<h3><b>회원정보수정</b></h3>
+				 		</div>	
+				 		<form action="${path }/user/myInfoModify" id="loginform" method="post" >
+							 <div id="loginBox" class="d-flex flex-column align-self-center mt-3" >
+								<div class="" >					 				
+				 					<h6>
+				                    	<i class="icon fas fa-user"></i>&nbsp;아이디
+				                    </h6>
+					                <input style=" border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;" 
+					                        		type="text" class="form-control" value="${id }">	
+					                 <input type="hidden" 	name="userId" id="userId" value="${u.member_id }"/>		
+					 			</div>
+					 			<div class="">	
+									<h6><i class="icon fas fa-unlock-alt"></i>&nbsp;비밀번호</h6>            
+			                        <input style=" border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;" 
+			                        		type="password" class="form-control" size="30" name="userPw" id="userPw" >
+	      
+					 	 		</div>	
+							 </div>
+							 <div class="d-flex  justify-content-center mt-3">
+							  	<button type="submit" class="mr-2 btn btn-primary" >확인</button>
+				 			 	<button type="button" class="btn btn-warning">취소</button>
+							 </div>
+						</form>
+					</div>
+					<div class="col-sm-4"></div>
 			 	</div>
-			 
+			 	
+			 	
 			</div>
 			<!-- 오른쪽여백으로 분리 -->
 			<jsp:include page="/WEB-INF/views/common/rightSide.jsp" />

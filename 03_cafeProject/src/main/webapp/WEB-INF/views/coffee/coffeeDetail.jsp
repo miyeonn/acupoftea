@@ -137,9 +137,9 @@
 					<div class="col-sm-3 mt-3 pt-3 coffeeDetail" style="width:300px;">
 						  	<div><h3>${coffee.coffee_title }</h3></div>
 						  	<div class="d-flex justify-content-end ">
-							  	<a class="mr-2"href="javascript:clickBookMark('${coffee.goods_no }')"><i id="bookmark"  class="far fa-bookmark"></i></a>
+							  	<a class="mr-2" href="javascript:clickBookMark('${coffee.goods_no }')"><i id="bookmark"  class="far fa-bookmark"></i></a>
 							  	<!-- <i class="fas fa-bookmark"></i> -->
-							  	<a><i class="fas fa-share-alt"></i></a>
+							  	<a href="javascript:clickShare('${coffee.goods_no }')"><i class="fas fa-share-alt"></i></a>
 						  	</div>
 						  	<div class="text-title">가격:<span name="goodsPrice">${coffee.coffee_price }</span></div>
 						  	<hr/>
@@ -312,7 +312,45 @@ $(function(){
 			})
 		
 		})  
+		Kakao.init('dd85c7c19c3d45f5bedf296de1914e7f');
+function clickShare(){
 
+Kakao.Link.sendDefault({
+				headers={
+					"Authorization":"Bearer"+<access_token>
+				}
+			  objectType: 'feed',//고정값
+			  content: {
+			    title: '${coffee.coffee_title }',
+			    description: '아메리카노, 빵, 케익', //디테일 정보
+			    imageUrl:
+			      'http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg',
+			    link: { //콘텐츠 클릭시 이동할 링크 정보
+			      mobileWebUrl: 'https://localhost:8080/coffee/coffeeDetail?coffeeNo=${coffee.goods_no}',
+			      androidExecParams: 'test',
+			    },
+			  },
+			  social: {
+			    likeCount: 10,
+			    commentCount: 20,
+			    sharedCount: 30,
+			  },
+			  buttons: [
+			    {
+			      title: '웹으로 이동',
+			      link: {
+			        mobileWebUrl: 'https://localhost:8080/',
+			      },
+			    },
+			 /*    {
+			      title: '앱으로 이동',
+			      link: {
+			        mobileWebUrl: 'https://developers.kakao.com',
+			      }, */
+			    },
+			  ]
+			});
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

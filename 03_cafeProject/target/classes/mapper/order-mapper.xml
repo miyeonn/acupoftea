@@ -33,4 +33,7 @@
 		WHERE MEMBER_NO=#{memberNo}
 		
 	</select>
+	<update id="cancelOrder" parameterType="hashMap">
+		UPDATE ORDER_TB SET ORDER_STATE='취소요청' WHERE ORDER_NO=#{orderNo} AND GOODS_NO=#{goodsNo}
+	</update>
 </mapper>

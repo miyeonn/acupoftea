@@ -84,4 +84,10 @@ public class OrderDaoImpl implements OrderDao {
 		return session.selectOne("order.countOrderState",memberNo);
 	}
 
+	@Override
+	public int cancelOrder(Map<String, Object> map, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.update("order.cancelOrder", map);
+	}
+
 }

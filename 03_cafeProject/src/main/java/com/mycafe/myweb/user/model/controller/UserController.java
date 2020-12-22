@@ -20,8 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mycafe.myweb.user.model.service.BookMarkService;
 import com.mycafe.myweb.user.model.service.UserService;
-
-
 import com.mycafe.myweb.user.model.vo.BookMarkList;
 import com.mycafe.myweb.user.model.vo.Bookmark;
 import com.mycafe.myweb.user.model.vo.JoinUser;
@@ -148,10 +146,20 @@ public class UserController {
 	
 	//내정보 관리 비밀번호 입력
 	@RequestMapping("/user/myInfo")
-	public String enterMyInfo(String pw) {
+	public ModelAndView enterMyInfo(int memberNo) {
+		ModelAndView mv=new ModelAndView();
+		JoinUser u=service.getUserByNo(memberNo);
+		String id=u.getMember_id();
+		id=id.substring(0,id.length()-4)+"***";
 		
+		//뒷자리 세자리 *로 가리고 출력
+		System.out.println(id);
 		
-		  return "user/myInfo";
+		mv.addObject("user",u);
+		mv.addObject("id",id);
+		mv.setViewName("user/myInfo");
+		
+		return mv;
 	}
 	
 	@RequestMapping("/user/myBookmark")
@@ -164,7 +172,7 @@ public class UserController {
 		  return mv;
 	}
 
-	
+	//회원정보 변경
 	@RequestMapping("/user/myInfoModify")
 	public String entermyInfoModify(String pw) {
 		

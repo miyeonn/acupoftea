@@ -77,18 +77,27 @@
 			<div class="row-vh d-flex flex-column border rounded mt-3 bg-white orderlist-container" style="width:100%">
 				<!-- <p class="orderlist-text mt-3 ml-3">기간/셀렉트박스</p> -->
 				<c:forEach items="${list }" var="l">
-				<div class="d-flex border-bottom justify-content-between mt-3 ml-3" style="width:95%">
+				<div class="d-flex border-bottom  mt-3 ml-3" style="width:95%">
 					<div><p class="orderlist-text">${l.order_date } | ${l.order_no}</p></div>
 					<!-- <div><p class="orderlist-text">상세보기</p></div> -->		
 				</div>
 				<hr/>	
 				<!-- 내 결제내역 반복구문 -->
-				<div class="d-flex form-check rounded-lg border-bottom ml-3" style="width:95%" >				
+				<div class="d-flex form-check rounded-lg border-bottom ml-3 pr-3" style="width:95%" >				
 					<img class="orderImg" src="${path }/resources/img/capsule.jpg" width="150px;" height="150px;"/>
 					<div>
 						<p class="orderlist-text">상품명</p>
 						<p class="orderlist-text">갯수</p>
 					</div>
+					<div class="ml-auto mt-3">
+					<c:if test="${l.order_state eq '결제완료' }">
+					<button class="btn btn-primary" onclick="fn_cancelOrder(${l.order_no},${l.goods_no });">결제취소요청</button>
+					</c:if>
+					<c:if test="${l.order_state eq '취소요청' }">
+						<button class="btn  btn-secondary disabled">취소처리중</button>
+					</c:if>
+					</div>
+				
 				</div>
 				</c:forEach>
 			</div>
@@ -108,5 +117,29 @@ function fn_orderState(str){
 	location.href="${path}/order/myOrder?memberNo="+${loginUser.member_no}+"&orderState="+str;
 	
 }
+function fn_cancelOrder(orderNo,goodsNo){
+	
+	$.ajax({
+		url:"${path}/order/cancelOrder",
+		data:{orderNo:orderNo,
+			goodsNo:goodsNo},
+		success:function(data){
+			console.log(data);
+			if(data>0){
+				alert('결제 취소 요청완료');
+				location.reload();
+			}
+		}
+			
+		
+		
+	})
+	
+	
+	
+	
+}
+
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

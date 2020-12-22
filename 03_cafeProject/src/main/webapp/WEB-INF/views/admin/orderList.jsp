@@ -48,7 +48,12 @@
 									<td>${l.order_qty }</td>
 									<td> </td>
 									<td></td>
-									<td>${l.order_state }</td>						
+									<td>
+									${l.order_state }
+									<c:if test="${l.order_state eq '취소요청' }">
+										<button class="btn btn-primary" onclick="fn_cancelPort(${l.order_no})">취소승인</button>
+									</c:if>
+									</td>						
 								</tr>
 								</c:forEach>
 							</table>
@@ -64,10 +69,48 @@
 </div>
 </section>
 <script>
-
+//아임포트 토큰 생성
+var token;
+$.ajax({
+	url:"${path}/order/getToken",
+	type:'post',
+	success:function(data){
+		console.log("토큰데이터"+data);
+		token=data;
+	}
+});
 	
 
-
+function fn_cancelPort(str){
+	$.ajax({
+		//먼저 해당 오더번호로 paymenttable의 정보를 가져옴
+		success:function(data){
+			//또 ajax로 아임포트에 연결.
+				 function cancelPay() {
+				      jQuery.ajax({
+				        "url": "http://www.myservice.com/payments/cancel",
+				        "type": "POST",
+				        "contentType": "application/json",
+				        "data": JSON.stringify({
+				          "merchant_uid": "mid_" + new Date().getTime(), // 주문번호
+				          "cancel_request_amount": 2000, // 환불금액
+				          "reason": "테스트 결제 환불" // 환불사유
+				          "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+				          "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(ex. KG이니시스의 경우 신한은행은 88번)
+				          "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+				        }),
+				        "dataType": "json"
+				      });
+				    }	
+		}
+		
+		
+		
+	})
+	
+	
+	
+}
 
 
 </script>

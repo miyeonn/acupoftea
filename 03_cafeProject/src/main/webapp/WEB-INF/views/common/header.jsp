@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -80,6 +80,12 @@ height:220px;
 	
 	
 	}
+html,body{height:100%}
+body{margin:0}
+.container-fluid{min-height:100%;padding-bottom:1.9em}
+#content{padding-bottom:1.9em}
+.footer{margin-top:-1.9em;height:1.9em}
+}
 	
 </style>
 </head>
@@ -91,8 +97,8 @@ height:220px;
 			 		<c:if test="${loginUser!=null && loginUser.member_id ne 'aldus9302@gmail.com' }">
 				    <li class="nav-item"><a class="nav-link">마이페이지</a>
 				    	<ul>
-				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo">내정보관리</a></li>
-				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myBookmark?memberNo=${loginUser.member_no }"">북마크</a></li>
+				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo?memberNo=${loginUser.member_no }">내정보관리</a></li>
+				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myBookmark?memberNo=${loginUser.member_no }">북마크</a></li>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/cart?memberNo=${loginUser.member_no }">장바구니</a></li>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder?memberNo=${loginUser.member_no }">결제내역</a></li>
 				    	</ul>

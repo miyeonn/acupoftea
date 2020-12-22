@@ -5,7 +5,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/user/sidebar_myPage.jsp" />
 <section>
-	<div class="container-fluid pb-3">
+	<div class="container-fluid pb-5">
 			<div class="row">
 			<!-- 사이드바로 분리 -->
 			<div class="col-sm-2 content"></div>

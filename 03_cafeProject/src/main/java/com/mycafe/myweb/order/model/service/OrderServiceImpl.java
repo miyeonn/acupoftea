@@ -106,5 +106,11 @@ public class OrderServiceImpl implements OrderService {
 		return dao.countOrderState(memberNo,session);
 	}
 
+	@Override
+	public int cancelOrder(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.cancelOrder(map,session);
+	}
+
 
 }

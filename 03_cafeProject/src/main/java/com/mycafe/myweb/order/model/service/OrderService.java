@@ -30,4 +30,6 @@ public interface OrderService {
 
 	OrderState countOrderState(int parseInt);
 
+	int cancelOrder(Map<String, Object> map);
+
 }
