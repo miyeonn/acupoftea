@@ -37,5 +37,7 @@ public interface OrderDao {
 
 	int cancelOrder(Map<String, Object> map, SqlSessionTemplate session);
 
+	Payment cancelPort(String orderNo, SqlSessionTemplate session);
+
 
 }

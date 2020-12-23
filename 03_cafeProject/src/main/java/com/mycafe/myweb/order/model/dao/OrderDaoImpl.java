@@ -90,4 +90,10 @@ public class OrderDaoImpl implements OrderDao {
 		return session.update("order.cancelOrder", map);
 	}
 
+	@Override
+	public Payment cancelPort(String orderNo, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("order.cancelPort",orderNo);
+	}
+
 }

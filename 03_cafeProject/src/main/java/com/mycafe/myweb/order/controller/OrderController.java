@@ -105,23 +105,25 @@ public class OrderController {
 
 	}
 
-	@RequestMapping("/order/getToken")
-	public @ResponseBody String getToken(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		
-		// 아임포트 토큰생성 
-		
-		String imp_key 		=	URLEncoder.encode("1691411943881289", "UTF-8");
-		String imp_secret	=	URLEncoder.encode("viv7heutRrAgzMfY56MdnCbuxuGrvLP03l8lzCOq4pHDcWCh3pvq1GVzbB0GnQHrbPMLsBcw0TacQNuT", "UTF-8");
-		
-		JSONObject json = new JSONObject();
-
-		json.put("imp_key", imp_key);
-		json.put("imp_secret", imp_secret);
-
-		String token = PaymentCheck.getToken(request, response, json); 
-		return token;
-	}
-	
+	/*
+	 * @RequestMapping("/order/getToken") public @ResponseBody String
+	 * getToken(HttpServletRequest request,HttpServletResponse response) throws
+	 * Exception {
+	 * 
+	 * // 아임포트 토큰생성
+	 * 
+	 * String imp_key = URLEncoder.encode("1691411943881289", "UTF-8"); String
+	 * imp_secret = URLEncoder.encode(
+	 * "viv7heutRrAgzMfY56MdnCbuxuGrvLP03l8lzCOq4pHDcWCh3pvq1GVzbB0GnQHrbPMLsBcw0TacQNuT",
+	 * "UTF-8");
+	 * 
+	 * JSONObject json = new JSONObject();
+	 * 
+	 * json.put("imp_key", imp_key); json.put("imp_secret", imp_secret);
+	 * 
+	 * String token = PaymentCheck.getToken(request, response, json); return token;
+	 * }
+	 */
 	
 	  @RequestMapping("/order/addOrder") 
 	  public ModelAndView addOrder(HttpServletRequest request) {
@@ -262,13 +264,19 @@ public class OrderController {
 	  
 	  //아임포트에 취소요청
 	  @RequestMapping("/order/cancelPort")
-	  public ModelAndView cancelPort(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		  ModelAndView mv=new ModelAndView();
+	  public @ResponseBody ModelAndView cancelPort(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		ModelAndView mv=new ModelAndView();
 		  
-		  String token=getToken(request, response);
-		  
-		  
-		  return mv;
+		Payment pay=service.cancelPort(request.getParameter("orderNo"));
+		
+		
+		
+		String token=paycheck.getImportToken();
+		int result=paycheck.cancelPayment(token, pay.getMerchant_id());
+		
+		
+		mv.setViewName("jsonView");
+		return mv;
 		  
 	  }
 	  

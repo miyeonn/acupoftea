@@ -112,5 +112,11 @@ public class OrderServiceImpl implements OrderService {
 		return dao.cancelOrder(map,session);
 	}
 
+	@Override
+	public Payment cancelPort(String orderNo) {
+		// TODO Auto-generated method stub
+		return dao.cancelPort(orderNo,session);
+	}
+
 
 }

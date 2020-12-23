@@ -32,4 +32,6 @@ public interface OrderService {
 
 	int cancelOrder(Map<String, Object> map);
 
+	Payment cancelPort(String parameter);
+
 }

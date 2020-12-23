@@ -1,115 +1,133 @@
 package com.mycafe.myweb.common;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList; 
+import java.util.HashMap; 
+import java.util.List; 
+import java.util.Map; 
+import java.util.Map.Entry; 
+import java.util.Set; 
+import org.apache.http.HttpResponse; 
+import org.apache.http.NameValuePair; 
+import org.apache.http.client.HttpClient; 
+import org.apache.http.client.entity.UrlEncodedFormEntity; 
+import org.apache.http.client.methods.HttpGet; 
+import org.apache.http.client.methods.HttpPost; 
+import org.apache.http.impl.client.HttpClientBuilder; 
+import org.apache.http.message.BasicNameValuePair; 
+import org.apache.http.util.EntityUtils; 
+import com.fasterxml.jackson.databind.JsonNode; 
+import com.fasterxml.jackson.databind.ObjectMapper; 
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.springframework.stereotype.Component;
-
-@Component
-public class PaymentCheck {
-
-	public static final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
-	public static final String IMPORT_PAYMENTINFO_URL = "https://api.iamport.kr/payments/find/";
-	public static final String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
-	public static final String IMPORT_PREPARE_URL = "https://api.iamport.kr/payments/prepare";
+public class PaymentCheck { 
 	
-	public static final String KEY = "아임포트 Rest Api key";
-	public static final String SECRET = "아임포트 Rest Api Secret";
 	
-	public static String getToken(HttpServletRequest request,HttpServletResponse response,JSONObject json) throws Exception{
-		// requestURL은 아임포트 고유키, 시크릿 키 정보를 포함하는 url 정보 
-
-		String _token = "";
-
-		try{
-
-			String requestString = "";
-
-			URL url = new URL(IMPORT_TOKEN_URL);
-
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();//해당 url로 페이지 정보 가져옴
-
-			connection.setDoOutput(true); //url연결이 출력용인경우 outputtrue -입력용인경우 input true	
-
-			connection.setInstanceFollowRedirects(false);  
-
-			connection.setRequestMethod("POST");//post형식 요청방식
-
-			connection.setRequestProperty("Content-Type", "application/json"); //json형식으로 전송.
-
-			OutputStream os= connection.getOutputStream(); //출력 스트림 생성
-
-			os.write(json.toString().getBytes()); //string을 byte 코드로 변경
-
-			connection.connect(); //네트워크상의 다른곳과 연결
-
-			StringBuilder sb = new StringBuilder(); 
-
-			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-
-				BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
-
-			
-
-				String line = null;  
-
-				while ((line = br.readLine()) != null) {  
-
-					sb.append(line + "\n");  
-
-				}
-
-				br.close();
-
-				requestString = sb.toString();
-
-			
-
-			}
-
-			os.flush();
-
-			connection.disconnect();
-
-			
-
-			JSONParser jsonParser = new JSONParser();
-
-			JSONObject jsonObj = (JSONObject) jsonParser.parse(requestString);
-
-			
-
-			if((Long)jsonObj.get("code")  == 0){
-
-				JSONObject getToken = (JSONObject) jsonObj.get("response");
-
-				System.out.println("getToken==>>"+getToken.get("access_token") );
-
-				_token = (String)getToken.get("access_token");
-
-			}
-
-			
-
-		}catch(Exception e){
-
-			e.printStackTrace();
-
-			_token = "";
-
+	public static final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken"; 
+	public static final String IMPORT_PAYMENTINFO_URL = "https://api.iamport.kr/payments/find/"; 
+	public static final String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel"; 
+	public static final String IMPORT_PREPARE_URL = "https://api.iamport.kr/payments/prepare"; 
+	public static final String KEY = "1691411943881289"; 
+	public static final String SECRET = "viv7heutRrAgzMfY56MdnCbuxuGrvLP03l8lzCOq4pHDcWCh3pvq1GVzbB0GnQHrbPMLsBcw0TacQNuT"; 
+	
+	// 아임포트 인증(토큰)을 받아주는 함수 
+	public String getImportToken() { 
+		String result = ""; 
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(IMPORT_TOKEN_URL); 
+		Map<String,String> m =new HashMap<String,String>();
+		m.put("imp_key", KEY); 
+		m.put("imp_secret", SECRET); 
+		try { 
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(m))); 
+			HttpResponse res = client.execute(post); 
+			ObjectMapper mapper = new ObjectMapper(); 
+			String body = EntityUtils.toString(res.getEntity()); 
+			JsonNode rootNode = mapper.readTree(body); 
+			JsonNode resNode = rootNode.get("response"); 
+			result = resNode.get("access_token").asText(); 
+			} catch (Exception e) {
+				e.printStackTrace();
+					}
+		return result; //토큰 리턴
 		}
+	// Map을 사용해서 Http요청 파라미터를 만들어 주는 함수 
+	private List<NameValuePair> convertParameter(Map<String,String> paramMap){ 
+		
+			List<NameValuePair> paramList = new ArrayList<NameValuePair>(); 
+			Set<Entry<String,String>> entries = paramMap.entrySet(); 
+			
+			for(Entry<String,String> entry : entries) { 
+					paramList.add(new BasicNameValuePair(entry.getKey(), entry.getValue())); 
+			} 
+			
+			return paramList; 
+			} 
+	// 결제취소 
+	public int cancelPayment(String token, String mid) { 
+		
+		HttpClient client = HttpClientBuilder.create().build(); 
+		HttpPost post = new HttpPost(IMPORT_CANCEL_URL); 
+		Map<String, String> map = new HashMap<String, String>();
+		post.setHeader("Authorization", token); 
+		map.put("merchant_uid", mid); 
+		String asd = ""; 
+		try { 
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(map))); 
+			HttpResponse res = client.execute(post); 
+			ObjectMapper mapper = new ObjectMapper(); 
+			String enty = EntityUtils.toString(res.getEntity()); 
+			JsonNode rootNode = mapper.readTree(enty); 
+			asd = rootNode.get("response").asText(); 
+			} catch (Exception e) {
+				e.printStackTrace(); 
+				} 
+		if (asd.equals("null")) { 
+			System.err.println("환불실패");
+			return -1; 
+			} else { 
+				System.err.println("환불성공"); 
+				return 1;
+				
+			} 
+		}
+	
+	// 아임포트 결제정보를 조회해서 결제금액을 뽑아주는 함수 
+	public String getAmount(String token, String mId) { 
+		String amount = ""; 
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpGet get = new HttpGet(IMPORT_PAYMENTINFO_URL + mId + "/paid");
+		get.setHeader("Authorization", token);
+		try { HttpResponse res = client.execute(get); 
+		ObjectMapper mapper = new ObjectMapper(); 
+		String body = EntityUtils.toString(res.getEntity());
+		JsonNode rootNode = mapper.readTree(body); 
+		JsonNode resNode = rootNode.get("response"); 
+		amount = resNode.get("amount").asText();
+		} catch (Exception e) {
+			e.printStackTrace(); 
+		} return amount; } 
+	
+	
+	// 아임포트 결제금액 변조는 방지하는 함수
+	public void setHackCheck(String amount,String mId,String token) {
+			HttpClient client = HttpClientBuilder.create().build(); 
+			HttpPost post = new HttpPost(IMPORT_PREPARE_URL);
+			Map<String,String> m =new HashMap<String,String>();
+			post.setHeader("Authorization", token); 
+			m.put("amount", amount); 
+			m.put("merchant_uid", mId); 
+			try { 
+				post.setEntity(new UrlEncodedFormEntity(convertParameter(m)));
+				HttpResponse res = client.execute(post); 
+				ObjectMapper mapper = new ObjectMapper();
+				String body = EntityUtils.toString(res.getEntity());
+				JsonNode rootNode = mapper.readTree(body); 
+				System.out.println(rootNode); 
+				} catch (Exception e) {
+					e.printStackTrace(); 
+				} 
+} 
 
-		return _token;
 
-	}
 }
-
 
