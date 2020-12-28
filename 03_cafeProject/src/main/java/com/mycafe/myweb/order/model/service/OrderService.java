@@ -7,6 +7,7 @@ import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
 import com.mycafe.myweb.order.model.vo.OrderState;
+import com.mycafe.myweb.order.model.vo.OrderSum;
 import com.mycafe.myweb.order.model.vo.Payment;
 
 public interface OrderService {
@@ -33,5 +34,7 @@ public interface OrderService {
 	int cancelOrder(Map<String, Object> map);
 
 	Payment cancelPort(String parameter);
+
+	OrderSum checkOrderToday(String today);
 
 }

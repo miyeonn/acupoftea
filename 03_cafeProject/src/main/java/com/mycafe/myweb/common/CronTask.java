@@ -16,12 +16,15 @@ public class CronTask {
 	private SendOrderMail sendMail;
 	
 	
-	@Scheduled(cron="0 * 10 15 12 *")//매일 오후 3시 관리자 메일로 발송
+	@Scheduled(cron="0 * 10 15 12 *")//매일 오후 3시 관리자 메일로 발송@Scheduled(cron="0 0/2 * * * *")
 	public void scheduleRun() {
 	    Calendar calendar = Calendar.getInstance();
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    System.out.println("스케줄 실행 : " + dateFormat.format(calendar.getTime()));
-	    sendMail.mailSend(dateFormat.format(calendar.getTime()));
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");
+	    String today=dateFormat.format(calendar.getTime());
+	    System.out.println("스케줄 실행 : " + today);
+	    sendMail.mailSend(today);
 	    
 	}
+	
+
 }

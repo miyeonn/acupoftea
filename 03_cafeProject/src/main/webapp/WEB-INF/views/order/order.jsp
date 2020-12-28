@@ -124,7 +124,7 @@
 	</div>
 </section>
 <script>
-function goPopup(){
+/* function goPopup(){
 	var address=document.getElementById("address").value;
 	if(address==""){
 	var pop = window.open("${path}/user/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
@@ -138,6 +138,23 @@ function jusoCallBack(roadFullAddr,zipNo){
 
 	document.orderfrm.zipcode.value = zipNo;
 	document.orderfrm.address.value = roadFullAddr;		 
+} */
+function goPopup(){
+new daum.Postcode({
+    oncomplete: function(data) {
+        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+        
+          document.getElementById('zipcode').value = data.zonecode;
+          document.getElementById("address").value = addr;
+        
+    }
+}).open();
 }
 
 //post방식으로 데이터 보내기
@@ -212,6 +229,11 @@ function payOrder(){
 	if (rsp.success) { //결제가 성공할 경우
 		
 	alert("결제 성공");
+	//소켓 호출
+	let target="aldus9302@gmail.com";
+	let url="${path}/admin/orderList"
+	socket.send("관리자님,"+target+","+url);
+	
 	
  	$.ajax({
 		url:'${path}/order/paymentEnd',

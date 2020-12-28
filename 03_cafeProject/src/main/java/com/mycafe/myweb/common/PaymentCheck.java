@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.databind.JsonNode; 
 import com.fasterxml.jackson.databind.ObjectMapper; 
 
+
 public class PaymentCheck { 
 	
 	
@@ -30,7 +31,7 @@ public class PaymentCheck {
 	public static final String SECRET = "viv7heutRrAgzMfY56MdnCbuxuGrvLP03l8lzCOq4pHDcWCh3pvq1GVzbB0GnQHrbPMLsBcw0TacQNuT"; 
 	
 	// 아임포트 인증(토큰)을 받아주는 함수 
-	public String getImportToken() { 
+	public static String getImportToken() { 
 		String result = ""; 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(IMPORT_TOKEN_URL); 
@@ -50,8 +51,9 @@ public class PaymentCheck {
 					}
 		return result; //토큰 리턴
 		}
+	
 	// Map을 사용해서 Http요청 파라미터를 만들어 주는 함수 
-	private List<NameValuePair> convertParameter(Map<String,String> paramMap){ 
+	private static List<NameValuePair> convertParameter(Map<String,String> paramMap){ 
 		
 			List<NameValuePair> paramList = new ArrayList<NameValuePair>(); 
 			Set<Entry<String,String>> entries = paramMap.entrySet(); 
@@ -62,8 +64,11 @@ public class PaymentCheck {
 			
 			return paramList; 
 			} 
+	
+	
+	
 	// 결제취소 
-	public int cancelPayment(String token, String mid) { 
+	public static int cancelPayment(String token, String mid) { 
 		
 		HttpClient client = HttpClientBuilder.create().build(); 
 		HttpPost post = new HttpPost(IMPORT_CANCEL_URL); 
@@ -105,7 +110,8 @@ public class PaymentCheck {
 		amount = resNode.get("amount").asText();
 		} catch (Exception e) {
 			e.printStackTrace(); 
-		} return amount; } 
+		} return amount; 
+		} 
 	
 	
 	// 아임포트 결제금액 변조는 방지하는 함수

@@ -39,4 +39,8 @@
 	<select id="cancelPort" parameterType="string" resultType="com.mycafe.myweb.order.model.vo.Payment">
 		SELECT * FROM PAYMENT WHERE ORDER_NO=#{orderNo}
 	</select>
+	<select id="checkOrder" parameterType="string" resultType="com.mycafe.myweb.order.model.vo.OrderSum" >
+		select order_date,count(order_no)as order_count,sum(order_qty)as order_qty from order_tb  where order_date=#{today} group by order_date
+		
+	</select>
 </mapper>

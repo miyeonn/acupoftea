@@ -78,8 +78,12 @@ function fn_cancelPort(str){
 		url:"${path}/order/cancelPort",
 		data:{orderNo:str},
 		success:function(data){
-			console.log(data.pay)
-			
+			console.log(data.result);
+			if(data.result>0){
+				alert("환불성공");
+			}else{
+				alert("환불실패");
+			}
 		
 				    
 		}

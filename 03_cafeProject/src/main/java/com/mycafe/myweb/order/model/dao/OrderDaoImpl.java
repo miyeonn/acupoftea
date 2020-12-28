@@ -11,6 +11,7 @@ import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
 import com.mycafe.myweb.order.model.vo.OrderState;
+import com.mycafe.myweb.order.model.vo.OrderSum;
 import com.mycafe.myweb.order.model.vo.Payment;
 
 @Repository
@@ -94,6 +95,12 @@ public class OrderDaoImpl implements OrderDao {
 	public Payment cancelPort(String orderNo, SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectOne("order.cancelPort",orderNo);
+	}
+
+	@Override
+	public OrderSum checkOrderToday(String today, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("order.checkOrder", today);
 	}
 
 }

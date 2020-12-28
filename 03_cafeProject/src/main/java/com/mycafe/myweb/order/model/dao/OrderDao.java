@@ -9,6 +9,7 @@ import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
 import com.mycafe.myweb.order.model.vo.OrderState;
+import com.mycafe.myweb.order.model.vo.OrderSum;
 import com.mycafe.myweb.order.model.vo.Payment;
 
 public interface OrderDao {
@@ -38,6 +39,8 @@ public interface OrderDao {
 	int cancelOrder(Map<String, Object> map, SqlSessionTemplate session);
 
 	Payment cancelPort(String orderNo, SqlSessionTemplate session);
+
+	OrderSum checkOrderToday(String today, SqlSessionTemplate session);
 
 
 }

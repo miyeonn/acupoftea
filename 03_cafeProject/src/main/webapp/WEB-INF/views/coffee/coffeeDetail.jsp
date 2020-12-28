@@ -312,12 +312,12 @@ $(function(){
 			})
 		
 		})  
-		Kakao.init('dd85c7c19c3d45f5bedf296de1914e7f');
+/* 		Kakao.init('dd85c7c19c3d45f5bedf296de1914e7f');
 function clickShare(){
 
 Kakao.Link.sendDefault({
-				headers={
-					"Authorization":"Bearer"+<access_token>
+			headers={
+					"Authorization":"Bearer"+
 				}
 			  objectType: 'feed',//고정값
 			  content: {
@@ -342,15 +342,15 @@ Kakao.Link.sendDefault({
 			        mobileWebUrl: 'https://localhost:8080/',
 			      },
 			    },
-			 /*    {
+			     {
 			      title: '앱으로 이동',
 			      link: {
 			        mobileWebUrl: 'https://developers.kakao.com',
-			      }, */
+			      }, 
 			    },
 			  ]
 			});
-}
+} */
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

@@ -13,6 +13,7 @@ import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
 import com.mycafe.myweb.order.model.vo.OrderState;
+import com.mycafe.myweb.order.model.vo.OrderSum;
 import com.mycafe.myweb.order.model.vo.Payment;
 
 @Service
@@ -116,6 +117,12 @@ public class OrderServiceImpl implements OrderService {
 	public Payment cancelPort(String orderNo) {
 		// TODO Auto-generated method stub
 		return dao.cancelPort(orderNo,session);
+	}
+
+	@Override
+	public OrderSum checkOrderToday(String today) {
+		// TODO Auto-generated method stub
+		return dao.checkOrderToday(today,session);
 	}
 
 

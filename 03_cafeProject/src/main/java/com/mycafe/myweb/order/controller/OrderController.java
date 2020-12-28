@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,9 +42,7 @@ public class OrderController {
 	private UserService uService;
 	
 	
-	@Autowired
-	private PaymentCheck paycheck;
-	
+
 
 	@RequestMapping("/order/enterOrder")
 	public String enterOrder() {
@@ -271,10 +270,12 @@ public class OrderController {
 		
 		
 		
-		String token=paycheck.getImportToken();
-		int result=paycheck.cancelPayment(token, pay.getMerchant_id());
+		String token=PaymentCheck.getImportToken();
+		int result=PaymentCheck.cancelPayment(token, pay.getMerchant_id());
 		
-		
+	
+		System.out.println(result);
+		mv.addObject("result", result);
 		mv.setViewName("jsonView");
 		return mv;
 		  

@@ -89,6 +89,7 @@
 										<div class="smallImage rounded" >
 											<img class="small" src="/img/cafe/${c}">
 										</div>
+										
 									</c:forEach> 
 							  	</div>
 								<div id="mainPhotoDiv" class="mx-auto img-fluid rounded" style="background-image:url('/img/cafe/${cafe.main_image}')" ></div>
@@ -108,13 +109,13 @@
 								<a><i class="fas fa-share-alt"></i></a>
 							</div>
 							<div class="mb-1 mt-3">
-							주소
+							주소:${cafe.cafe_address }
 							</div>
 							<div class="mb-1">
-							전화번호
+							전화번호:${cafe.cafe_tel }
 							</div>
 							<div class="mb-1">
-							영업시간
+							영업시간:${cafe.cafe_hours }
 							</div>
 							<div class="mb-1">
 							홈페이지

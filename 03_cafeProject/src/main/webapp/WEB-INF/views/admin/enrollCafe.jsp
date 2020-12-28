@@ -107,12 +107,25 @@
 </div>
 </section>
 <script>
-function goPopup(){
-	// 주소검색을 수행할 팝업 페이지를 호출
-	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출.
-	var pop = window.open("${path}/user/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-	
-}
+
+	function goPopup(){
+		new daum.Postcode({
+		    oncomplete: function(data) {
+		        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                    addr = data.roadAddress;
+		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                    addr = data.jibunAddress;
+		                }
+		        
+		          document.getElementById('cafeAddr').value = addr;
+		        
+		        
+		    }
+		}).open();
+		}
+
 
 function jusoCallBack(roadFullAddr){
 		// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.	

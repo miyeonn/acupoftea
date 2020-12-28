@@ -19,9 +19,12 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd85c7c19c3d45f5bedf296de1914e7f&libraries=services"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- 결제api -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" ></script>
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- web socket -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <meta charset="UTF-8">
 <title>메인 홈</title>
 <style>
@@ -86,12 +89,14 @@ body{margin:0}
 #content{padding-bottom:1.9em}
 .footer{margin-top:-1.9em;height:1.9em}
 }
-	
+
 </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 <header >
  	<div class="header-wrap" style="height:100%">
+ 		<div id="socketAlert" class="alert alert-success" style="display:none;">
+		</div>
 		<div class="head dropmenu">
 			 <ul class="nav justify-content-end mr-5 " id="myPage_ul">
 			 		<c:if test="${loginUser!=null && loginUser.member_id ne 'aldus9302@gmail.com' }">
@@ -105,6 +110,11 @@ body{margin:0}
 				    </li>
 					</c:if>
 				  	<c:if test="${loginUser.member_id eq'aldus9302@gmail.com' }">
+				  		<li class="nav-item mt-1">
+				  			<button type="button" class="btn btn-light">
+								 <i class="far fa-bell"></i> <span class="badge badge-danger">4</span>
+								</button>
+				  		</li>
 					    <li class="nav-item">
 					      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
 					    </li>
@@ -133,6 +143,52 @@ body{margin:0}
 $(".dropmenu ul li").hover(function(){
 	$(this).find("ul").stop().fadeToggle(500);
 });
+$(document).ready( function() {
+    connectWS();	
+});
+
+var socket=null;
+function connectWS(){
+	
+	var ws=new WebSocket("ws://localhost:8080/replyEcho");//브라우저 자체지원 웹소켓
+	socket=ws;
+	ws.onopen=function(){//연결되었을때
+		console.log('info:connection opened');
+		
+		
+	}
+	ws.onmessage=function(event){
+		console.log(event.data+"\n");
+        let socketAlert = $('#socketAlert');
+        socketAlert.html(event.data);
+        socketAlert.css('display', 'block');
+        
+        setTimeout( function() {
+        	$socketAlert.css('display', 'none');
+        }, 3000);
+	};
+	
+	ws.onclose=function(event){
+		console.log("Info:connection closed");
+		setTimeout(function(){connectWs();},1000);//연결이 끊어지게 된다면 다시 연결
+		};
+	ws.onerror=function(event){console.log("Info:connection error");};
+}
+
+
+ // toast생성 및 추가
+    function onMessage(evt){
+        var data = evt.data;
+        // toast
+        let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+        toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+        toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+        toast += "<span aria-hidden='true'>&times;</span></button>";
+        toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+        $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+        $(".toast").toast({"animation": true, "autohide": false});
+        $('.toast').toast('show');
+    };
 
 
 
