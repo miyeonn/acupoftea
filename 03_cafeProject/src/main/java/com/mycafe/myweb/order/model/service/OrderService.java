@@ -3,6 +3,7 @@ package com.mycafe.myweb.order.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.mycafe.myweb.coffee.model.vo.Coffee;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
@@ -36,5 +37,9 @@ public interface OrderService {
 	Payment cancelPort(String parameter);
 
 	OrderSum checkOrderToday(String today);
+
+	int updateSt(String merchant_id);
+
+	Coffee selectgoods(int goodsNo);
 
 }

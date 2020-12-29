@@ -76,6 +76,9 @@
 			</div>
 			<div class="row-vh d-flex flex-column border rounded mt-3 bg-white orderlist-container" style="width:100%">
 				<!-- <p class="orderlist-text mt-3 ml-3">기간/셀렉트박스</p> -->
+				<c:if test="${empty list}">
+					<div class="text-center">해당 내역이 없습니다</div>
+				</c:if>
 				<c:forEach items="${list }" var="l">
 				<div class="d-flex border-bottom  mt-3 ml-3" style="width:95%">
 					<div><p class="orderlist-text">${l.order_date } | ${l.order_no}</p></div>

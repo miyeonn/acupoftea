@@ -5,7 +5,7 @@
 		INSERT INTO PAYMENT VALUES(PAYMENT_NO_SEQ.NEXTVAL,#{payment_price},'결제완료','n',#{imp_id},#{merchant_id},#{apply_num},#{order_no})
 	</insert>
 	<insert id="insertOrder" parameterType="com.mycafe.myweb.order.model.vo.OrderList">
-		INSERT INTO ORDER_TB VALUES(#{member_no},#{goods_no},SYSDATE,'출고대기',#{order_qty},#{order_receiver},#{order_tel},#{order_address},
+		INSERT INTO ORDER_TB VALUES(#{member_no},#{goods_no},SYSDATE,'결제완료',#{order_qty},#{order_receiver},#{order_tel},#{order_address},
 		'N','N','N',#{order_sender},#{sender_tel},#{sender_memo},#{order_no})
 	
 	</insert>
@@ -23,6 +23,7 @@
 			<if test="orderState!=null">
 				AND ORDER_STATE=#{orderState}
 			</if>
+				AND ORDER_CALCELED='N'
 	</select>
 	<select id="countOrderState" parameterType="_int" resultType="com.mycafe.myweb.order.model.vo.OrderState">
 		SELECT COUNT(CASE WHEN order_state='결제완료' THEN 1 END ) CNT,
@@ -43,4 +44,12 @@
 		select order_date,count(order_no)as order_count,sum(order_qty)as order_qty from order_tb  where order_date=#{today} group by order_date
 		
 	</select>
+	<update id="updateSt" parameterType="string" useGeneratedKeys="true" keyColumn="order_no" keyProperty="orderNo">
+		UPDATE PAYMENT SET PAYMENT_STATE='환불완료' WHERE MERCHANT_ID=#{merchant_id}
+		
+	</update>
+		<update id="updateOrderSt" parameterType="string" >
+		UPDATE ORDER_TB SET PAYMENT_STATE='취소완료' ,ORDER_CALCELED='Y' WHERE order_no=#{orderNo}
+		
+	</update>
 </mapper>

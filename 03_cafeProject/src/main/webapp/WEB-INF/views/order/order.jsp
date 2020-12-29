@@ -33,17 +33,30 @@
 					<h4><b>주문상품</b></h4>
 				</div>
 				<div class="border rounded">
-					<c:forEach items="${list }" var="l">
-					<div class="d-flex mt-1 mb-2">
-						<input type="hidden" name="goodsNo" value="${l.goods_no }"/>
-						<img class="orderImg ml-3" src="/img/cafe/${l.main_image }" width="150px;" height="150px;">
-						<div class="ml-3 mt-2">
-							<h6><b>${l.coffee_title }</b></h6><br>
-							<div><span>${l.coffee_price}</span><span>원 | 수량:</span><span class="qty">${l.goods_qty }</span></div>
+				<c:choose>
+					<c:when test="${!empty list  }">
+						<c:forEach items="${list }" var="l">
+							<div class="d-flex mt-1 mb-2">
+								<input type="hidden" name="goodsNo" value="${l.goods_no }"/>
+								<img class="orderImg ml-3" src="/img/cafe/${l.main_image }" width="150px;" height="150px;">
+								<div class="ml-3 mt-2">
+									<h6><b>${l.coffee_title }</b></h6><br>
+									<div><span>${l.coffee_price}</span><span>원 | 수량:</span><span class="qty">${l.goods_qty }</span></div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="d-flex mt-1 mb-2">
+							<input type="hidden" name="goodsNo" value="${goods.goods_no }"/>
+							<img class="orderImg ml-3" src="/img/cafe/${goods.main_image }" width="150px;" height="150px;">
+							<div class="ml-3 mt-2">
+								<h6><b>${goods.coffee_title }</b></h6><br>
+								<div><span>${goods.coffee_price}</span><span>원 | 수량:</span><span class="qty">${goods_qty }</span></div>
+							</div>
 						</div>
-					</div>
-					
-					</c:forEach>
+					</c:otherwise>
+				</c:choose>	
 				</div>
 				<hr/>
 				<!-- 배송지정보 -->
@@ -255,8 +268,8 @@ function payOrder(){
 		} ,
 		success:function(data){
 			if(data.result>0){
-				console.log(data.result)
-			alert("결제,오더 완료");
+				console.log(data.result);
+				alert("결제,오더 완료");
 			}else{
 				alert("결제,오더 실패");
 			}

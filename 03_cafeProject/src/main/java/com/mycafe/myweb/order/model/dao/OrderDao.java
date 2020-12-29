@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.mycafe.myweb.coffee.model.vo.Coffee;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
@@ -41,6 +42,12 @@ public interface OrderDao {
 	Payment cancelPort(String orderNo, SqlSessionTemplate session);
 
 	OrderSum checkOrderToday(String today, SqlSessionTemplate session);
+
+	int updateSt(String merchant_id, SqlSessionTemplate session);
+
+	int updateOrderSt(String merchant_id, SqlSessionTemplate session);
+
+	Coffee selectgoods(int goodsNo, SqlSessionTemplate session);
 
 
 }

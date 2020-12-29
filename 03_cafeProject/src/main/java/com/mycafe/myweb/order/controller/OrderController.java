@@ -1,6 +1,5 @@
 package com.mycafe.myweb.order.controller;
 
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,18 +10,18 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mycafe.myweb.coffee.model.vo.Coffee;
 import com.mycafe.myweb.common.PagingFactory;
-import com.mycafe.myweb.common.PaymentCheck;
+import com.mycafe.myweb.common.PaymentCheck2;
 import com.mycafe.myweb.order.model.service.OrderService;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
@@ -45,10 +44,20 @@ public class OrderController {
 
 
 	@RequestMapping("/order/enterOrder")
-	public String enterOrder() {
+	public ModelAndView enterOrder(HttpServletRequest request,HttpSession session) {
+		//바로구매 클릭시
+		ModelAndView mv=new ModelAndView();
+		
+		JoinUser u=(JoinUser) session.getAttribute("loginUser");
+		
+		Coffee cf=service.selectgoods(Integer.parseInt(request.getParameter("goodsNo")));
 		
 		
-		return "order/order";
+		mv.addObject("goods",cf);
+		mv.addObject("user",u);
+		mv.addObject("goods_qty",Integer.parseInt(request.getParameter("qty")));
+		mv.setViewName("order/order");
+		return mv;
 	}
 	@RequestMapping("/order/cart")
 	public ModelAndView enterCart(HttpServletRequest request) {
@@ -222,14 +231,16 @@ public class OrderController {
 		  int totalData=0;
 		  
 		  map.put("memberNo",Integer.parseInt(request.getParameter("memberNo")));
+		  
+		  //orderstate 필터 낄 경우
 		  if(orderState!=null) {
 			  map.put("orderState",orderState);
-			  System.out.println("여기로 실행"+map);
+			  System.out.println("orderstate필터 실행"+map);
 			  list=service.selectMyOrder(map,cPage, numPerpage);
 			  totalData=service.selectMyOrderCount(map);
 			  
 		  }else {
-			 
+			 //첫화면일경우
 			  list=service.selectMyOrder(map,cPage, numPerpage);
 			  totalData=service.selectMyOrderCount(map);
 		  }
@@ -268,14 +279,24 @@ public class OrderController {
 		  
 		Payment pay=service.cancelPort(request.getParameter("orderNo"));
 		
+		System.out.println("merchant_id"+pay.getMerchant_id());
 		
+		String token=PaymentCheck2.getImportToken();
 		
-		String token=PaymentCheck.getImportToken();
-		int result=PaymentCheck.cancelPayment(token, pay.getMerchant_id());
-		
+		String merchant_id=PaymentCheck2.cancelPayment(token, pay.getImp_id());
+		if(merchant_id.equals("환불실패")) {
+			mv.addObject("result", merchant_id);
+		}else {
+			// state 업데이트 order_state:결제취소 payment_state:환불완료
+			int resultcnt=service.updateSt(merchant_id);
+			if(resultcnt>0) {
+				mv.addObject("result", "환불완료");
+			}else {
+				mv.addObject("result", "환불완료실패");
+			}
+		}
 	
-		System.out.println(result);
-		mv.addObject("result", result);
+		
 		mv.setViewName("jsonView");
 		return mv;
 		  

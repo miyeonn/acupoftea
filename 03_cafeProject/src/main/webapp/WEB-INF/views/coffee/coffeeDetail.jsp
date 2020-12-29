@@ -154,7 +154,7 @@
 						  	<div class="text-title">주문금액 :<span name="totalPrice"></span>   원</div>
 						  	<div>
 						  		<button class="btn btn-outline-primary" onclick="addCart('${coffee.goods_no}');">장바구니</button>
-						  		<button class="btn btn-primary" onclick="location.href='${path}/order/enterOrder'">바로구매</button>
+						  		<button class="btn btn-primary" onclick="orderNow('${coffee.goods_no}');">바로구매</button>
 					  		</div>
 				  	</div>
 				</div>	
@@ -351,6 +351,14 @@ Kakao.Link.sendDefault({
 			  ]
 			});
 } */
+
+function orderNow(goodsNo){
+	
+	var goodsQty=document.querySelector('input[name="pop_out"]').value;
+	
+	location.href='${path}/order/enterOrder?goodsNo='+goodsNo+'&qty='+goodsQty;
+	
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

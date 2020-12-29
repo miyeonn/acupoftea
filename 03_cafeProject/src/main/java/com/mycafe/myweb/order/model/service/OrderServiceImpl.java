@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mycafe.myweb.coffee.model.vo.Coffee;
 import com.mycafe.myweb.order.model.dao.OrderDao;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
@@ -123,6 +124,24 @@ public class OrderServiceImpl implements OrderService {
 	public OrderSum checkOrderToday(String today) {
 		// TODO Auto-generated method stub
 		return dao.checkOrderToday(today,session);
+	}
+
+	@Override
+	public int updateSt(String merchant_id) {
+		// TODO Auto-generated method stub
+		int result= dao.updateSt(merchant_id,session);
+		System.out.println("db다녀온값:"+merchant_id);
+		if(result>0) {
+			System.out.println("paymentupdate완료");
+		result=dao.updateOrderSt(merchant_id,session);
+		}
+		return result;
+	}
+
+	@Override
+	public Coffee selectgoods(int goodsNo) {
+		// TODO Auto-generated method stub
+		return dao.selectgoods(goodsNo,session);
 	}
 
 

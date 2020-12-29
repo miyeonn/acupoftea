@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.mycafe.myweb.coffee.model.vo.Coffee;
 import com.mycafe.myweb.order.model.vo.Cart;
 import com.mycafe.myweb.order.model.vo.CartList;
 import com.mycafe.myweb.order.model.vo.OrderList;
@@ -101,6 +102,24 @@ public class OrderDaoImpl implements OrderDao {
 	public OrderSum checkOrderToday(String today, SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectOne("order.checkOrder", today);
+	}
+
+	@Override
+	public int updateSt(String merchant_id, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.update("order.updateSt", merchant_id);
+	}
+
+	@Override
+	public int updateOrderSt(String orderNo, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.update("order.updateOrderSt",orderNo );
+	}
+
+	@Override
+	public Coffee selectgoods(int goodsNo, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("coffee.selectHots",goodsNo);
 	}
 
 }
