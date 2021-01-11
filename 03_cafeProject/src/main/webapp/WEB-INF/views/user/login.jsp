@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="651161446279-3rjhjblbrb141lep5kevk9d1mvrtbp74.apps.googleusercontent.com">
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
  .login-container{
@@ -11,6 +10,9 @@
  }
  .loginContent{
  	margin-bottom:10px;
+ }
+ .container-fluid{
+ 	margin-bottom:70px;
  }
 
 </style>
@@ -37,14 +39,11 @@
 					 			</div>
 					 			<div class="loginContent">
 									<button class="btn btn-primary btn-block" onclick='btn_click("login");'>로그인</button>
-								</div>
+								</div>								
 								<div class="loginContent">
-									<div class="g-signin2 align-center" data-onsuccess="onSignIn"></div>
-									<a id="kakao-login-btn"></a>
-									<!-- <a href="#" onclick="signOut();">Sign out</a>로그인 상태일때 -->
-								</div>
-								<hr style="background-color:grey"/>
-								<button class="btn btn-primary btn-block" onclick='btn_click("join");'>회원가입</button>	 
+									<button class="btn btn-primary btn-block" onclick='btn_click("join");'>회원가입</button>	
+									<div class="text-center mt-3"><a id="kakao-login-btn"></a></div>
+								</div> 
 							 </div>
 						</form>
 					</div>	
@@ -59,19 +58,7 @@
 			
 </section>
 <script>
-function onSignIn(googleUser) {
-	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  console.log('Name: ' + profile.getName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-	}
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
+
   //회원가입,로그인 버튼 
  function btn_click(str){
 	 if(str=="login")
@@ -110,5 +97,4 @@ function onSignIn(googleUser) {
   
   
 </script>
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

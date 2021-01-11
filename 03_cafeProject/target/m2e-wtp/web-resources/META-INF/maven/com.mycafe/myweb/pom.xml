@@ -20,7 +20,7 @@
 		    <url>https://jitpack.io</url>
 		</repository>
 	</repositories>
-<dependencies>
+	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -270,7 +270,13 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-websocket</artifactId>
 		    <version>${org.springframework-version}</version>
-		</dependency>    	
+		</dependency>
+		<!-- 엑셀 --> 
+		<dependency>
+			 <groupId>org.apache.poi</groupId>
+		  	 <artifactId>poi-ooxml</artifactId>
+			<version>3.7</version>
+		</dependency>   	
 	</dependencies>	
     <build>
         <plugins>

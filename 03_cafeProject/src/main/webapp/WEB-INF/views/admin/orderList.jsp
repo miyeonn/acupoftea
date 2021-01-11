@@ -24,10 +24,13 @@
 			<!-- 사이드바로 분리 -->
 			<jsp:include page="/WEB-INF/views/common/leftSide.jsp" />			
 			<!-- 컨텐츠섹션으로 분리 -->
-			<div class="col-sm-8 content">
-				<div class="row">
-					<div class="admin-header d-flex flex-column justify-content-center align-items-center" width="100%">
-					     <div class="d-flex pr-2 justify-content-center align-items-center" width="100%">
+			<div class="col-sm-8 content border">				
+					<div class="admin-header border d-flex flex-column " >
+					
+						<div class="d-flex justify-content-end mt-5 mb-0">
+							<button class="btn btn-success  mr-2" onclick="location.href='${path}/admin/excelDown';">Excel</button>
+						</div>					
+					     <div class="d-flex  justify-content-center align-items-center" width="100%">	
 							<table class="table table-bordered">
 								<tr>
 									<td>주문번호</td>
@@ -60,7 +63,7 @@
 							
 						</div>   
 					</div>
-				</div>	
+					
 			</div>
 		
 			<!-- 오른쪽여백으로 분리 -->
@@ -85,7 +88,16 @@ function fn_cancelPort(str){
 	})
 		
 }
+/* function excelDown(){
+	$.ajax({
 
+		type:"get",
+		url:"${path}/admin/excelDown",
+		success : function(data){ messageJs.alertMeassge(data); }
+
+		});
+}
+ */
 
 
 

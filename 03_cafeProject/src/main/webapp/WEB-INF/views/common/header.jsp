@@ -20,41 +20,35 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- 결제api -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" ></script>
+ <!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/b5f4d53f14.js" crossorigin="anonymous"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- web socket -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR:wght@500&family=Noto+Serif+KR&display=swap" rel="stylesheet">
+  <link href="${path }/resources/css/one-page-wonder.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>메인 홈</title>
 <style>
-header{
-height:220px;
 
-}
-	@font-face
-	{
-	src:url("${path}/resources/fonts/Pacifico-Regular.ttf");
-	font-family:"pcrr";
-	}
+
 	 #title
 	 {
-	 	font-family:"pcrr";
-	 	color:#A01C32;
+	 	font-family:'Nanum Myeongjo', serif;;
+	 	color:white;
 	 	text-decoration:none;
 	 }
-	 .header-wrap{
-	 background-image:linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ),url("${path}/resources/img/main/coffeemain.jpg");
-	 }
 
-	#myPage_ul{
-	min-width:300px;
-	
-	text-align:center;
-	}
-	.dropmenu{
-	background-color:#white;
-	}
+
+
 	.dropmenu ul ul{
 	position:absolute;
 	display:none;
@@ -62,7 +56,7 @@ height:220px;
 	}
 	.dropmenu ul ul li{
 	display:block;
-	background-color:#a1775a;
+	background-color:rgba(0,0,0,.7);
 	color:blue;
 	}
 	.dropmenu ul li{
@@ -78,28 +72,29 @@ height:220px;
 	line-height:30px;
 	
 	}
-	.dropmenu ul li a:hover{
-	background-color:#f4d35d;
-	
-	
-	}
-html,body{height:100%}
-body{margin:0}
-.container-fluid{min-height:100%;padding-bottom:1.9em}
-#content{padding-bottom:1.9em}
-.footer{margin-top:-1.9em;height:1.9em}
-}
+
 
 </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
-<header >
- 	<div class="header-wrap" style="height:100%">
- 		<div id="socketAlert" class="alert alert-success" style="display:none;">
-		</div>
-		<div class="head dropmenu">
-			 <ul class="nav justify-content-end mr-5 " id="myPage_ul">
-			 		<c:if test="${loginUser!=null && loginUser.member_id ne 'aldus9302@gmail.com' }">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="${path }/">A CUP OF TEA.</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse dropmenu" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        	<c:choose>
+	        	<c:when test="${loginUser==null }">
+		          <li class="nav-item">
+		            <a class="nav-link" href="${path}/user/joinUser">Sign Up</a>
+		          </li>
+		          <li class="nav-item">
+		            <a class="nav-link" href="${path }/user/login">Log In</a>
+		          </li>
+	          	</c:when>
+	          	<c:when test="${loginUser!=null && loginUser.member_id ne 'aldus9302@gmail.com' }">          		
 				    <li class="nav-item"><a class="nav-link">마이페이지</a>
 				    	<ul>
 				    		<li class="nav-item"><a class="nav-link" href="${path }/user/myInfo?memberNo=${loginUser.member_no }">내정보관리</a></li>
@@ -108,36 +103,34 @@ body{margin:0}
 				    		<li class="nav-item"><a class="nav-link" href="${path }/order/myOrder?memberNo=${loginUser.member_no }">결제내역</a></li>
 				    	</ul>
 				    </li>
-					</c:if>
-				  	<c:if test="${loginUser.member_id eq'aldus9302@gmail.com' }">
-				  		<li class="nav-item mt-1">
-				  			<button type="button" class="btn btn-light">
-								 <i class="far fa-bell"></i> <span class="badge badge-danger">4</span>
-								</button>
-				  		</li>
-					    <li class="nav-item">
-					      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
-					    </li>
-				    </c:if>   
-				    <li class="nav-item">|</li>
-				    <c:if test="${loginUser!=null }">
-					    <li class="nav-item">
-					      <a class="nav-link" href="${path }/user/logout">로그아웃</a>
-					    </li>
-				    </c:if>
-				    <c:if test="${loginUser==null }">
-					    <li class="nav-item">
-					      <a class="nav-link" href="${path }/user/login">로그인/회원가입</a>
-					    </li>
-				    </c:if>
-			 </ul>
-		</div>
-		<div class="text-center " >
-		  <h1 id="title"><a id="title" href="${path}/home">A CUP OF TEA</a></h1>
-		  <br>
-		  <p class="">내 스타일의 카페와 커피를 만나보세요.</p> 
-		</div>
-	</div>
+				</c:when>
+			  	<c:when test="${loginUser.member_id eq'aldus9302@gmail.com' }">
+			  	<!-- 	<li class="nav-item mt-1">
+			  			<button type="button" class="btn btn-light">
+							 <i class="far fa-bell"></i> <span class="badge badge-danger">4</span>
+							</button>
+			  		</li> -->
+				    <li class="nav-item">
+				      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
+				    </li>
+			    </c:when>
+			</c:choose>   
+			    <c:if test="${!empty loginUser }">
+				    <li class="nav-item">
+				      <a class="nav-link" href="${path }/user/logout">로그아웃</a>
+				    </li>
+			    </c:if>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<header class="masthead text-center text-white">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0" id="title">A CUP OF TEA .</h1>
+        <h5 class="mt-4 mb-0" style="color:#8c5a53;font-family:'Noto Serif KR', serif;">내 스타일의 카페와 커피를 만나보세요.</h5>
+      </div>
+    </div>
 </header>
 <script>
 $(".dropmenu ul li").hover(function(){

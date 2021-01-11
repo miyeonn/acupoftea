@@ -3,9 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 <style>
 	.hometext-title{
-	 
+	 font-family:'Noto Sans KR', sans-serif;
 	
 	}
     .card-img-top:hover{
@@ -19,13 +20,14 @@
 	 
 	 }
  	.btns {
+ 		border:solid 1px black;
 	  height: 380px;
 	  width: 80px;
 	  background: none;
-	  border: none;
+	  /* border: none; */
 	  font-size: 28px;
 	  font-weight: 800;
-	  color :#f4d35d;
+	  color :#8c5a53;
 	  z-index: 9999;
 	  cursor:pointer;
 	}
@@ -80,6 +82,7 @@ transition:left 0.5s ease-out;
 
 
 </style>
+
 <section>
 	<div class="container-fluid">
 		<div class="row">
@@ -90,15 +93,14 @@ transition:left 0.5s ease-out;
 			<div class="col-sm-8 content">
 			 	<div class="row">
 			 		
-			 	
-			 		<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-			 		<div class="col-sm-10 mt-3">
-
-				 		<div>
+			 		<div class="col-sm-12 mt-3 border">
+				 		<div class="border ">
 				 			<h4 class="hometext-title ml-3"><b>최근 추가된 카페</b></h4>
-				 			<div class="d-flex justify-content-around pl-4 pr-4">
-				 					<button class="left btns">&lt;</button>
-				 					<div class="slide-wrapper">
+				 			<div class="d-flex  pl-4 pr-4 ">
+				 					<div class="ml-5">
+				 					<button class="left btns "><i class="fas fa-angle-left"></i></button>
+				 					</div>
+				 					<div class="slide-wrapper border">
 					 					<div class=" d-flex slides">
 					 						<c:forEach items="${cafeList }" var="c" varStatus="status">
 											  	<div class="card-container mt-3  ">
@@ -115,14 +117,16 @@ transition:left 0.5s ease-out;
 											</c:forEach>							
 										</div>
 									</div>
-									<button  class="right btns" >&gt;</button>
+									<button  class="right btns" ><i class="fas fa-angle-right"></i></button>
 							</div>
 				 		</div>
 				 		<hr/>
 		 		 		<div>
 				 			<h4 class="hometext-title ml-3"><b>인기 아이템</b></h4>
 								<div class="d-flex justify-content-around pl-4 pr-4">
-				 					<button class="item-left btns">&lt;</button>
+									<div class="ml-5">
+				 					<button class="item-left btns"><i class="fas fa-angle-left"></i></button>
+				 					</div>
 				 					<div class="slide-wrapper">
 					 					<div class=" d-flex item_slides">
 					 						<c:forEach items="${coffeeList }" var="cf">
@@ -141,11 +145,11 @@ transition:left 0.5s ease-out;
 											</c:forEach>						
 										</div>
 									</div>
-									<button  class="item-right btns" >&gt;</button>
+									<button  class="item-right btns" ><i class="fas fa-angle-right"></i></button>
 							</div>
 				 		</div> 
 			 		</div>
-			 	
+			 		
 			 	</div>
 			 
 			</div>
