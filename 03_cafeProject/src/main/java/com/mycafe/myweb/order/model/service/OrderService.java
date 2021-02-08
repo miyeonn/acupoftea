@@ -17,7 +17,7 @@ public interface OrderService {
 
 	List<CartList> selectCart(int parseInt);
 
-	List<CartList> selectCartBygoodsNo(int[] goodsNo);
+	List<CartList> selectCartBygoodsNo(int[] goodsNo, int memeberNo);
 
 	int insertPayment(Payment pay);
 

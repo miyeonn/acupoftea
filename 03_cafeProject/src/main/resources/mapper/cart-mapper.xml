@@ -17,9 +17,9 @@
 	
 	</update>
 	
-	<select id="selectByGoodsNo" parameterType="_int" resultType="com.mycafe.myweb.order.model.vo.CartList">
+	<select id="selectByGoodsNo" parameterType="map" resultType="com.mycafe.myweb.order.model.vo.CartList">
 		SELECT GOODS_NO,CART_NO,GOODS_QTY,COFFEE_NO,COFFEE_TITLE,COFFEE_PRICE,MAIN_IMAGE,CATEGORY,GOODS_STOCK 
-		FROM CART JOIN COFFEE USING(GOODS_NO) JOIN GOODS USING(GOODS_NO) WHERE CART_STATE='Y' AND GOODS_NO=#{goodsNo}
+		FROM CART JOIN COFFEE USING(GOODS_NO) JOIN GOODS USING(GOODS_NO) WHERE CART_STATE='Y' AND GOODS_NO=#{goodsNo} AND MEMBER_NO=#{memberNo}
 	</select>
 	<update id="deleteCart" parameterType="_int" >
 		 UPDATE CART SET CART_STATE='N' WHERE CART_NO=#{cartNo}

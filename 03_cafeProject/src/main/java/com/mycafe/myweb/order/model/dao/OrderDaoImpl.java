@@ -1,5 +1,6 @@
 package com.mycafe.myweb.order.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,9 +44,13 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public CartList selectCartBygoodsNo(int goodsNo, SqlSessionTemplate session) {
+	public CartList selectCartBygoodsNo(int goodsNo,int memberNo, SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectOne("cart.selectByGoodsNo",goodsNo);
+		Map map=new HashMap();
+		map.put("goodsNo", goodsNo);
+		map.put("memberNo",memberNo);
+		System.out.println("goodsNo:"+goodsNo);
+		return session.selectOne("cart.selectByGoodsNo",map);
 	}
 
 

@@ -20,7 +20,7 @@
 	 
 	 }
  	.btns {
- 		border:solid 1px black;
+ 	   border: none;
 	  height: 380px;
 	  width: 80px;
 	  background: none;
@@ -87,20 +87,20 @@ transition:left 0.5s ease-out;
 	<div class="container-fluid">
 		<div class="row">
 			<!-- 사이드바로 분리 -->
-			<div class="col-sm-2 content"></div>
+			<jsp:include page="/WEB-INF/views/common/leftSide.jsp" />
 			
 			<!-- 컨텐츠섹션으로 분리 -->
 			<div class="col-sm-8 content">
 			 	<div class="row">
 			 		
-			 		<div class="col-sm-12 mt-3 border">
-				 		<div class="border ">
+			 		<div class="col-sm-12 mt-3 ">
+				 		<div class=" ">
 				 			<h4 class="hometext-title ml-3"><b>최근 추가된 카페</b></h4>
 				 			<div class="d-flex  pl-4 pr-4 ">
 				 					<div class="ml-5">
 				 					<button class="left btns "><i class="fas fa-angle-left"></i></button>
 				 					</div>
-				 					<div class="slide-wrapper border">
+				 					<div class="slide-wrapper ">
 					 					<div class=" d-flex slides">
 					 						<c:forEach items="${cafeList }" var="c" varStatus="status">
 											  	<div class="card-container mt-3  ">
@@ -111,7 +111,7 @@ transition:left 0.5s ease-out;
 												    	<div class="card-body">
 												      		<h4 class="card-title">${c.cafe_title}</h4>
 												      		<p class="card-text">서울시 연남동</p>	
-												    	</div>
+												    	</div>  
 												  	</div>
 												</div>
 											</c:forEach>							

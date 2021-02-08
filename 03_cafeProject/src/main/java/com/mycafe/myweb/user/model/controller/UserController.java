@@ -57,6 +57,11 @@ public class UserController {
 		
 		return "user/jusoPopup";
 	}
+	@RequestMapping("/user/joinSuccess")
+	public String joinSuccess() {
+		
+		return "user/joinSuccess";
+	}
 
 	@RequestMapping("/user/joinUserEnd")
 	public String joinUserEnd(@RequestParam Map param,Model m) {
@@ -76,7 +81,7 @@ public class UserController {
 			m.addAttribute("loc", "/user/joinUser");
 		}else {
 			m.addAttribute("msg", "회원가입성공!");
-			m.addAttribute("loc", "/");
+			m.addAttribute("loc", "/user/joinSuccess");
 		}
 		return page;
 		
@@ -223,22 +228,26 @@ public class UserController {
 	  Bookmark bks=new Bookmark();
 	  ModelAndView mv=new ModelAndView();
 	  String cafeNo=request.getParameter("cafeNo");
-	  System.out.println("카페번호"+cafeNo);
-	  if(cafeNo!=null) {
-		  System.out.println("카페실행");
-	  bk.setCafe_no(Integer.parseInt(cafeNo));
-	  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
-	  
-	  bks=bkService.selectBookMark(bk);
-	  }else {
-		  //bookmark goods등록
-		  System.out.println("굿즈실행");
-		  bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
-		  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
-		  
-		  bks=bkService.selectBookMark(bk);
+	  String userNo=request.getParameter("userNo");
+	  System.out.println("유저no"+userNo);
+	  if(userNo!=null||userNo!=" "){
+			  if(cafeNo!=null) {
+				  //카페 북마크 등록
+				  System.out.println("카페실행");
+			  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
+			  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+			  
+			  bks=bkService.selectBookMark(bk);
+			  }else {
+				  //상품 북마크 등록
+				  System.out.println("굿즈실행");
+				  bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
+				  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+				  
+				  bks=bkService.selectBookMark(bk);
+			  }
+			    
 	  }
-	    
 	  System.out.println(bks);
 	  
 	  
@@ -249,7 +258,8 @@ public class UserController {
 	  mv.setViewName("jsonView"); 
 	  return mv; 
 	  }
-	 
+
+
 	
 	
 	

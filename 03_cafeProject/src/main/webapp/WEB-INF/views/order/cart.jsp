@@ -9,12 +9,16 @@
  	margin-right:50px;
  	padding-top:5px;
  }
+ .W-container{
+ 	min-height:500px;
+ 
+ }
 
 </style>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <jsp:include page="/WEB-INF/views/user/sidebar_myPage.jsp" />
 <section>
-	<div class="row bg-light pt-4">
+	<div class="W-container row bg-light pt-4" >
 		<div class="col-sm-2 content"></div>
 		<div class="col-sm-6">
 			<div class="row-vh d-flex flex-column">
@@ -32,10 +36,10 @@
 				<c:forEach items="${list }" var="c">
 					<div class="border d-flex form-check bg-white rounded-lg mb-2" >
 						
-						<input type="checkbox" name="cartCheck" class="form-check-input" value="${c.goods_no }" />
+						<input type="checkbox" name="cartCheck" class="mt-1 form-check-input" value="${c.goods_no }" />
 						<input type="hidden" name="cartNo" class="form-check-input" value="${c.cart_no }" />
 						<img class="orderImg"src="/img/cafe/${c.main_image}" width="150px;" height="150px;"/>
-						<div>
+						<div class="ml-3 mt-2">
 							<h6>${c.coffee_title }</h6>
 							<div>금액:<span class="goodsPrice">${c.coffee_price }</span></div>
 							<div id="">
@@ -75,11 +79,11 @@
 		 		<br/>
 		 		<div class="d-flex">
 		 			<h6 class="label"><b>결제금액</b></h6>
-		 			<span name="OrderTotalPrice">0</span><span>원</span>
+		 			<span id="OrderTotalPrice">0</span><span>원</span>
 		 		</div>
 		 	</div>
 		 	<div class="mt-3">
-		 		<button id="CartAddOrder" class="btn btn-primary btn-block" onclick="fnAddOrder()";>n개 상품 결제하기</button>
+		 		<button id="CartAddOrder" class="btn btn-primary btn-block" onclick="fnAddOrder();"><span id="itemCount">0</span>개 상품 결제하기</button>
 		 	</div>
 		</div>
 	
@@ -243,6 +247,7 @@ function CountAmount(){
 	var checkbox=document.getElementsByName('cartCheck');
 	var selectbox=document.getElementsByName('qtySelector');
 	var priceArr=document.getElementsByClassName('goodsPrice');//상품가격 전부 가져오기
+	var deliveryFee=document.getElementById('deliveryFee');
 	
 	//각각의 (금액 *수량)한것을 모두 합산
 	var selectArr=new Array();
@@ -265,10 +270,21 @@ function CountAmount(){
 	
 	console.log('토탈금액:'+totalPrice);
 	
-	
+	var itemCount=document.getElementById('itemCount');
+	itemCount.innerHTML=price.length;
+	var dFee=2500;
+	deliveryFee.innerHTML=addComma(dFee);
 	var totalInput=document.querySelector('span[id="cartTotalPrice"]');
 	
-	totalInput.innerHTML=addComma(totalPrice);
+	var OrderTotalPrice=document.querySelector('span[id="OrderTotalPrice"]');
+	
+	totalInput.innerHTML=addComma(totalPrice);//총상품 금액
+	
+	OrderTotalPrice.innerHTML=addComma(Number(totalPrice)+delComma(deliveryFee.innerHTML));
+
+			
+	
+	
 }
 
 function addComma(num) {
@@ -276,6 +292,10 @@ function addComma(num) {
 	  var regexp = /\B(?=(\d{3})+(?!\d))/g;
 	  return num.toString().replace(regexp, ',');
 	}
+function delComma(num){
+	return parseInt(num.replace(/,/g,""));
+}	
+	
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

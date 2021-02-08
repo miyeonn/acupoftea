@@ -5,7 +5,7 @@
 			SELECT *FROM CAFE
 	</select>
 	<select id="selectCafeAll" resultType="com.mycafe.myweb.cafe.model.vo.Cafe">
-		SELECT *FROM CAFE 
+		SELECT *FROM CAFE ORDER BY CAFE_NO DESC
 	</select>
 	<select id="selectCafeDetail" resultType="com.mycafe.myweb.cafe.model.vo.CafeAndFile">
 		SELECT DISTINCT CAFE_NO,CAFE_TITLE,CAFE_ADDRESS,CAFE_HOURS,CAFE_PAGE,CAFE_TEL,MAIN_IMAGE

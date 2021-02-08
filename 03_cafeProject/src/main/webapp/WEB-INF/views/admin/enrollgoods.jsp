@@ -20,12 +20,12 @@
 <jsp:include page="/WEB-INF/views/admin/sidebar-admin.jsp" />
 <section>
 <div class="container-fluid">
-		<div class="row">
+		<div class="row ">
 			<!-- 사이드바로 분리 -->
 			<jsp:include page="/WEB-INF/views/common/leftSide.jsp" />			
 			<!-- 컨텐츠섹션으로 분리 -->
 			<div class="col-sm-8 content">
-				<div class="row">
+				<div class="row justify-content-center">
 					<div class="admin-header d-flex flex-column justify-content-center align-items-center">
 					     <div class="d-flex pr-2">
 							<form action="${path }/admin/enrollGoodsEnd" method="post" enctype="multipart/form-data" >

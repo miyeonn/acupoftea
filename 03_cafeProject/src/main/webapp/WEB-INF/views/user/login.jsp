@@ -14,6 +14,13 @@
  .container-fluid{
  	margin-bottom:70px;
  }
+  #loginTitle
+	 {
+	 	font-family:'Nanum Myeongjo', serif;;
+	 	color:brown;
+	 	text-decoration:none;
+	 }
+ 
 
 </style>
 <section>
@@ -30,7 +37,7 @@
 			 		<div class="col-sm-4 container login-container">
 						<form action="${path }/user/loginEnd" id="loginform" method="post" >
 							 <div id="loginBox" class="d-flex flex-column  justify-content-center">
-							 	<h1 id="title" class="text-center mb-3">LOGIN</h1>
+							 	<h1 id="loginTitle" class="text-center mb-3">LOGIN</h1>
 					 			<div class="loginContent">
 					 				<input type="text" class="form-control" name="id" placeholder="아이디"/>
 					 			</div>

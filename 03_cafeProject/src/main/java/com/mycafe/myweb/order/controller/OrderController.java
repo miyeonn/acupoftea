@@ -150,8 +150,9 @@ public class OrderController {
 		  System.out.println("user가져옴:"+user);
 		  
 		//goods번호로 cart번호랑 goods_title 가져오기
-		  List<CartList> lists =service.selectCartBygoodsNo(goodsNo);
-		  
+		
+		  List<CartList> lists=service.selectCartBygoodsNo(goodsNo,user.getMember_no());
+		
 		 for(int i=0;i<lists.size();i++) {
 			 lists.get(i).setGoods_qty(qty[i]);
 			 

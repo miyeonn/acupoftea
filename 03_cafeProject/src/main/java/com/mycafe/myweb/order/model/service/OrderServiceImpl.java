@@ -52,12 +52,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<CartList> selectCartBygoodsNo(int[] goodsNo) {
+	public List<CartList> selectCartBygoodsNo(int[] goodsNo,int memberNo) {
 		// TODO Auto-generated method stub
 		List<CartList> lists=new ArrayList<CartList>();	
 	
 		for(int i=0;i<goodsNo.length;i++) {
-			lists.add(dao.selectCartBygoodsNo(goodsNo[i],session));
+			lists.add(dao.selectCartBygoodsNo(goodsNo[i],memberNo,session));
 			
 		}
 		

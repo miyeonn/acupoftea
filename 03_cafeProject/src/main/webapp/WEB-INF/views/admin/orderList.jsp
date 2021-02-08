@@ -25,7 +25,7 @@
 			<jsp:include page="/WEB-INF/views/common/leftSide.jsp" />			
 			<!-- 컨텐츠섹션으로 분리 -->
 			<div class="col-sm-8 content border">				
-					<div class="admin-header border d-flex flex-column " >
+					<div class="admin-header  d-flex flex-column " >
 					
 						<div class="d-flex justify-content-end mt-5 mb-0">
 							<button class="btn btn-success  mr-2" onclick="location.href='${path}/admin/excelDown';">Excel</button>

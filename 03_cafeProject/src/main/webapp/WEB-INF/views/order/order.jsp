@@ -72,7 +72,7 @@
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">주소</div>
-						<div><input type="text" class="form-control" onclick="goPopup();" name="address" id="address" value="${user.address }"></div>
+						<div>${user.address }</div>
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">상세주소</div>
@@ -80,7 +80,7 @@
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">휴대전화</div>
-						<div><input type="text" class="form-control" name="receiverTel" id="receiverTel" value="${user.phone }"></div>
+						<div  name="receiverTel" id="receiverTel">${user.phone }</div>
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">배송메모</div>
@@ -90,7 +90,8 @@
 				<hr/>
 				<!-- 주문자정보 -->
 				<div class="row-vh d-flex flex-column mb-4">
-					<div class="d-flex mb-2"><h4 style="width:100px;margin-right:60px;"><b>주문자</b></h4><button class="btn btn-outline-primary btn-sm">배송자 정보와 동일</button></div>
+					<div class="d-flex mb-2"><h4 style="width:100px;margin-right:60px;"><b>주문자</b></h4>
+					<button onclick="sameInfo();" class="btn btn-outline-primary btn-sm">배송자 정보와 동일</button></div>
 					<div class="d-flex input-container">
 						<div class="label">이름</div>
 						<div><input type="text" class="form-control" name="sender"  id="sender"></div>
@@ -121,10 +122,7 @@
 					<div></div>
 				</div>
 				<hr/>  -->
-				<div class="row-vh d-flex flex-column mb-4">
-					<div><input type="checkbox" onclick="">결제 진행 필수사항 동의</div>
-					
-				</div>
+			 
 				<div class="row-vh d-flex flex-column mb-4">
 					<div><button class="btn btn-primary btn-block" onclick="payOrder();"><b>결제하기</b></button></div>
 					
@@ -137,21 +135,7 @@
 	</div>
 </section>
 <script>
-/* function goPopup(){
-	var address=document.getElementById("address").value;
-	if(address==""){
-	var pop = window.open("${path}/user/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-	}
-	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
-}
 
-function jusoCallBack(roadFullAddr,zipNo){
-	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-
-	document.orderfrm.zipcode.value = zipNo;
-	document.orderfrm.address.value = roadFullAddr;		 
-} */
 function goPopup(){
 new daum.Postcode({
     oncomplete: function(data) {
@@ -294,8 +278,19 @@ function payOrder(){
 }
 
 
+//주문자와 배송자 정보가 동일할 경우
 
 
+
+
+function sameInfo(){
+	console.log("sameInfo들어옴");
+	var sender=document.getElementById("sender");
+	var senderTel=document.getElementById("senderTel");
+	sender.value=document.getElementById("receiver").value;
+	senderTel.value=document.getElementById("receiverTel").innerHTML;
+	
+}
 
 
 

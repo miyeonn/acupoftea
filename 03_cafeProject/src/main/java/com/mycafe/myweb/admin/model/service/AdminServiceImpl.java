@@ -113,15 +113,15 @@ public class AdminServiceImpl implements AdminService {
 	    
 	            cell = row.createCell(0);
 	            cell.setCellStyle(headStyle);
-	            cell.setCellValue("번호");
+	            cell.setCellValue("오더번호");
 	    
 	            cell = row.createCell(1);
 	            cell.setCellStyle(headStyle);
-	            cell.setCellValue("이름");
+	            cell.setCellValue("오더날짜");
 	    
 	            cell = row.createCell(2);
 	            cell.setCellStyle(headStyle);
-	            cell.setCellValue("제목");
+	            cell.setCellValue("상품명");
 	    
 	            // 데이터 부분 생성
 	            for(OrderList ol: list) {

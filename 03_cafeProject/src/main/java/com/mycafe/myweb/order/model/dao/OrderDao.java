@@ -23,7 +23,7 @@ public interface OrderDao {
 
 	int addCountcart(Cart cart, SqlSessionTemplate session);
 
-	CartList selectCartBygoodsNo(int goodsNo, SqlSessionTemplate session);
+	CartList selectCartBygoodsNo(int goodsNo, int memberNo, SqlSessionTemplate session);
 
 	int insertPayment(Payment pay, SqlSessionTemplate session);
 	

@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="coffee">
 	<select resultType="com.mycafe.myweb.coffee.model.vo.Coffee" id="selectCafeAll">
-			SELECT *FROM coffee
+			SELECT *FROM coffee ORDER BY COFFEE_NO DESC
 	</select>
 	<insert id="enrollGoodsCoffee">
 		INSERT INTO COFFEE VALUES (COFFEE_NO_SEQ.NEXTVAL,#{goodsNo},#{goodsTitle},#{goodsBrand},
 		#{goodsPrice},#{goodsCom},#{goodsMachine},#{goodsOrigin},#{goodsFlavor},#{goodsTaste},#{mainImage})	
 	</insert>
 	<select id="selectCoffee" parameterType="_int" resultType="com.mycafe.myweb.coffee.model.vo.CoffeeAndFile">
-		SELECT * FROM COFFEE WHERE COFFEE_NO=#{coffeeNo}
+		SELECT * FROM COFFEE WHERE COFFEE_NO=#{coffeeNo} 
 	</select>
 	<select id="selectFiles" parameterType="_int" resultType="String">
 		SELECT FILE_NAME FROM GOODS_FILE JOIN COFFEE USING(GOODS_NO) WHERE COFFEE_NO=#{coffeeNo}

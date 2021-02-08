@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <style>
 	#mainPhotoDiv{
 		 width:500px ;
@@ -69,7 +70,6 @@
 			<!-- 컨텐츠섹션으로 분리 -->
 			<div class="col-sm-8 content">
 				<div class="row">
-					<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 			
 				<!-- 커피사진,커피 관련내용 -->					
 					<div class=" col-sm-7 mt-3">
@@ -143,7 +143,7 @@
 						  	</div>
 						  	<div class="text-title">가격:<span name="goodsPrice">${coffee.coffee_price }</span></div>
 						  	<hr/>
-						  	<div class="text-title">재고 10개이하일경우 품절임박표시</div>
+						  	<div class="text-title"><!-- 재고 10개이하일경우 품절임박표시 --></div>
 						  	<div class="d-none" id="stockCount">10</div>
 						  	<div class="text-title">갯수선택</div>
 						  	<div class="d-flex">

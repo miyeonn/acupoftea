@@ -49,6 +49,9 @@
 		margin-left:70px;
 		
 	}
+	.map-container{
+		margin-left:40px;
+	}
 
 	.btns {
 	  height: 30px;
@@ -68,7 +71,7 @@
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <section>
 	<div class="container-fluid ">
 		<div class="row ">
@@ -78,9 +81,7 @@
 			<!-- 컨텐츠섹션으로 분리 -->
 			<div class="col-sm-8 content">
 				<!-- 메인사진 &&설명 -->
-				<div class="row">
-					<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
-							
+				<div class="row">						
 						<div class=" col-sm-7 mt-3 mb-3">
 							<div class="d-flex mb-3">
 								
@@ -95,7 +96,7 @@
 								<div id="mainPhotoDiv" class="mx-auto img-fluid rounded" style="background-image:url('/img/cafe/${cafe.main_image}')" ></div>
 						  	</div>
 						  	<hr/>
-						  	<div class="">
+						  	<div class="map-container">
 						  		<div class="mb-2"style="font-size:25px;">위치정보</div>
 								<div id="map" style="width:650px;height:400px;"></div>
 							</div> 	
@@ -242,6 +243,7 @@ console.log(bookmark);
 
 //북마크에 저장되어있는 카페인지 확인
 $(function(){
+	if(userNo){
 			$.ajax({
 				url:'${path}/user/selectBookMark',
 				data:insertList,
@@ -259,8 +261,8 @@ $(function(){
 					
 				}			
 				
-			})
-		
+				})
+			}
 		})  
  
 </script>

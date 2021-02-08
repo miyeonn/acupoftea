@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <style>
-    div#userId-container span.guide{
+    .guide{
    		display:none;
-   		font-size: 14px;
-   		position:absolute;  
-   		top:12px; right:10px;
+   /* 		font-size: 14px;
+   		position:absolute;   */
+   		
 	} 
 
 </style>
@@ -37,14 +37,19 @@
 				                    </h6>
 				                      <div class="mb-3" id="userId-container">       
 				                        <input style=" border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;" 
-				                        		type="text" class="form-control" placeholder="아이디를 4글자 이상 입력하세요"  name="userId" id="userId" >
-				                        <span class="guide ok">이 아이디는 사용이 가능합니다.</span>
-										<span class="guide error">이미 사용중인 아이디입니다.</span>
+				                        		type="text" class="form-control" placeholder="아이디를 4글자 이상 입력하세요"  name="userId" id="userId" >				                    
 				                      </div>
+				                      <div class="alert alert-danger guide letter">아이디를 4글자 이상 입력하세요.</div>		
+				                      <div class="alert alert-success guide ok">이 아이디는 사용이 가능합니다.</div>
+									  <div class="alert alert-danger guide error">이미 사용중인 아이디입니다.</div>
 				                        <script>
 				                          $(function(){
 				                			$("#userId").keyup(function(){
 				                				const id=$(this).val();
+				                				if(id.trim().length<4){
+				                					$(".guide.letter").show();
+													return;
+												}
 				                				 if(id.trim().length>4){ 
 				                					$.ajax({
 				                						url:"${path}/user/checkId",
@@ -92,8 +97,8 @@
 				                        <input style=" border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;" 
 				                        		type="password" class="form-control" placeholder="비밀번호 확인" size="30" name="pwck" id="pwck" >
 				                      </div>
-				                        		<div class="alert alert-success" id="alert-success2">비밀번호가 일치합니다.</div>
-				                        		<div class="alert alert-danger" id="alert-danger2">비밀번호가 일치하지 않습니다.</div>
+				                      <div class="alert alert-success" id="alert-success2">비밀번호가 일치합니다.</div>
+				                      <div class="alert alert-danger" id="alert-danger2">비밀번호가 일치하지 않습니다.</div>
 				                      <br>
 				                      <h6><i class="icon far fa-grin"></i>&nbsp;이름</h6>
 				                      <div class="input-group mb-3">
@@ -127,7 +132,7 @@
 			 	</div> 
 			</div>
 			<!-- 오른쪽여백으로 분리 -->
-			<jsp:include page="/WEB-INF/views/common/rightSide.jsp" />
+		<%-- 	<jsp:include page="/WEB-INF/views/common/rightSide.jsp" /> --%>
 		</div>
 	</div>
 </section>
@@ -201,7 +206,7 @@
 	 });
 	//주소 입력 api
 	
-	
+/* 	
 function goPopup(){
 	// 주소검색을 수행할 팝업 페이지를 호출합니다.
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
@@ -216,7 +221,24 @@ function jusoCallBack(roadFullAddr){
 	console.log(roadFullAddr);
 	document.joinfrm.address.value = roadFullAddr;		
 }
-
+ */
+ function goPopup(){
+	 new daum.Postcode({
+	     oncomplete: function(data) {
+	         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	         // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	           if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                     addr = data.roadAddress;
+	                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                     addr = data.jibunAddress;
+	                 }
+	         
+	          // document.getElementById('zipcode').value = data.zonecode;
+	           document.getElementById('address').value = addr;
+	         
+	     }
+	 }).open();
+	 }
 
 
 </script>

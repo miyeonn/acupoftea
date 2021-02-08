@@ -34,7 +34,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR:wght@500&family=Noto+Serif+KR&display=swap" rel="stylesheet">
-  <link href="${path }/resources/css/one-page-wonder.min.css" rel="stylesheet">
+ <link href="${path }/resources/css/one-page-wonder.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>메인 홈</title>
 <style>
@@ -42,7 +42,7 @@
 
 	 #title
 	 {
-	 	font-family:'Nanum Myeongjo', serif;;
+	 	font-family:'Nanum Myeongjo', serif;
 	 	color:white;
 	 	text-decoration:none;
 	 }
@@ -79,7 +79,7 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="${path }/">A CUP OF TEA.</a>
+      <a class="navbar-brand" href="${path }/home">A CUP OF TEA.</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

@@ -28,11 +28,10 @@ public class HomeController {
 	@Autowired
 	private CoffeeService cService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-	
+		System.out.println("안타니");
 		//최근 추가된 카페
 		List<Cafe> cafeList=cfService.resentCafe();
 		System.out.println("리스트 가져옴:"+cafeList);
@@ -46,7 +45,7 @@ public class HomeController {
 	@RequestMapping("/home")
 	public ModelAndView home(ModelAndView mv) {
 		
-		
+		System.out.println("안타니2");
 
 		List<Cafe> cafeList=cfService.resentCafe();
 		List<Coffee> coffeelist=cService.selectHot();
