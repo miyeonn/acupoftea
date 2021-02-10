@@ -18,5 +18,11 @@ public interface BookMarkDao {
 
 	List<BookMarkList> selectMyBookmark(SqlSessionTemplate session, int memberNo);
 
+	int deleteBookMark(SqlSessionTemplate session, Bookmark bk);
+
+	List<BookMarkList> selectGoodsList(SqlSessionTemplate session, int memberNo);
+
+	List<BookMarkList> selectCafeList(SqlSessionTemplate session, int memberNo);
+
 
 }

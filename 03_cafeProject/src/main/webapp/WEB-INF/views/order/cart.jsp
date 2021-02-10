@@ -33,6 +33,11 @@
 					</div>
 				</div>
 				<!-- 내 장바구니 반복구문 -->
+				<c:if test="${empty list}">
+					<div class="border text-center pt-5 pb-5" >
+						장바구니가 비어있습니다.
+					</div>
+				</c:if>
 				<c:forEach items="${list }" var="c">
 					<div class="border d-flex form-check bg-white rounded-lg mb-2" >
 						

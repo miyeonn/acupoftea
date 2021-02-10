@@ -42,4 +42,6 @@ public interface OrderService {
 
 	Coffee selectgoods(int goodsNo);
 
+	int updateCart(Map<String, Object> map);
+
 }

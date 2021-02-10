@@ -36,6 +36,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR:wght@500&family=Noto+Serif+KR&display=swap" rel="stylesheet">
  <link href="${path }/resources/css/one-page-wonder.min.css" rel="stylesheet">
 <meta charset="UTF-8">
+<%@ page import="com.mycafe.myweb.user.model.vo.JoinUser" %>
+<%
+	JoinUser loginUser=(JoinUser)session.getAttribute("loginUser");
+%>
 <title>메인 홈</title>
 <style>
 

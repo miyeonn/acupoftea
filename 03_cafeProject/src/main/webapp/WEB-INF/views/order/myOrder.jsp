@@ -9,11 +9,15 @@
  	margin-right:50px;
  	padding-top:5px;
  }
+ .W-container{
+	 min-height:500px;
+ }
  .order-container,.orderlist-container{
  box-shadow: 2px 2px 0 0 #bdbdbd;
      
  }
  .order-container *{
+ 
  	margin-left:20px;
  	margin-top:10px;
  	
@@ -45,7 +49,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <jsp:include page="/WEB-INF/views/user/sidebar_myPage.jsp" />
 <section>
-	<div class="row bg-light pt-4 pb-5">
+	<div class="W-container row bg-light pt-4 pb-5">
 		<div class="col-sm-2 content"></div>
 		<div class="col-sm-8">
 			<!-- 여기는 AJAX로 필터링할 부분! -->
@@ -87,7 +91,7 @@
 				<hr/>	
 				<!-- 내 결제내역 반복구문 -->
 				<div class="d-flex form-check rounded-lg border-bottom ml-3 pr-3" style="width:95%" >				
-					<img class="orderImg" src="${path }/resources/img/capsule.jpg" width="150px;" height="150px;"/>
+					<img class="orderImg" src="${path }/resources/img/" width="150px;" height="150px;"/>
 					<div>
 						<p class="orderlist-text">상품명</p>
 						<p class="orderlist-text">갯수</p>

@@ -144,5 +144,11 @@ public class OrderServiceImpl implements OrderService {
 		return dao.selectgoods(goodsNo,session);
 	}
 
+	@Override
+	public int updateCart(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.updateCart(map,session);
+	}
+
 
 }

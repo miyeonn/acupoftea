@@ -3,7 +3,7 @@
 <mapper namespace="user">
 	<insert id="insertUser" parameterType="map">
 		INSERT INTO MEMBER_TB (MEMBER_NO,MEMBER_ID,PASSWORD,ADDRESS,PHONE,USERNAME) 
-		VALUES(MEMBER_NO_SEQ.NEXTVAL,#{userId},#{userPw},#{address},#{phone},#{userName})
+		VALUES(MEMBER_NO_SEQ.NEXTVAL,#{userId},#{userPw},#{address},#{phone},#{userName},#{zipcode},#{address2})
 	</insert>
 	<select id="checkId" parameterType="String" resultType="com.mycafe.myweb.user.model.vo.JoinUser">
 			SELECT *FROM MEMBER_TB WHERE MEMBER_ID=#{id}

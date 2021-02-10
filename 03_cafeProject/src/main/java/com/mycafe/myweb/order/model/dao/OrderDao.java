@@ -49,5 +49,7 @@ public interface OrderDao {
 
 	Coffee selectgoods(int goodsNo, SqlSessionTemplate session);
 
+	int updateCart(Map<String, Object> map, SqlSessionTemplate session);
+
 
 }

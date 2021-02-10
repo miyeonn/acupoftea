@@ -127,4 +127,10 @@ public class OrderDaoImpl implements OrderDao {
 		return session.selectOne("coffee.selectHots",goodsNo);
 	}
 
+	@Override
+	public int updateCart(Map<String, Object> map, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.update("cart.updateCart",map);
+	}
+
 }

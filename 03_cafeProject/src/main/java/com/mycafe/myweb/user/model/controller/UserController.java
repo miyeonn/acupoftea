@@ -171,7 +171,7 @@ public class UserController {
 	public ModelAndView selectMyBookmark(int memberNo) {
 		ModelAndView mv=new ModelAndView();
 		List<BookMarkList> list=bkService.selectMyBookmark(memberNo);
-		
+		System.out.println(list);
 		mv.addObject("list", list);
 		mv.setViewName("user/myBookmark");
 		  return mv;
@@ -195,18 +195,19 @@ public class UserController {
 	  System.out.println("카페번호:"+request.getParameter("cafeNo"));
 	  String cafeNo=request.getParameter("cafeNo");
 	  int result=0;
-	  if(cafeNo!=null) {
-
-		  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
-		  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
-		  result=bkService.insertBookMark(bk);
-	  }else {
-		  bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
-		  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+		  if(cafeNo!=null) {
 	
-		  result=bkService.insertBookMark(bk);
-		  
-	  }
+			  bk.setCafe_no(Integer.parseInt(request.getParameter("cafeNo")));
+			  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+			  result=bkService.insertBookMark(bk);
+		  }else {
+			  System.out.println("커피상품 북마크 등록");
+			  bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
+			  bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+		
+			  result=bkService.insertBookMark(bk);
+			  
+		  }
 	  
 	  	ModelAndView mv=new ModelAndView();
 		
@@ -258,7 +259,23 @@ public class UserController {
 	  mv.setViewName("jsonView"); 
 	  return mv; 
 	  }
-
+	 
+	 @RequestMapping("/user/deleteBookMark")
+	 public @ResponseBody int deleteBookMark(HttpServletRequest request) {
+		
+		 
+		 //제품 북마크 삭제
+		 Bookmark bk=new Bookmark();
+		 bk.setGoods_no(Integer.parseInt(request.getParameter("goodsNo")));
+		 bk.setMember_no(Integer.parseInt(request.getParameter("userNo")));
+		 
+		 int result=bkService.deleteBookMark(bk);
+		 
+		 
+		 return result;
+		 
+		 
+	 }
 
 	
 	

@@ -16,6 +16,8 @@ public interface BookMarkService {
 
 	List<BookMarkList> selectMyBookmark(int memberNo);
 
+	int deleteBookMark(Bookmark bk);
+
 
 
 }

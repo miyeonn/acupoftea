@@ -100,8 +100,8 @@
 						</div>
 						<div>
 							<div id="goodsDetail" style="height:600px;">
-								<h1>상품정보</h1>
-								
+								<!-- <h1>상품정보</h1>
+								 -->
 							</div>
 							<div id="goodsReview" style="height:600px;">
 								<h1>상품후기</h1>
@@ -151,7 +151,7 @@
 						  		<input type="text" name="pop_out" value="1" readonly="readonly" style="text-align:center;"/>
 						  		<button type ="button" onclick="fnCalCount('p');">+</button>
 						  	</div>
-						  	<div class="text-title">주문금액 :<span name="totalPrice"></span>   원</div>
+						  	<div class="text-title">주문금액 :<span name="totalPrice">0</span>   원</div>
 						  	<div>
 						  		<button class="btn btn-outline-primary" onclick="addCart('${coffee.goods_no}');">장바구니</button>
 						  		<button class="btn btn-primary" onclick="orderNow('${coffee.goods_no}');">바로구매</button>
@@ -257,6 +257,7 @@ function addCart(goodsNo){
 	}	
 }
 //북마크 등록하기
+var bookmark=document.getElementById("bookmark");
 var goodsNo='${coffee.goods_no}';
 var userNo='${loginUser.member_no}';
 var insertList={
@@ -270,25 +271,45 @@ function clickBookMark(goodsNo){
 		alert("로그인후 이용해주세요");
 		location.href="${path}/user/login";
 	}else{
-	$.ajax({
-		url:'${path}/user/insertBookMark',
-		data:insertList,
-		success:function(data){
-			if(data.result>0){
-			alert("북마크 등록 성공");
-			bookmark.className="fas fa-bookmark";
+			if(bookmark.className=="fas fa-bookmark"){
+				//색깔있을경우 이미 저장된것. 클릭시 북마크에서 삭제
+				$.ajax({
+				url:'${path}/user/deleteBookMark',
+				data:insertList,
+				success:function(data){
+					
+					if(data>0){
+						alert("북마크에서 삭제되었습니다");
+						bookmark.className="fas fa-bookmark";
+						location.reload();
+					}else{
+						alert("북마크 삭제 실패");
+					}
+				}
+					
+					
+					
+				})
+				
+				
+				
 			}else{
-				alert("북마크 등록 실패");
-			}
-			}	
-		})
-	}
+					$.ajax({
+							url:'${path}/user/insertBookMark',
+							data:insertList,
+							success:function(data){
+								console.log(data.result);
+								if(data>0){
+									alert("북마크 등록 성공");
+									bookmark.className="fas fa-bookmark";
+								}else{
+									alert("북마크 등록 실패");
+								}
+							}	
+						  })
+				 }	
+		 }
 }
-
-
-
-var bookmark=document.getElementById("bookmark");
-console.log(bookmark);
 
 //북마크에 저장되어있는 카페인지 확인
 $(function(){
@@ -300,7 +321,7 @@ $(function(){
 					if(data.flag==true){
 						//이미 저장되어있음(색깔)
 					
-					 bookmark.className="fas fa-bookmark";
+					 bookmark.className="far fa-bookmark";
 						
 					}else{
 						//

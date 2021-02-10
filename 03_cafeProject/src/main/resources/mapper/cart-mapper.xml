@@ -24,4 +24,7 @@
 	<update id="deleteCart" parameterType="_int" >
 		 UPDATE CART SET CART_STATE='N' WHERE CART_NO=#{cartNo}
 	</update>
+	<update id="updateCart" parameterType="map">
+		UPDATE CART SET CART_STATE='N' WHERE MEMBER_NO=#{memberNo} GOODS_NO=#{goodsNo}
+	</update>
 </mapper>

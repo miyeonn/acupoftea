@@ -208,15 +208,24 @@ public class OrderController {
 		  pay.setMerchant_id(request.getParameter("merchant_uid"));
 		  System.out.println(pay);
 		  result=service.insertPayment(pay);
+		  System.out.println("insertPayment 결과:"+result);
+		  if(result>0) {
+		  //주문완료된 것은 장바구니 테이블에서 지우기(member_no,goods_no)
+			  Map<String,Object> map=new HashMap<String,Object>();
 		  
-		  //주문완료된 것은 장바구니 테이블에서 지우기
-		  
-		  
-		  
-		  
-		
-		  return result;
-		  
+			  for(int i=0;i>goodsNo.length;i++) {
+				  map.put("memberNo",request.getParameter("memberNo"));
+				  map.put("goodsNo",goodsNo[i]);
+				  result=service.updateCart(map);
+			  		}
+			 
+		 	  return result;
+		  }
+		  	else {
+			  return result;
+		  }
+		  //페이지 이동하려면. 
+		  //member 번호만 있으면 됨
 		  
 	  }
 	  
@@ -302,7 +311,15 @@ public class OrderController {
 		return mv;
 		  
 	  }
-	  
+	  @RequestMapping("/order/orderSuccess")
+	  public String orderSuccess() {
+		  return "order/orderSuccess";
+		  
+	  }
+	  @RequestMapping("/order/orderFail")
+	  public String orderFail() {
+		  return "order/orderFail";
+	  }
 	
 
 }

@@ -61,22 +61,22 @@
 				<hr/>
 				<!-- 배송지정보 -->
 				<div class="row-vh d-flex flex-column mb-4">
-					<div class="mb-2"><h4><b>배송지</b></h4></div>
+					<div class="d-flex mb-2"><h4><b>배송지</b></h4><h6 class="ml-3"><a href="" data-toggle="modal" data-target="#myModal">변경하기</a></h6></div>
 					<div class="d-flex input-container">
 						<div class="label">받는분</div>
-						<div><input type="text" class="form-control" name="receiver" id="receiver" value="${user.username }"></div>
+						<div name="receiver" id="receiver">${user.username }</div>
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">우편번호</div>
-						<div><input type="text" class="form-control" onclick="goPopup();" name="zipcode" id="zipcode"></div>
+						<div name="zipcode" id="zipcode">${user.zipcode }</div>
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">주소</div>
-						<div>${user.address }</div>
+						<div name="address" id="address">${user.address }</div>
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">상세주소</div>
-						<div><input type="text" class="form-control" name="address2" id="address2"></div>
+						<div name="address2" id="address2">${user.address2 }</div>
 					</div>
 					<div class="d-flex input-container">
 						<div class="label">휴대전화</div>
@@ -134,6 +134,55 @@
 		<jsp:include page="/WEB-INF/views/common/rightSide.jsp" />
 	</div>
 </section>
+<!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">배송지 변경</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+         		<div class="d-flex input-container">
+						<div class="label">받는분</div>
+						<div><input type="text" class="form-control" name="receiver2" id="receiver2"/></div>
+					</div>
+					<div class="d-flex input-container">
+						<div class="label">우편번호</div>
+						<div><input type="text" class="form-control" name="zipcode2" id="zipcode2" onclick="goPopup();"/></div>
+					</div>
+					<div class="d-flex input-container">
+						<div class="label">주소</div>
+						<div><input type="text" class="form-control" name="addr" id="addr" onclick="goPopup();"/></div>
+					</div>
+					<div class="d-flex input-container">
+						<div class="label">상세주소</div>
+						<div><input type="text" class="form-control" name="addr2" id="addr2"/></div>
+					</div>
+					<div class="d-flex input-container">
+						<div class="label">휴대전화</div>
+						<div><input type="text" class="form-control" name="receiverTel2" id="receiverTel2"/></div>
+					</div>
+					<div class="d-flex input-container">
+						<div class="label">배송메모</div>
+						<div><input type="text" class="form-control" name="memo2" id="memo2"></div>
+					</div>
+          
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-primary" onclick="changeAddr();">변경하기</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 <script>
 
 function goPopup(){
@@ -147,11 +196,17 @@ new daum.Postcode({
                     addr = data.jibunAddress;
                 }
         
-          document.getElementById('zipcode').value = data.zonecode;
-          document.getElementById("address").value = addr;
+          document.getElementById("zipcode2").value = data.zonecode;//문제야
+          document.getElementById("addr").value = addr;
+          console.log(document.getElementById("addr").value);
+          console.log(document.getElementById("zipcode2").value);
+          document.getElementById("addr2").focus();
         
     }
 }).open();
+
+document.getElementById("address2").focus();
+
 }
 
 //post방식으로 데이터 보내기
@@ -251,11 +306,13 @@ function payOrder(){
 			memo:document.getElementById("memo").value
 		} ,
 		success:function(data){
-			if(data.result>0){
-				console.log(data.result);
-				alert("결제,오더 완료");
+			console.log("data:"+data);
+			console.log("dataresult"+data.result);
+			if(data>0){
+				location.href="${path}/order/orderSuccess";
 			}else{
-				alert("결제,오더 실패");
+				//결제 최종오류
+				location.href="${path}/order/orderFail";
 			}
 			
 			
@@ -269,31 +326,37 @@ function payOrder(){
 		
 	
 	} else {
-	var msg = '결제에 실패하였습니다.';
-	msg += '에러내용 : ' + rsp.error_msg;
-	}
-	alert(msg);
+		var msg = '결제에 실패하였습니다.';
+		msg += '에러내용 : ' + rsp.error_msg;
+		}
 	});
 
 }
 
 
 //주문자와 배송자 정보가 동일할 경우
-
-
-
-
 function sameInfo(){
 	console.log("sameInfo들어옴");
 	var sender=document.getElementById("sender");
 	var senderTel=document.getElementById("senderTel");
-	sender.value=document.getElementById("receiver").value;
+	sender.value=document.getElementById("receiver").innerHTML;
 	senderTel.value=document.getElementById("receiverTel").innerHTML;
 	
 }
 
+//배송지 변경시
+function changeAddr(){
+	
+	document.getElementById("receiver").innerHTML=document.getElementById("receiver2").value;
+	document.getElementById("receiverTel").innerHTML=document.getElementById("receiverTel2").value;
+	document.getElementById("address").innerHTML=document.getElementById("addr").value;
+	document.getElementById("address2").innerHTML=document.getElementById("addr2").value;
+	document.getElementById("zipcode").innerHTML=document.getElementById("zipcode2").value;
+	document.getElementById("memo").value=document.getElementById("memo2").value;
+	$('#myModal').modal('hide');  
 
 
+}
 
 
 </script>

@@ -4,11 +4,11 @@
 	<insert id="insertBookMark" parameterType="com.mycafe.myweb.user.model.vo.Bookmark">
 		INSERT INTO BOOKMARK VALUES
 		<choose>
-			<when test="cafe_no !=null">
-				(b_NO_SEQ.NEXTVAL,#{member_no},#{cafe_no},null)
+			<when test="cafe_no > 0">
+				(b_NO_SEQ.NEXTVAL,#{member_no},#{cafe_no},null,'Y')
 			</when>
 			<otherwise>
-				(b_NO_SEQ.NEXTVAL,#{member_no},null,#{goods_no})
+				(b_NO_SEQ.NEXTVAL,#{member_no},null,#{goods_no},'Y')
 			</otherwise>		
 		
 		</choose>
@@ -17,16 +17,23 @@
 		SELECT *
 		<choose>
 			<when test="cafe_no !=null">
-			FROM BOOKMARK WHERE MEMBER_NO=#{member_no} AND CAFE_NO=#{cafe_no}
+			FROM BOOKMARK WHERE MEMBER_NO=#{member_no} AND CAFE_NO=#{cafe_no} AND BOOK_STATE='Y'
 			</when>
 			<otherwise>
-			FROM BOOKMARK WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}
+			FROM BOOKMARK WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no} AND BOOK_STATE='Y'
 			</otherwise>
 		</choose>
 	</select>
 	<select id="selectMyBookmark" resultType="com.mycafe.myweb.user.model.vo.BookMarkList">
-		SELECT *FROM BOOKMARK_CAFE JOIN BOOKMARK
-	
+		SELECT *FROM BOOKMARK WHERE BOOK_STATE='Y' AND MEMBER_NO=#{memberNo}	
 	</select>
-
+	<update id="deleteBookmark" parameterType="com.mycafe.myweb.user.model.vo.Bookmark">
+		UPDATE BOOKMARK SET BOOK_STATE='N' WHERE MEMBER_NO=#{member_no} AND GOODS_NO=#{goods_no}
+	</update>
+	<select id="selectCafeList" parameterType="_int" resultType="com.mycafe.myweb.user.model.vo.BookMarkList">
+		SELECT * FROM BOOKMARK JOIN CAFE USING (CAFE_NO) WHERE MEMBER_NO=#{memberNo} AND BOOK_STATE='Y'
+	</select>
+	<select id="selectGoodsList" parameterType="_int" resultType="com.mycafe.myweb.user.model.vo.BookMarkList">
+		SELECT * FROM BOOKMARK JOIN COFFEE USING (GOODS_NO) WHERE MEMBER_NO=#{memberNo} AND BOOK_STATE='Y'
+	</select>
 </mapper>

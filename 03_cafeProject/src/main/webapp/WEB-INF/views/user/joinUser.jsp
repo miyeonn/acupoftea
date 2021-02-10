@@ -107,10 +107,20 @@
 				                      </div>
 				                      <br>
 				                      <h6><i class="icon far fa-grin"></i>&nbsp;주소</h6>
+				                       <div class="input-group mb-3">
+				                        <input style="border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;"  
+				                        		type="text" class="form-control" placeholder="우편번호" size="30" name="zipcode" id="zipcode"
+												 onclick="goPopup();">
+				                      </div>
 				                      <div class="input-group mb-3">
 				                        <input style="border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;"  
 				                        		type="text" class="form-control" placeholder="주소 입력" size="30" name="address" id="address"
 												onclick="goPopup();"  >
+				                      </div>
+				                       <div class="input-group mb-3">
+				                        <input style="border: none; border-bottom: solid 1px #FFE3E3; border-radius:0;"  
+				                        		type="text" class="form-control" placeholder="상세주소 입력" size="30" name="address2" id="address2"
+												  >
 				                      </div>
 									  <br>
 				                      <h6><i class="icon fas fa-mobile-alt"></i>&nbsp;전화번호</h6>
@@ -206,22 +216,6 @@
 	 });
 	//주소 입력 api
 	
-/* 	
-function goPopup(){
-	// 주소검색을 수행할 팝업 페이지를 호출합니다.
-	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
-	var pop = window.open("${path}/user/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-	
-	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
-}
-
-function jusoCallBack(roadFullAddr){
-	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-	console.log(roadFullAddr);
-	document.joinfrm.address.value = roadFullAddr;		
-}
- */
  function goPopup(){
 	 new daum.Postcode({
 	     oncomplete: function(data) {
@@ -233,7 +227,7 @@ function jusoCallBack(roadFullAddr){
 	                     addr = data.jibunAddress;
 	                 }
 	         
-	          // document.getElementById('zipcode').value = data.zonecode;
+	           document.getElementById('zipcode').value = data.zonecode;
 	           document.getElementById('address').value = addr;
 	         
 	     }

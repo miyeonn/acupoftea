@@ -19,6 +19,8 @@ public class JoinUser {
 	private String address;
 	private String phone;
 	private String username;
+	private String zipcode;
+	private String address2;
 	
 	
 }

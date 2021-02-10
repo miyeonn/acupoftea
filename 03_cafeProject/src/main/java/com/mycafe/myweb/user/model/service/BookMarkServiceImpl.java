@@ -1,15 +1,13 @@
 package com.mycafe.myweb.user.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycafe.myweb.user.model.dao.BookMarkDao;
-
 import com.mycafe.myweb.user.model.vo.BookMarkList;
 import com.mycafe.myweb.user.model.vo.Bookmark;
 
@@ -41,7 +39,31 @@ public class BookMarkServiceImpl implements BookMarkService {
 	@Override
 	public List<BookMarkList> selectMyBookmark(int memberNo) {
 		// TODO Auto-generated method stub
-		return dao.selectMyBookmark(session,memberNo);
+		List<BookMarkList> list=new ArrayList<BookMarkList>(); 
+		List<BookMarkList> bklist=new ArrayList<BookMarkList>(); 
+		
+		list=dao.selectMyBookmark(session,memberNo);
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i).getCafe_no()==0) {
+				//goods가서 join
+				bklist.addAll(dao.selectGoodsList(session,memberNo));
+			}else {
+				//cafe가서 join
+				bklist.addAll(dao.selectCafeList(session,memberNo));
+			}
+		}
+		
+		return bklist;
+		
+	}
+
+
+
+
+	@Override
+	public int deleteBookMark(Bookmark bk) {
+		// TODO Auto-generated method stub
+		return dao.deleteBookMark(session,bk);
 	}
 
 
