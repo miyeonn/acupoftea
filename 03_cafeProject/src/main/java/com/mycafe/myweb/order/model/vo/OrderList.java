@@ -24,5 +24,8 @@ public class OrderList {
 	private String order_ship;//db
 	private String order_cfm;//db
 	private String sender_memo;
+	private String main_image;
+	private String coffee_title;
+	private int coffee_price;
 	
 }

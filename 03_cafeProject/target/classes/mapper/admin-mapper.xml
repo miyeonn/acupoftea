@@ -10,7 +10,10 @@
 	
 	</insert>
 	<select id="checkStock" resultType="com.mycafe.myweb.order.model.vo.OrderList">
-		SELECT *FROM ORDER_TB
+		SELECT *FROM ORDER_TB JOIN COFFEE USING(GOODS_NO) ORDER BY ORDER_DATE DESC
 	
+	</select>
+	<select id="orderByDate" parameterType="map" resultType="com.mycafe.myweb.order.model.vo.OrderList">
+		SELECT * FROM ORDER_TB JOIN COFFEE USING(GOODS_NO) WHERE ORDER_DATE BETWEEN #{startDate} AND #{endDate} ORDER BY ORDER_DATE DESC
 	</select>
 </mapper>

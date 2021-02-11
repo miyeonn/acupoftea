@@ -1,5 +1,6 @@
 package com.mycafe.myweb.admin.model.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,12 @@ public class AdminDaoImpl implements AdminDao {
 	public List<OrderList> checkStock(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectList("admin.checkStock");
+	}
+
+	@Override
+	public List<OrderList> orderByDate(Map<String, String> dateMap, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("admin.orderByDate",dateMap);
 	}
 
 }

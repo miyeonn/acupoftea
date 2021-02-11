@@ -1,6 +1,8 @@
 package com.mycafe.myweb.admin.model.service;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,18 +112,17 @@ public class AdminServiceImpl implements AdminService {
 	    
 	            // 헤더 생성
 	            row = sheet.createRow(rowNo++);
-	    
-	            cell = row.createCell(0);
-	            cell.setCellStyle(headStyle);
-	            cell.setCellValue("오더번호");
-	    
-	            cell = row.createCell(1);
-	            cell.setCellStyle(headStyle);
-	            cell.setCellValue("오더날짜");
-	    
-	            cell = row.createCell(2);
-	            cell.setCellStyle(headStyle);
-	            cell.setCellValue("상품명");
+	            
+	            String[] cellTitle= {"주문날짜","주문번호","상품명","주문수량","주문상태","수취인","배송주소","주문자","주문자연락처"};
+	            
+	            for(int i=0; i<cellTitle.length;i++) {
+		            cell = row.createCell(i);
+		            cell.setCellStyle(headStyle);
+		            cell.setCellValue(cellTitle[i]);
+		            }
+	       
+	            
+	            
 	    
 	            // 데이터 부분 생성
 	            for(OrderList ol: list) {
@@ -130,19 +131,40 @@ public class AdminServiceImpl implements AdminService {
 	                row = sheet.createRow(rowNo++);
 	                cell = row.createCell(0);
 	                cell.setCellStyle(bodyStyle);
-	                cell.setCellValue(ol.getOrder_no());
+	                cell.setCellValue(ol.getOrder_date());
 	                cell = row.createCell(1);
 	                cell.setCellStyle(bodyStyle);
-	                cell.setCellValue(ol.getOrder_date());
+	                cell.setCellValue(ol.getOrder_no());
 	                cell = row.createCell(2);
 	                cell.setCellStyle(bodyStyle);
-	                cell.setCellValue(ol.getOrder_no());
+	                cell.setCellValue(ol.getCoffee_title());
+	                cell = row.createCell(3);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_qty());
+	                cell = row.createCell(4);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_state());
+	                cell = row.createCell(5);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_receiver());
+	                cell = row.createCell(6);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_address());
+	                cell = row.createCell(7);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_sender());
+	                cell = row.createCell(8);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getSender_tel());
 	            }
 	    
 	            // 컨텐츠 타입과 파일명 지정
-	            response.setContentType("ms-vnd/excel");
-	            response.setHeader("Content-Disposition", "attachment;filename=test.xls");
-	 
+	            String title="주문내역";
+	            title=URLEncoder.encode(title, "UTF-8");
+	            response.setCharacterEncoding("UTF-8");
+	            response.setContentType("ms-vnd/excel;");
+	            response.setHeader("Content-Disposition", "attachment;filename="+title+".xls");
+
 	            // 엑셀 출력
 	            workbook.write(response.getOutputStream());
 	            response.getOutputStream().close();
@@ -152,6 +174,13 @@ public class AdminServiceImpl implements AdminService {
 	        
 
 		
+	}
+
+
+	@Override
+	public List<OrderList> orderByDate(Map<String, String> dateMap) {
+		// TODO Auto-generated method stub
+		return dao.orderByDate(dateMap,session);
 	}
 
 }

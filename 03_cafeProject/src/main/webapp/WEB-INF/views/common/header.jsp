@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -35,6 +36,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR:wght@500&family=Noto+Serif+KR&display=swap" rel="stylesheet">
  <link href="${path }/resources/css/one-page-wonder.min.css" rel="stylesheet">
+ <!-- 날짜 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+
+
 <meta charset="UTF-8">
 <%@ page import="com.mycafe.myweb.user.model.vo.JoinUser" %>
 <%
@@ -115,7 +124,7 @@
 							</button>
 			  		</li> -->
 				    <li class="nav-item">
-				      <a class="nav-link" href="${path }/admin/adminPage">관리자 페이지</a>
+				      <a class="nav-link" href="${path }/admin/enrollCafe">관리자 페이지</a>
 				    </li>
 			    </c:when>
 			</c:choose>   

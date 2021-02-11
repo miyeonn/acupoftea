@@ -1,5 +1,6 @@
 package com.mycafe.myweb.admin.model.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,5 +15,7 @@ public interface AdminService {
 	List<OrderList> checkStock();
 
 	void getExcelDown(HttpServletResponse response);
+
+	List<OrderList> orderByDate(Map<String, String> dateMap);
 
 }

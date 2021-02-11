@@ -22,12 +22,12 @@ color:black;
 		    <li class="nav-item">
 		      <a class="nav-link " href="${path }/admin/enrollgoods">상품등록</a>
 		    </li>
-		    <li class="nav-item">
+		 <%--    <li class="nav-item">
 		      <a class="nav-link "  href="${path }/admin/allUsers">이용자 정보관리</a>
 		    </li>
 		    <li class="nav-item">
 		      <a class="nav-link "  href="${path }/admin/stock">재고관리</a>
-		    </li>
+		    </li> --%>
 		    <li class="nav-item">
 		      <a class="nav-link "  href="${path }/admin/orderList">주문관리</a>
 		    </li>

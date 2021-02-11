@@ -1,5 +1,6 @@
 package com.mycafe.myweb.admin.model.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +16,7 @@ public interface AdminDao {
 	int enrollCafeFiles(CafeFile cf, SqlSessionTemplate session);
 
 	List<OrderList> checkStock(SqlSessionTemplate session);
+
+	List<OrderList> orderByDate(Map<String, String> dateMap, SqlSessionTemplate session);
 
 }

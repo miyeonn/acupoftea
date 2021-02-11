@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <style>
+
  .label{
  	width:100px;
  	margin-left:10px;
@@ -85,24 +86,38 @@
 				</c:if>
 				<c:forEach items="${list }" var="l">
 				<div class="d-flex border-bottom  mt-3 ml-3" style="width:95%">
-					<div><p class="orderlist-text">${l.order_date } | ${l.order_no}</p></div>
+					<div>
+						<p class="orderlist-text" style="color:#424242;">
+							${l.order_no}  |
+							<fmt:parseDate value="${l.order_date}" var="noticePostDate" pattern="yy/MM/dd"/>
+							<fmt:formatDate value="${noticePostDate}" pattern="yyyy.MM.dd"/> 
+							
+						</p>
+					</div>
 					<!-- <div><p class="orderlist-text">상세보기</p></div> -->		
 				</div>
-				<hr/>	
+					
 				<!-- 내 결제내역 반복구문 -->
-				<div class="d-flex form-check rounded-lg border-bottom ml-3 pr-3" style="width:95%" >				
-					<img class="orderImg" src="${path }/resources/img/" width="150px;" height="150px;"/>
-					<div>
-						<p class="orderlist-text">상품명</p>
-						<p class="orderlist-text">갯수</p>
+				<div class="d-flex justify-content-between form-check rounded-lg border-bottom ml-3 pr-3" style="width:95%" >				
+					
+					<div class="d-flex">
+					<img class="orderImg mt-3 mb-2" src="/img/cafe/${l.main_image}" width="150px;" height="150px;"/>
+						<div class="d-flex flex-column">
+						<h6 class="orderlist-text  mt-5 ml-3" style="color:#424242;">${l.coffee_title }</h6>
+						<h4 class="orderlist-text ml-3" style="color:#424242;">${l.order_qty } 개</h4>
+						</div>
 					</div>
-					<div class="ml-auto mt-3">
-					<c:if test="${l.order_state eq '결제완료' }">
-					<button class="btn btn-primary" onclick="fn_cancelOrder(${l.order_no},${l.goods_no });">결제취소요청</button>
-					</c:if>
-					<c:if test="${l.order_state eq '취소요청' }">
-						<button class="btn  btn-secondary disabled">취소처리중</button>
-					</c:if>
+					<div class="mt-5">
+						<h5><fmt:formatNumber type="number" maxFractionDigits="3" value="${l.coffee_price }"/> 원</h5>
+						<div class="text-center mt-2 mb-2" style="color:#87CEEB;"><h6>${l.order_state }</h6></div>
+					</div>
+					<div class="mt-5">
+						<c:if test="${l.order_state eq '결제완료' }">
+						<button class="btn btn-sm btn-primary" onclick="fn_cancelOrder(${l.order_no},${l.goods_no });">결제취소요청</button>
+						</c:if>
+						<c:if test="${l.order_state eq '취소요청' }">
+							<button class="btn  btn-secondary disabled">취소처리중</button>
+						</c:if>
 					</div>
 				
 				</div>
