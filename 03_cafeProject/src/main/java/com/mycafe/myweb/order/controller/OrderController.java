@@ -167,13 +167,14 @@ public class OrderController {
 	  }
 	  @RequestMapping("/order/paymentEnd")
 	  public @ResponseBody int paymentEnd(HttpServletRequest request) {
-		  
+		  System.out.println(request.getParameter("address"));
+		  System.out.println(request.getParameter("sender_tel"));
 		  // 주문번호 생성하기
 		  Date now = new Date();
 		  SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		  
 		  String orderNo= format.format(now);
-		  System.out.println("주문번호:"+orderNo);
+		  
 		//order테이블에 넣기
 		  List<OrderList> list=new ArrayList<OrderList>();
 		  
@@ -188,13 +189,17 @@ public class OrderController {
 			  order.setOrder_qty(qty[i]);
 			  order.setOrder_receiver(request.getParameter("receiver"));
 			  order.setOrder_tel(request.getParameter("receiver_tel"));
+			  order.setOrder_zipcode(request.getParameter("zipcode"));
 			  order.setOrder_address(request.getParameter("address"));
+			  order.setOrder_address2(request.getParameter("address2"));
 			  order.setOrder_sender(request.getParameter("sender"));
 			  order.setSender_tel(request.getParameter("sender_tel"));
 			  order.setSender_memo(request.getParameter("memo"));
+			  
 			  list.add(order);
 			 
 		  	}
+		  System.out.println(list);
 		  int result=service.insertOrder(list);
 		    
 		  
@@ -218,7 +223,7 @@ public class OrderController {
 				  map.put("goodsNo",goodsNo[i]);
 				  result=service.updateCart(map);
 			  		}
-			 
+			 System.out.println("장바구니 삭제"+result);
 		 	  return result;
 		  }
 		  	else {
@@ -286,21 +291,24 @@ public class OrderController {
 	  @RequestMapping("/order/cancelPort")
 	  public @ResponseBody ModelAndView cancelPort(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		ModelAndView mv=new ModelAndView();
-		  
-		Payment pay=service.cancelPort(request.getParameter("orderNo"));
+		 
+		String orderNo=request.getParameter("orderNo");
+		Payment pay=service.cancelPort(orderNo);
 		
 		System.out.println("merchant_id"+pay.getMerchant_id());
 		
 		String token=PaymentCheck2.getImportToken();
 		
 		String merchant_id=PaymentCheck2.cancelPayment(token, pay.getImp_id());
+		
 		if(merchant_id.equals("환불실패")) {
-			mv.addObject("result", merchant_id);
+			mv.addObject("result", merchant_id+"환불실패");
 		}else {
 			// state 업데이트 order_state:결제취소 payment_state:환불완료
 			int resultcnt=service.updateSt(merchant_id);
+			
 			if(resultcnt>0) {
-				mv.addObject("result", "환불완료");
+				mv.addObject("result", "환불완료");			
 			}else {
 				mv.addObject("result", "환불완료실패");
 			}

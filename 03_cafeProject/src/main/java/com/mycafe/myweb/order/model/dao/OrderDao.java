@@ -51,5 +51,7 @@ public interface OrderDao {
 
 	int updateCart(Map<String, Object> map, SqlSessionTemplate session);
 
+	int updateCancelSt(String orderNo, SqlSessionTemplate session);
+
 
 }

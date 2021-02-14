@@ -16,7 +16,7 @@ public class CronTask {
 	private SendOrderMail sendMail;
 	
 	
-	@Scheduled(cron="0 * 10 15 12 *")//매일 오후 3시 관리자 메일로 발송@Scheduled(cron="0 0/2 * * * *")
+	@Scheduled  (cron="0 12 15 10 * *")//매일 -일 - 시 - 분-//매일 오후 3시 관리자 메일로 발송@Scheduled(cron="0 0/2 * * * *")
 	public void scheduleRun() {
 	    Calendar calendar = Calendar.getInstance();
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");

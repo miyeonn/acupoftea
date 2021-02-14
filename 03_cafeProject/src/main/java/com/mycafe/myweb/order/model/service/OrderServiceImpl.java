@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
 	public int updateSt(String merchant_id) {
 		// TODO Auto-generated method stub
 		int result= dao.updateSt(merchant_id,session);
-		System.out.println("db다녀온값:"+merchant_id);
+		System.out.println("db업데이트:"+result);
 		if(result>0) {
 			System.out.println("paymentupdate완료");
 		result=dao.updateOrderSt(merchant_id,session);
@@ -148,6 +148,12 @@ public class OrderServiceImpl implements OrderService {
 	public int updateCart(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return dao.updateCart(map,session);
+	}
+
+	@Override
+	public int updateCancelSt(String orderNo) {
+		// TODO Auto-generated method stub
+		return dao.updateCancelSt(orderNo,session);
 	}
 
 

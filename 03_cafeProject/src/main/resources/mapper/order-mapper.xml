@@ -6,7 +6,7 @@
 	</insert>
 	<insert id="insertOrder" parameterType="com.mycafe.myweb.order.model.vo.OrderList">
 		INSERT INTO ORDER_TB VALUES(#{member_no},#{goods_no},SYSDATE,'결제완료',#{order_qty},#{order_receiver},#{order_tel},#{order_address},
-		'N','N','N',#{order_sender},#{sender_tel},#{sender_memo},#{order_no})
+		'N','N','N',#{order_sender},#{sender_tel},#{sender_memo},#{order_no},#{order_zipcode},#{order_address2})
 	
 	</insert>
 	<select id="selectMyOrder" parameterType="hashMap" resultType="com.mycafe.myweb.order.model.vo.OrderList">
@@ -48,8 +48,9 @@
 		UPDATE PAYMENT SET PAYMENT_STATE='환불완료' WHERE MERCHANT_ID=#{merchant_id}
 		
 	</update>
-		<update id="updateOrderSt" parameterType="string" >
+	<update id="updateOrderSt" parameterType="string" >
 		UPDATE ORDER_TB SET PAYMENT_STATE='취소완료' ,ORDER_CALCELED='Y' WHERE order_no=#{orderNo}
 		
 	</update>
+	
 </mapper>

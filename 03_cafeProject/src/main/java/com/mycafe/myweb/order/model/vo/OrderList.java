@@ -27,5 +27,7 @@ public class OrderList {
 	private String main_image;
 	private String coffee_title;
 	private int coffee_price;
+	private String order_zipcode;
+	private String order_address2;
 	
 }

@@ -151,7 +151,7 @@
 						  		<input type="text" name="pop_out" value="1" readonly="readonly" style="text-align:center;"/>
 						  		<button type ="button" onclick="fnCalCount('p');">+</button>
 						  	</div>
-						  	<div class="text-title">주문금액 :<span name="totalPrice">0</span>   원</div>
+						  	<div class="text-title">주문금액 :<span name="totalPrice">${coffee.coffee_price }</span>   원</div>
 						  	<div>
 						  		<button class="btn btn-outline-primary" onclick="addCart('${coffee.goods_no}');">장바구니</button>
 						  		<button class="btn btn-primary" onclick="orderNow('${coffee.goods_no}');">바로구매</button>

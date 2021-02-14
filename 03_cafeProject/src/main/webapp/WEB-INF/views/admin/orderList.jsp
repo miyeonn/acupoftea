@@ -71,7 +71,7 @@
 									<td class="d-flex flex-column">
 									${l.order_state }
 									<c:if test="${l.order_state eq '취소요청' }">
-										<button class="btn btn-sm btn-primary " onclick="fn_cancelPort(${l.order_no})">취소승인</button>
+										<button class="btn btn-sm btn-success " onclick="fn_cancelPort(${l.order_no})">취소승인</button>
 									</c:if>
 									<c:if test="${l.order_state eq '결제완료' }">
 										<button class="btn  btn-sm btn-primary mt-1" onclick="fn_cancelPort(${l.order_no})">출고진행</button>

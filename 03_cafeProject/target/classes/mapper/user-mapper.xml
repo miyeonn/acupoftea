@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 	<insert id="insertUser" parameterType="map">
-		INSERT INTO MEMBER_TB (MEMBER_NO,MEMBER_ID,PASSWORD,ADDRESS,PHONE,USERNAME) 
+		INSERT INTO MEMBER_TB (MEMBER_NO,MEMBER_ID,PASSWORD,ADDRESS,PHONE,USERNAME,zipcode,address2) 
 		VALUES(MEMBER_NO_SEQ.NEXTVAL,#{userId},#{userPw},#{address},#{phone},#{userName},#{zipcode},#{address2})
 	</insert>
 	<select id="checkId" parameterType="String" resultType="com.mycafe.myweb.user.model.vo.JoinUser">

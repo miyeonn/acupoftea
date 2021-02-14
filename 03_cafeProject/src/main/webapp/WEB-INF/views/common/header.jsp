@@ -96,6 +96,8 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <div id="socketAlert" class="alert alert-success" style="display:none;">
+	  </div>
       <div class="collapse navbar-collapse dropmenu" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
         	<c:choose>

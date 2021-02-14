@@ -133,4 +133,10 @@ public class OrderDaoImpl implements OrderDao {
 		return session.update("cart.updateCart",map);
 	}
 
+	@Override
+	public int updateCancelSt(String orderNo, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.update("order.updateCancelSt",orderNo);
+	}
+
 }

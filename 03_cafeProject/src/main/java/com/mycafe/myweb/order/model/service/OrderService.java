@@ -34,7 +34,7 @@ public interface OrderService {
 
 	int cancelOrder(Map<String, Object> map);
 
-	Payment cancelPort(String parameter);
+	Payment cancelPort(String orderNo);
 
 	OrderSum checkOrderToday(String today);
 
@@ -43,5 +43,7 @@ public interface OrderService {
 	Coffee selectgoods(int goodsNo);
 
 	int updateCart(Map<String, Object> map);
+
+	int updateCancelSt(String orderNo);
 
 }

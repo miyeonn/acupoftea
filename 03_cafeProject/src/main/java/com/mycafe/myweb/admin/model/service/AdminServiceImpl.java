@@ -113,7 +113,7 @@ public class AdminServiceImpl implements AdminService {
 	            // 헤더 생성
 	            row = sheet.createRow(rowNo++);
 	            
-	            String[] cellTitle= {"주문날짜","주문번호","상품명","주문수량","주문상태","수취인","배송주소","주문자","주문자연락처"};
+	            String[] cellTitle= {"주문날짜","주문번호","상품명","주문수량","주문상태","수취인","우편번호","배송주소","주소","주문자","주문자연락처"};
 	            
 	            for(int i=0; i<cellTitle.length;i++) {
 		            cell = row.createCell(i);
@@ -149,11 +149,17 @@ public class AdminServiceImpl implements AdminService {
 	                cell.setCellValue(ol.getOrder_receiver());
 	                cell = row.createCell(6);
 	                cell.setCellStyle(bodyStyle);
-	                cell.setCellValue(ol.getOrder_address());
+	                cell.setCellValue(ol.getOrder_zipcode());               
 	                cell = row.createCell(7);
 	                cell.setCellStyle(bodyStyle);
-	                cell.setCellValue(ol.getOrder_sender());
+	                cell.setCellValue(ol.getOrder_address());
 	                cell = row.createCell(8);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_address2());
+	                cell = row.createCell(9);
+	                cell.setCellStyle(bodyStyle);
+	                cell.setCellValue(ol.getOrder_sender());
+	                cell = row.createCell(10);
 	                cell.setCellStyle(bodyStyle);
 	                cell.setCellValue(ol.getSender_tel());
 	            }

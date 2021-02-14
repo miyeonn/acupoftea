@@ -253,6 +253,7 @@ $.ajax({
 
 //아임포트 연동 api. 결제 및 orderlist에 저장.
 function payOrder(){
+	alert(document.getElementById("address").innerHTML);
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp19318003');
 	// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -298,9 +299,11 @@ function payOrder(){
 			memberNo:${loginUser.member_no},
 			goodsNos:goodsNos,//배열
 			orderQtys:orderQtys,//배열
-			receiver:document.getElementById("receiver").value,	
-		    receiver_tel:document.getElementById("receiverTel").value,
-			address:document.getElementById("address").value,
+			receiver:document.getElementById("receiver").innerHTML,	
+		    receiver_tel:document.getElementById("receiverTel").innerHTML,
+		    zipcode:document.getElementById("zipcode").innerHTML,
+			address:document.getElementById("address").innerHTML,
+			address2:document.getElementById("address2").innerHTML,
 			sender:document.getElementById("sender").value,
 			sender_tel:document.getElementById("senderTel").value,
 			memo:document.getElementById("memo").value
