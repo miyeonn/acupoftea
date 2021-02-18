@@ -1,5 +1,5 @@
 # A cup of tea
- a cup of tea. a website for cafe&coffee
+ A cup of tea. A website for cafe&coffee
  
  
 <h3>주요 기능</h3>
