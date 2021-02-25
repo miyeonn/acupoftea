@@ -16,4 +16,6 @@ public interface UserService {
 
 	JoinUser getUserByNo(int memberNo);
 
+	JoinUser kakaoLogin(JoinUser u);
+
 }

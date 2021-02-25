@@ -53,4 +53,20 @@ public class UserServiceImpl implements UserService {
 		return dao.getUserByNo(session,memberNo);
 	}
 
+
+	@Override
+	public JoinUser kakaoLogin(JoinUser u) {
+		// TODO Auto-generated method stub
+		JoinUser user=new JoinUser();
+			//이미 등록되어있음
+			user=dao.selectUser(u.getMember_id(), session);
+		if(user==null) {
+			//등록해야함
+			int result=dao.insertKakaoUser(u,session);
+			if(result>0) user=dao.selectUser(u.getMember_id(), session);
+		}
+		
+		return user;
+	}
+
 }

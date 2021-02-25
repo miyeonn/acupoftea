@@ -18,4 +18,8 @@ public interface UserDao {
 
 	JoinUser getUserByNo(SqlSessionTemplate session, int memberNo);
 
+	
+
+	int insertKakaoUser(JoinUser u, SqlSessionTemplate session);
+
 }

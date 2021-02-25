@@ -271,12 +271,7 @@ function payOrder(){
 	buyer_tel: '010-1234-5678',
 	buyer_addr: '서울특별시 강남구 삼성동',
 	buyer_postcode: '123-456',
-/* 	m_redirect_url: 'https://www.yourdomain.com/payments/complete'
-	
-	모바일 결제시,
-	결제가 끝나고 랜딩되는 URL을 지정
-	(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
-	 */
+
 	}, function (rsp) {//callback
 	
 	if (rsp.success) { //결제가 성공할 경우

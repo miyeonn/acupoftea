@@ -49,7 +49,11 @@
 								</div>								
 								<div class="loginContent">
 									<button class="btn btn-primary btn-block" onclick='btn_click("join");'>회원가입</button>	
-									<div class="text-center mt-3"><a id="kakao-login-btn"></a></div>
+									<div id="kakao_id_login" class="mt-2" style="text-align: center">
+										<a href="${kakaoUrl}"> 
+											<img width="223" src="/img/main/kakao_login_medium_narrow.png" />
+										</a> 
+									</div>
 								</div> 
 							 </div>
 						</form>
@@ -86,20 +90,35 @@
  
  
    // 사용할 앱의 JavaScript 키를 설정해 주세요.
-   Kakao.init('dd85c7c19c3d45f5bedf296de1914e7f');
+//    Kakao.init('dd85c7c19c3d45f5bedf296de1914e7f');
    
-   // 카카오 로그인 버튼을 생성합니다.
+   /* // 카카오 로그인 버튼을 생성합니다.
    Kakao.Auth.createLoginButton({
-     container: '#kakao-login-btn',
-     success: function(authObj) {
+     container: '#kakao-login-btn'
+   /*   success: function(authObj) {
     alert(JSON.stringify(authObj));
      },
      fail: function(err) {
      alert(JSON.stringify(err));
-     }
-   });
-    //
-
+     } 
+   }); 
+    // */
+/* 	function kakaoLogin(){
+	   $.ajax({
+		 url:"${path}/login/getKakaoAuthUrl",
+		 type:"get",
+		 dataType:"text",
+		 success:function(res){
+			 alert(res);
+			 location.href=res;
+		 }
+		   
+		   
+	   })
+	    */
+	   
+	   
+   
   
   
   

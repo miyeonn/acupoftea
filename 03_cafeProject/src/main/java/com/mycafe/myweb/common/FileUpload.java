@@ -28,6 +28,7 @@ public class FileUpload {
 				 //fileOriginName에 날짜+.+확장자명으로 저장시킴. 
 				 fileOriginName = formatter.format(now.getTime())+"."+extension; 
 				 System.out.println("변경된 파일명 : "+fileOriginName);
+				 System.out.println("저장경로:"+uploadPath+fileOriginName);
 				 
 				 File f = new File(uploadPath,fileOriginName);	
 				System.out.println(f);

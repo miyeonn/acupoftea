@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.mycafe.myweb.common.KakaoApi;
 import com.mycafe.myweb.user.model.service.BookMarkService;
 import com.mycafe.myweb.user.model.service.UserService;
 import com.mycafe.myweb.user.model.vo.BookMarkList;
@@ -27,7 +31,9 @@ import com.mycafe.myweb.user.model.vo.JoinUser;
 @Controller
 @SessionAttributes({"loginUser"})
 public class UserController {
-
+	
+	
+	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
@@ -38,8 +44,17 @@ public class UserController {
 	private BookMarkService bkService;
 	
 	@RequestMapping("/user/login")
-	private String loginPage() {
-		return "user/login";
+	private ModelAndView loginPage(HttpSession session) {
+		ModelAndView mv=new ModelAndView();
+		
+		//카카오 로그인 url가져오기
+		String kakaoUrl=KakaoApi.getKakaoAuthUrl(session);
+		
+		
+		mv.addObject("kakaoUrl",kakaoUrl);
+		mv.setViewName("user/login");
+	
+		return mv;
 	}
 	
 	@RequestMapping("/user/myPage")
@@ -276,9 +291,51 @@ public class UserController {
 		 
 		 
 	 }
+	 
+	 @RequestMapping("/kakaologin") 
+		public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response, HttpSession session)throws Exception {
+			System.out.println("들어옴");
+		 	ModelAndView mav = new ModelAndView(); // 결과값을 node에 담아줌 
+			JsonNode node = KakaoApi.getAccessToken(code); // accessToken에 사용자의 로그인한 모든 정보가 들어있음
+			System.out.println("로그인후 코드얻음:"+code);
+			System.out.println(node);
+			JsonNode accessToken = node.get("access_token"); // 사용자의 정보 
+			System.out.println("토큰:"+accessToken);
+			JsonNode userInfo = KakaoApi.getKakaoUserInfo(accessToken); 
+			System.out.println(userInfo);
+			
+			String kname = null; 
+			String kemail=null;
 
-	
-	
-	
+			// 유저정보 카카오에서 가져오기 Get properties 
+			
+			JsonNode kakao_account = userInfo.path("kakao_account"); 
+			JsonNode profile=kakao_account.path("profile");
+			kname = profile.path("nickname").asText(); //이름 
+			kemail = kakao_account.path("email").asText(); //이메일
+			
+			System.out.println("이름,이메일:"+kname+kemail);
+			//일단member_tb에서 찾는다.
+			//있으면 반환, 없으면 insert
+			JoinUser u=new JoinUser();
+			u.setMember_id(kemail);
+			u.setUsername(kname);
+			JoinUser loginUser=service.kakaoLogin(u);
+			
+			session = request.getSession();
+			session.setAttribute("loginUser", loginUser);
+			
+			
+			mav.addObject("loginUser",loginUser);
+			mav.addObject("msg", "환영합니다!");
+			mav.addObject("loc", "/");
+			
+			String page = "common/msg";
+			
+			return page; 
+			
+		}
+
+
 
 }

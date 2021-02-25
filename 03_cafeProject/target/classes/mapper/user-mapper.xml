@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 	<insert id="insertUser" parameterType="map">
-		INSERT INTO MEMBER_TB (MEMBER_NO,MEMBER_ID,PASSWORD,ADDRESS,PHONE,USERNAME,zipcode,address2) 
-		VALUES(MEMBER_NO_SEQ.NEXTVAL,#{userId},#{userPw},#{address},#{phone},#{userName},#{zipcode},#{address2})
+		INSERT INTO MEMBER_TB (MEMBER_NO,MEMBER_ID,PASSWORD,ADDRESS,PHONE,USERNAME,zipcode,address2,platform) 
+		VALUES(MEMBER_NO_SEQ.NEXTVAL,#{userId},#{userPw},#{address},#{phone},#{userName},#{zipcode},#{address2},'CUPMEMBER')
 	</insert>
 	<select id="checkId" parameterType="String" resultType="com.mycafe.myweb.user.model.vo.JoinUser">
 			SELECT *FROM MEMBER_TB WHERE MEMBER_ID=#{id}
@@ -17,4 +17,9 @@
 	<select id="selectByNo" parameterType="_int" resultType="com.mycafe.myweb.user.model.vo.JoinUser">
 		SELECT * FROM MEMBER_TB WHERE MEMBER_NO=#{memberNo}
 	</select>
+
+	<insert id="insertKakaoUser" parameterType="com.mycafe.myweb.user.model.vo.JoinUser">
+		INSERT INTO MEMBER_TB (MEMBER_NO,MEMBER_ID,USERNAME,platform) 
+		VALUES(MEMBER_NO_SEQ.NEXTVAL,#{member_id},#{username},'KAKAO')
+	</insert>
 </mapper>

@@ -40,6 +40,14 @@ public class UserDaoImpl implements UserDao {
 		return session.selectOne("user.selectByNo", memberNo);
 	}
 
+
+
+	@Override
+	public int insertKakaoUser(JoinUser u, SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.insert("user.insertKakaoUser",u);
+	}
+
 	
 
 }
